@@ -18,15 +18,15 @@ const getMocks = {
   'https://api.postcodes.io/postcodes/e83fp': postcodeGetResponse,
   'https://api.github.com/users/arrested-developer': github,
   'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=no_geolocation': airtableNoGeo,
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=valid_records': airtableAllValidRows,
+  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=valid_records': airtableAllValidRows
 };
 
 const postMocks = {
-  'https://api.postcodes.io/postcodes': postcodesResponse,
+  'https://api.postcodes.io/postcodes': postcodesResponse
 };
 
 const setStatus = {
-  'https://api.500.com': 500,
+  'https://api.500.com': 500
 };
 
 const setError = {
@@ -34,7 +34,7 @@ const setError = {
   'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK/givemeanerror?':
     'server error',
   'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=throw_error':
-    'server error',
+    'server error'
 };
 
 const request = (options, callback) => {

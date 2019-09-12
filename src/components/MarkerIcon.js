@@ -9,7 +9,7 @@ export default ({ useClass }) => {
     B8: '#ffb700',
     D1: '#a463f2',
     D2: '#ff6300',
-    Other: '#fff',
+    Other: '#fff'
   };
 
   return (
