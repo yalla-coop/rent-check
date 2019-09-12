@@ -1,7 +1,7 @@
-import React from './node_modules/react';
-import ReactDOM from './node_modules/react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import App from '.';
-import { render, cleanup } from './node_modules/react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors

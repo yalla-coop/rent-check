@@ -1,5 +1,5 @@
-const { render, cleanup } = require('./node_modules/react-testing-library');
-import React from './node_modules/react';
+const { render, cleanup } = require('react-testing-library');
+import React from 'react';
 import PostcodeForm from '.';
 
 afterAll(cleanup);

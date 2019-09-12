@@ -1,8 +1,8 @@
-import React from './node_modules/react';
+import React from 'react';
 // import ReactDOM from "react-dom";
 import Map from '.';
 // import { formatDate } from "./Map";
-import { render, cleanup } from './node_modules/react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 
 const markers = [
   {
