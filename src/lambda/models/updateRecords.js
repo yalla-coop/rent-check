@@ -9,8 +9,8 @@ const {
 const apiKey = process.env.AIRTABLE_API_KEY
   ? process.env.AIRTABLE_API_KEY
   : process.env.NODE_ENV === 'production'
-    ? null
-    : 'keyTestValue';
+  ? null
+  : 'keyTestValue';
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',

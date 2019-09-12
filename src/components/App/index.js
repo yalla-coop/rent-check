@@ -1,40 +1,41 @@
-import React, { Component } from 'react';
-import Landing from '../Landing';
-import Header from '../Header';
-import Map from '../Map';
-import PostcodeForm from '../PostcodeForm';
+import React, { Component } from "react";
+import Landing from "../Landing";
+import Header from "../Header";
+import Map from "../Map";
+import PostcodeForm from "../PostcodeForm";
 import {
   FullScreenContainer,
   ModalContainer,
-  ModalOverlay
-} from './App.styles';
+  ModalOverlay,
+} from "./App.styles";
+import "../tachyons.css";
 
 class App extends Component {
   state = {
     markers: false,
     loaded: false,
-    searchInput: '',
+    searchInput: "",
     center: [51.527329, -0.0554895],
     showFormWarning: false,
-    legend: false
+    legend: false,
   };
 
   defaultLocation = [51.527329, -0.0554895];
 
   componentDidMount() {
-    this.showLoadingScreen();
+    //this.showLoadingScreen();
     this.callApi().catch(err => console.log(err));
   }
 
   // api call made to backend to fetch airtable object
   callApi = async () => {
     this.calledTimes = 0;
-    const response = await fetch('/api/get_locations');
+    const response = await fetch("/.netlify/functions/getLocations");
     const body = await response.json();
     if (response.status !== 200) console.error(body.message);
     // if no results received, try again (make max 3 calls)
     if (body.length > 0) {
-      this.setState({ markers: body });
+      this.setState({ markers: body, loaded: true });
     } else if (this.calledTimes < 2) {
       setTimeout(this.callApi, 5000);
     }
@@ -61,7 +62,7 @@ class App extends Component {
     event.preventDefault();
     const postcode = this.state.searchInput;
     if (postcode.length === 0) {
-      return this.setState({ showFormWarning: 'Please enter a postcode' });
+      return this.setState({ showFormWarning: "Please enter a postcode" });
     } else {
       this.apiCallGeo(postcode);
     }
@@ -79,13 +80,13 @@ class App extends Component {
   checkResponse = res => {
     if (res.status === 404) {
       return this.setState({
-        showFormWarning: 'Please enter a valid postcode',
-        center: false
+        showFormWarning: "Please enter a valid postcode",
+        center: false,
       });
     }
     const location = [
       Object.values(res.result)[7],
-      Object.values(res.result)[6]
+      Object.values(res.result)[6],
     ];
     return this.setState({ showFormWarning: false, center: location });
   };

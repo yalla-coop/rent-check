@@ -1,4 +1,4 @@
-const xhr = require('../utils/xhr');
+const xhr = require('axios');
 
 // Postcodes :: Contents
 // makePostcodeArray - takes an array of objects from airtable response and returns
