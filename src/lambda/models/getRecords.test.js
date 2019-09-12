@@ -1,8 +1,4 @@
-const {
-  getNoGeo,
-  getAllValidRows,
-  requestRows
-} = require('../../database/getRecords');
+const { getNoGeo, getAllValidRows, requestRows } = require('./getRecords');
 const request = require('request');
 
 beforeEach(() => {

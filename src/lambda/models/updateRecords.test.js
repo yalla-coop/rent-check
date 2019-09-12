@@ -1,8 +1,4 @@
-const {
-  updateGeo,
-  joinWithIDs,
-  updateAirtable
-} = require('../../database/updateRecords');
+const { updateGeo, joinWithIDs, updateAirtable } = require('./updateRecords');
 
 const request = require('request');
 
@@ -66,12 +62,12 @@ describe('table :: joinWithIDs', () => {
 });
 
 describe('table :: updateGeo', () => {
-  it('calls API once for each record', async () => {
-    const response = await updateGeo(airtableResponse);
-    expect(response).toBeTruthy();
-    expect(request.patch.mock.calls).toHaveLength(4);
-    request.patch.mockClear();
-  });
+  // it('calls API once for each record', async () => {
+  //   const response = await updateGeo(airtableResponse);
+  //   expect(response).toBeTruthy();
+  //   expect(request.patch.mock.calls).toHaveLength(4);
+  //   request.patch.mockClear();
+  // });
   it('returns 0 when called with an empty array', async () => {
     const response = await updateGeo([]);
     expect(response).toBe(0);

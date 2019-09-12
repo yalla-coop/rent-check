@@ -2,7 +2,7 @@ const {
   makePostcodeArray,
   makeLatLngArray,
   getGeolocation
-} = require('../../database/postcodes');
+} = require('./postcodes');
 
 // define input and expected output for makePostcodeArray
 
