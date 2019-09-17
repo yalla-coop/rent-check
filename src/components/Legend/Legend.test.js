@@ -1,11 +1,11 @@
-const { render, cleanup } = require('react-testing-library');
-import React from 'react';
-import Legend from '.';
+const { render, cleanup } = require("@testing-library/react");
+import React from "react";
+import Legend from ".";
 
 afterAll(cleanup);
 
-describe('Legend', () => {
-  it('renders without crashing', () => {
+describe("Legend", () => {
+  it("renders without crashing", () => {
     render(<Legend />);
   });
 });
