@@ -1,48 +1,48 @@
 //const request = jest.genMockFromModule('request');
 
 // require JSON data from files
-const postcodesResponse = require('./json/postcodes_geolocation_data.json');
-const postcodeGetResponse = require('./json/postcodeGetResponse.json');
-const github = require('./json/github.json');
-const airtableNoGeo = require('./json/airtable_no_geolocation.json');
-const airtableAllValidRows = require('./json/airtable_all_valid_rows.json');
-const base = process.env.AIRTABLE_BASE;
+const postcodesResponse = require("./json/postcodes_geolocation_data.json");
+const postcodeGetResponse = require("./json/postcodeGetResponse.json");
+const github = require("./json/github.json");
+const airtableNoGeo = require("./json/airtable_no_geolocation.json");
+const airtableAllValidRows = require("./json/airtable_all_valid_rows.json");
+const base = process.env.AIRTABLE_BASE || "apphdQNWTLdRQbOOg";
 
 if (!base) {
-  throw new Error('The Airtable base is not set');
+  throw new Error("The Airtable base is not set");
 } else {
-  console.log('Airtable base is set');
+  console.log("Airtable base is set");
 }
 
 const getMocks = {
-  'https://api.postcodes.io/postcodes/e83fp': postcodeGetResponse,
-  'https://api.github.com/users/arrested-developer': github,
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=no_geolocation': airtableNoGeo,
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=valid_records': airtableAllValidRows
+  "https://api.postcodes.io/postcodes/e83fp": postcodeGetResponse,
+  "https://api.github.com/users/arrested-developer": github,
+  "https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=no_geolocation": airtableNoGeo,
+  "https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=valid_records": airtableAllValidRows,
 };
 
 const postMocks = {
-  'https://api.postcodes.io/postcodes': postcodesResponse
+  "https://api.postcodes.io/postcodes": postcodesResponse,
 };
 
 const setStatus = {
-  'https://api.500.com': 500
+  "https://api.500.com": 500,
 };
 
 const setError = {
-  'https://api.error.com': 'server error',
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK/givemeanerror?':
-    'server error',
-  'https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=throw_error':
-    'server error'
+  "https://api.error.com": "server error",
+  "https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK/givemeanerror?":
+    "server error",
+  "https://api.airtable.com/v0/apphdQNWTLdRQbOOg/RENTCHECK?maxRecords=1000&pageSize=100&view=throw_error":
+    "server error",
 };
 
 const request = (options, callback) => {
-  if (options.method === 'POST') {
+  if (options.method === "POST") {
     post(options, callback);
-  } else if (options.method === 'GET') {
+  } else if (options.method === "GET") {
     get(options, callback);
-  } else if (options.method === 'PATCH') {
+  } else if (options.method === "PATCH") {
     patch(options, callback);
   }
 };
