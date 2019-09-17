@@ -30,12 +30,6 @@ describe("postcodes :: makePostCodeArray", () => {
   });
 });
 
-// describe('postcodes :: POST request', () => {
-//   it('returns an array of 3 items', () => {
-//     getGeolocation(postcodeArray).then(res => expect(res.length).toBe(3));
-//   });
-// });
-
 // define input and output for makeLatLng, including 'invalid' geolocation results
 const geolocationInput = [
   {
