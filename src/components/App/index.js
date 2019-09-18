@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import Landing from "../Landing";
 import Header from "../Header";
 import Map from "../Map";
@@ -8,6 +9,8 @@ import {
   ModalContainer,
   ModalOverlay
 } from "./App.styles";
+
+import Nav from "./../Common/Nav";
 
 import "antd/dist/antd.css";
 
@@ -129,10 +132,11 @@ class App extends Component {
       <ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
     );
     return (
-      <React.Fragment>
+      <Router>
         <FullScreenContainer>
           {(!loaded || !markers) && <Landing />}
-          <Header openSearch={this.openSearch} />
+          {/* <Header openSearch={this.openSearch} /> */}
+          <Nav />
           {markers && loaded && (
             <Map
               markers={this.state.markers}
@@ -146,7 +150,7 @@ class App extends Component {
 
         {loaded && markers && !center && <ModalOverlay />}
         {loaded && markers && !center && modal}
-      </React.Fragment>
+      </Router>
     );
   }
 }
