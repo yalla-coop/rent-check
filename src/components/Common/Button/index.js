@@ -1,6 +1,6 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-// import { Spin } from "antd"
+import React from "react";
+import styled, { css } from "styled-components";
+import { Spin, Icon } from "antd";
 
 const sharedStyles = css`
   position: relative;
@@ -12,6 +12,9 @@ const sharedStyles = css`
   cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
   opacity: ${props => props.disabled && !props.loading && 0.3};
   font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover::after {
     content: "";
@@ -33,24 +36,24 @@ const sharedStyles = css`
     background: rgba(84, 84, 85, 0.4);
     box-shadow: none;
   }
-`
+`;
 
 export const roundStyles = css`
-  height: ${props => props.height || "35px"};
-  width: ${props => props.width || "158px"};
-  border-radius: 17.5px;
+  height: ${props => props.height || "32px"};
+  width: ${props => props.width || "160px"};
+  border-radius: 16px;
   &::after {
-    border-radius: 17.5px;
+    border-radius: 16px;
   }
 `;
 
 export const primaryStyles = css`
-  background-color: #386A9B;
-  color: ${colors.white};
+  background-color: ${({ bg }) => (bg ? bg : "#386A9B")};
+  color: ${({ color }) => (color ? color : "white")};
 `;
 
 export const negativeStyles = css`
-  background: red;
+  background: firebrick;
   color: white;
 `;
 
@@ -58,16 +61,30 @@ const StyledButton = styled.button`
   ${sharedStyles};
   ${props => props.type === "primary" && roundStyles}
   ${props => props.type === "primary" && primaryStyles}
-  ${props => props.type === "negative" && roundStyles }
+  ${props => props.type === "negative" && roundStyles}
   ${props => props.type === "negative" && negativeStyles}
-`
+`;
 
-const Button = ({ text, diabled, loading, type }) => {
+export const ButtonSpinner = () => {
+  // antd spinner for if the button request is loading
+  const antIcon = (
+    <Icon type="loading" style={{ fontSize: 16, color: "white" }} spin />
+  );
+  return <Spin indicator={antIcon} style={{ marginRight: ".5rem" }} />;
+};
+
+const Button = ({ text, disabled, loading, type, ...props }) => {
   return (
-    <StyledButton aria-label={text} {...props} disabled={diabled || loading}>
-      {label}
+    <StyledButton
+      aria-label={text}
+      type={type}
+      disabled={disabled || loading}
+      {...props}
+    >
+      {loading && <ButtonSpinner />}
+      {text}
     </StyledButton>
-  )
-}
+  );
+};
 
 export default Button;

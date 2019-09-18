@@ -6,8 +6,11 @@ import PostcodeForm from "../PostcodeForm";
 import {
   FullScreenContainer,
   ModalContainer,
-  ModalOverlay,
+  ModalOverlay
 } from "./App.styles";
+
+import "antd/dist/antd.css";
+
 import "./tachyons.css";
 
 class App extends Component {
@@ -17,7 +20,7 @@ class App extends Component {
     searchInput: "",
     center: [51.527329, -0.0554895],
     showFormWarning: false,
-    legend: false,
+    legend: false
   };
 
   defaultLocation = [51.527329, -0.0554895];
@@ -81,12 +84,12 @@ class App extends Component {
     if (res.status === 404) {
       return this.setState({
         showFormWarning: "Please enter a valid postcode",
-        center: false,
+        center: false
       });
     }
     const location = [
       Object.values(res.result)[7],
-      Object.values(res.result)[6],
+      Object.values(res.result)[6]
     ];
     return this.setState({ showFormWarning: false, center: location });
   };
