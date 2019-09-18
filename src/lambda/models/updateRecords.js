@@ -1,9 +1,10 @@
-const Airtable = require('airtable');
-const {
-  makePostcodeArray,
+import Airtable from 'airtable';
+
+import {
+  makeLatLngArray,
   getGeolocation,
-  makeLatLngArray
-} = require('./postcodes');
+  makePostcodeArray,
+} from './postcodes';
 
 /* istanbul ignore next */
 const apiKey = process.env.AIRTABLE_API_KEY
@@ -14,7 +15,7 @@ const apiKey = process.env.AIRTABLE_API_KEY
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey
+  apiKey,
 });
 const base = Airtable.base(process.env.AIRTABLE_BASE);
 
@@ -27,7 +28,7 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 // updateAirtable - updates one row in Airtable, takes id and object of fields to update
 // updateMany - takes array of multiple records to update
 
-const updateGeo = airtableResponse =>
+export const updateGeo = airtableResponse =>
   new Promise((resolve, reject) => {
     if (airtableResponse.length === 0) {
       resolve(0);
@@ -46,21 +47,21 @@ const updateGeo = airtableResponse =>
     }
   });
 
-const joinWithIDs = (airtableResponse, postcodeResponse) =>
+export const joinWithIDs = (airtableResponse, postcodeResponse) =>
   new Promise((resolve, reject) => {
-    let updateArray = [];
+    const updateArray = [];
     for (let i = 0; i < airtableResponse.length; i++) {
       updateArray[i] = {
         id: airtableResponse[i].id,
         fields: {
-          geolocation: JSON.stringify(postcodeResponse[i])
-        }
+          geolocation: JSON.stringify(postcodeResponse[i]),
+        },
       };
     }
     resolve(updateArray);
   });
 
-const updateAirtable = (id, fields) =>
+export const updateAirtable = (id, fields) =>
   new Promise((resolve, reject) => {
     base('RENTCHECK').update(id, fields, function(err, record) {
       if (err) {
@@ -71,15 +72,8 @@ const updateAirtable = (id, fields) =>
     });
   });
 
-const updateMany = array =>
+export const updateMany = array =>
   new Promise((resolve, reject) => {
     array.forEach(async row => await updateAirtable(row.id, row.fields));
     resolve(true);
   });
-
-module.exports = {
-  updateGeo,
-  joinWithIDs,
-  updateAirtable,
-  updateMany
-};
