@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Landing from "../Landing";
+import Loading from "../Loading";
 import Header from "../Header";
 import Map from "../Map";
 import PostcodeForm from "../PostcodeForm";
@@ -7,10 +7,10 @@ import {
   FullScreenContainer,
   ModalContainer,
   ModalOverlay,
-} from "./App.styles";
-import "./tachyons.css";
+} from "./MapInterface.style";
 
-class App extends Component {
+
+class MapInterface extends Component {
   state = {
     markers: false,
     loaded: false,
@@ -128,7 +128,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <FullScreenContainer>
-          {(!loaded || !markers) && <Landing />}
+          {(!loaded || !markers) && <Loading />}
           <Header openSearch={this.openSearch} />
           {markers && loaded && (
             <Map
@@ -148,4 +148,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default MapInterface;
