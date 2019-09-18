@@ -3,6 +3,7 @@ import Landing from "../Landing";
 import Header from "../Header";
 import Map from "../Map";
 import PostcodeForm from "../PostcodeForm";
+import Admin from '../Admin'
 import {
   FullScreenContainer,
   ModalContainer,
@@ -127,8 +128,9 @@ class App extends Component {
     );
     return (
       <React.Fragment>
-        <FullScreenContainer>
-          {(!loaded || !markers) && <Landing />}
+         <Admin />
+          {/* <FullScreenContainer>
+        {(!loaded || !markers) && <Landing />}
           <Header openSearch={this.openSearch} />
           {markers && loaded && (
             <Map
@@ -140,9 +142,8 @@ class App extends Component {
             />
           )}
         </FullScreenContainer>
-
-        {loaded && markers && !center && <ModalOverlay />}
-        {loaded && markers && !center && modal}
+     {loaded && markers && !center && <ModalOverlay />}
+        {loaded && markers && !center && modal} */}
       </React.Fragment>
     );
   }

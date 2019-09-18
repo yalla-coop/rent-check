@@ -1,0 +1,1 @@
+// this acts as the index file of our components and feds into App.js
