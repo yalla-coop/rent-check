@@ -21,7 +21,9 @@
     "styled-components": "^4.3.2"
   },
   "scripts": {
-    "start:client": "react-scripts start",
+    "wait:lambda": "wait-on http://localhost:9000/.netlify/functions/getLocations",
+    "dev-server": "react-scripts start",
+    "start:client": "run-s wait:lambda dev-server",
     "start": "run-p start:**",
     "start:lambda": "netlify-lambda serve src/lambda",
     "build": "run-p build:**",
