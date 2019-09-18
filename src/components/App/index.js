@@ -8,7 +8,7 @@ import {
   ModalContainer,
   ModalOverlay,
 } from "./App.styles";
-import "../tachyons.css";
+import "./tachyons.css";
 
 class App extends Component {
   state = {
@@ -130,16 +130,15 @@ class App extends Component {
         <FullScreenContainer>
           {(!loaded || !markers) && <Landing />}
           <Header openSearch={this.openSearch} />
-          {markers &&
-            loaded && (
-              <Map
-                markers={this.state.markers}
-                center={this.state.center || this.defaultLocation}
-                useColor={this.state.useClassColor}
-                toggleLegend={this.toggleLegend}
-                legend={this.state.legend}
-              />
-            )}
+          {markers && loaded && (
+            <Map
+              markers={this.state.markers}
+              center={this.state.center || this.defaultLocation}
+              useColor={this.state.useClassColor}
+              toggleLegend={this.toggleLegend}
+              legend={this.state.legend}
+            />
+          )}
         </FullScreenContainer>
 
         {loaded && markers && !center && <ModalOverlay />}

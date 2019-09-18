@@ -1,12 +1,12 @@
-const { render, cleanup } = require('react-testing-library');
-import React from 'react';
-import PostcodeForm from '.';
+const { render, cleanup } = require("@testing-library/react");
+import React from "react";
+import PostcodeForm from ".";
 
 afterAll(cleanup);
 
-describe('PostcodeForm', () => {
-  let searchInput = '';
-  it('renders without crashing', () => {
+describe("PostcodeForm", () => {
+  let searchInput = "";
+  it("renders without crashing", () => {
     render(
       <PostcodeForm
         onSubmit={jest.fn()}
@@ -16,7 +16,7 @@ describe('PostcodeForm', () => {
       />
     );
   });
-  it('renders with a warning', () => {
+  it("renders with a warning", () => {
     render(
       <PostcodeForm
         onSubmit={jest.fn()}
