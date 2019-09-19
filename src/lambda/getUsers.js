@@ -1,5 +1,5 @@
 import connectToDatabase from './database/dbConnection';
-import User from './database/models/users';
+import User from './database/models/User';
 
 require('dotenv').config();
 
