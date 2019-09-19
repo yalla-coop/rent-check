@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import dbConnection from '../dbConnection';
 import resetDb from '../resetDb';
 import users from './users';
+import rentalData from './rentalData';
 
 require('dotenv').config();
 
@@ -10,6 +11,7 @@ const buildData = () =>
     try {
       await resetDb();
       await users();
+      await rentalData();
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('err during building the test db, try again', err);

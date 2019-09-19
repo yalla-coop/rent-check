@@ -15,11 +15,14 @@ const schema = new mongoose.Schema({
   reviewedBy: {
     type: Schema.Types.ObjectId,
     ref: 'users',
-    required: true,
   },
   status: {
     type: String,
     enum: statusEnum,
+    required: true,
+  },
+  geoLocation: {
+    type: String,
     required: true,
   },
   address: String,
@@ -49,10 +52,7 @@ const schema = new mongoose.Schema({
     enum: ['Restricted', 'Unrestricted', "Don't know"],
   },
   breakClauses: String,
-  geoLocation: {
-    type: String,
-    required: true,
-  },
+  additionalComments: String,
 });
 
 const RentalData = model('rentalData', schema);
