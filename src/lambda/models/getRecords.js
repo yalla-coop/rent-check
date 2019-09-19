@@ -1,10 +1,4 @@
-const Airtable = require('airtable');
-const {
-  makePostcodeArray,
-  getGeolocation,
-  makeLatLngArray
-} = require('./postcodes');
-
+import Airtable from 'airtable';
 // Airtable configuration:
 
 /* istanbul ignore next */
@@ -19,7 +13,7 @@ if (!apiKey || !process.env.AIRTABLE_BASE)
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey
+  apiKey,
 });
 const base = Airtable.base(process.env.AIRTABLE_BASE);
 
@@ -31,13 +25,13 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 // requestRows - takes 2 arguments - airtable view and callback to be performed on
 //               each record.Returns an array of objects
 
-const getNoGeo = () =>
+export const getNoGeo = () =>
   new Promise((resolve, reject) => {
     requestRows('no_geolocation', (array, record) => {
-      //if (record.fields.postcode != null) {
+      // if (record.fields.postcode != null) {
       const postcodeIdObj = {
         id: record.id,
-        postcode: record.fields.postcode
+        postcode: record.fields.postcode,
       };
       array.push(postcodeIdObj);
       // }
@@ -50,8 +44,8 @@ const isValidRow = ({
     price_sqft,
     use_class,
     date_of_last_rent_review,
-    geolocation
-  }
+    geolocation,
+  },
 }) => {
   if (
     postcode &&
@@ -66,7 +60,7 @@ const isValidRow = ({
   return false;
 };
 
-const getAllValidRows = () =>
+export const getAllValidRows = () =>
   new Promise((resolve, reject) => {
     requestRows('valid_records', (array, record) => {
       if (isValidRow(record)) {
@@ -75,14 +69,14 @@ const getAllValidRows = () =>
     }).then(resolve);
   });
 
-const requestRows = (view, cb) =>
+export const requestRows = (view, cb) =>
   new Promise((resolve, reject) => {
     const outputArray = [];
     base('RENTCHECK')
       .select({
         maxRecords: 1000,
         pageSize: 100,
-        view
+        view,
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -99,9 +93,3 @@ const requestRows = (view, cb) =>
         }
       );
   });
-
-module.exports = {
-  getNoGeo,
-  getAllValidRows,
-  requestRows
-};
