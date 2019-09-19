@@ -1,5 +1,5 @@
-import RentalData from '../models/RentalData';
-import User from '../models/User';
+import RentalData from '../models/rentalData';
+import User from '../models/users';
 
 // import constants
 import { status } from '../../../constants/rentalData';

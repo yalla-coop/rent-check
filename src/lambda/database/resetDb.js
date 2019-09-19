@@ -1,5 +1,5 @@
-import User from './models/User';
-import RentalData from './models/RentalData';
+import User from './models/users';
+import RentalData from './models/rentalData';
 
 const resetDB = async () => {
   try {
