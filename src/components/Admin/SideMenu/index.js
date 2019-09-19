@@ -1,12 +1,15 @@
+// creates Drawer Menu
 import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
+// styles
 import { SideMenuWrapper, StyledButton as Button } from './SideMenu.style';
 
+// menu structure
 import { menuElements } from '../../../constants/adminRoutes';
 
-const {SubMenu} = Menu;
+const { SubMenu } = Menu;
 
 const rootSubmenuKeys = menuElements.reduce((accu, current) => {
   if (current.items) {
@@ -22,8 +25,9 @@ export default class SideMenu extends Component {
   };
 
   componentDidMount() {
+    const { menuSizeObserver } = this.props;
     const resizeObserver = new ResizeObserver(entries => {
-      this.props.menuSizeObserver(entries[0].contentRect.width);
+      menuSizeObserver(entries[0].contentRect.width);
     });
     resizeObserver.observe(document.querySelector('#watcher'));
   }
@@ -49,24 +53,23 @@ export default class SideMenu extends Component {
   };
 
   render() {
+    // should eventually be changed to props.location
     const { pathname } = window.location;
-
+    const { collapsed, openKeys } = this.state;
     return (
       <SideMenuWrapper>
         <Button type="primary" onClick={this.toggleCollapsed}>
-          <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+          <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
         </Button>
         <Menu
           defaultSelectedKeys={['/']}
           defaultOpenKeys={[menuElements[0].title]}
           mode="inline"
           theme="light"
-          inlineCollapsed={this.state.collapsed}
+          inlineCollapsed={collapsed}
           onOpenChange={this.onOpenChange}
           openKeys={
-            this.state.openKeys || [
-              '/' + pathname.split('/admin')[1].split('/')[1]
-            ]
+            openKeys || [`/${pathname.split('/admin')[1].split('/')[1]}`]
           }
         >
           {menuElements.map(element =>

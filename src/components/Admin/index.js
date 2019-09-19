@@ -1,18 +1,23 @@
+// Router Component for admin routes
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch } from 'react-router-dom';
 
+// Components
 import SideMenu from './SideMenu/index';
-import Users from "./Users";
-import RentalData from "./RentalData";
+import Users from './Users';
+import RentalData from './RentalData';
 
-import { routes } from "./../../constants/adminRoutes";
-import { ContentWrapper, AdminWrapper } from "./Admin.style";
+// Styles
+import { ContentWrapper, AdminWrapper } from './Admin.style';
+
+// Routes
+import { routes } from '../../constants/adminRoutes';
 
 const { USERS, RENTAL_DATA } = routes;
 
 export default class Admin extends Component {
   state = {
-    menuWidth: 0
+    menuWidth: 0,
   };
 
   menuSizeObserver = width => {
@@ -20,21 +25,21 @@ export default class Admin extends Component {
   };
 
   render() {
+    const { menuWidth } = this.state;
+
     return (
       <AdminWrapper>
-       <SideMenu menuSizeObserver={this.menuSizeObserver}  />
-       <ContentWrapper marginLeft={`${Math.ceil(this.state.menuWidth)}`}>
+        <SideMenu menuSizeObserver={this.menuSizeObserver} />
+        <ContentWrapper marginLeft={`${Math.ceil(menuWidth)}`}>
           <Switch>
+            <Route path={USERS} render={props => <Users {...props} />} />
             <Route
-             path={USERS}
-             render={props => <Users {...props} />} />
-            <Route
-             path={RENTAL_DATA}
-             render={props => <RentalData {...props} />} />
+              path={RENTAL_DATA}
+              render={props => <RentalData {...props} />}
+            />
           </Switch>
         </ContentWrapper>
       </AdminWrapper>
-    )
+    );
   }
 }
-

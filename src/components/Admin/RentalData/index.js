@@ -1,9 +1,15 @@
+// Router for Rental Data
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+
+// Components
 import Table from '../Table';
 
+// Table props
 import rentalDataColumns from './rentalDataColumns';
+import { dataSource } from './dummyData';
 
+// routes
 import { routes } from '../../../constants/adminRoutes';
 
 const { RENTAL_DATA_ALL } = routes;
@@ -15,7 +21,13 @@ export default class RentalData extends Component {
         <Route
           exact
           path={RENTAL_DATA_ALL}
-          render={props => <AllRentalData {...props} />}
+          render={props => (
+            <Table
+              columns={rentalDataColumns}
+              dataSource={dataSource}
+              {...props}
+            />
+          )}
         />
       </Switch>
     );

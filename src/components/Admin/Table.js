@@ -1,4 +1,5 @@
-// creates Table for Users and Rental Data
+// creates Tables for Users and Rental Data
+// gets fed data source and column files as props
 import React, { Component } from 'react';
 import { Table, Input, Icon, Button } from 'antd';
 

@@ -1,74 +1,73 @@
-import React from "react";
-import Highlighter from "react-highlight-words";
+// sets columns for user table
 
-export default ({
-  getColumnSearchProps,
-  searchText
-}) => {
+import React from 'react';
+import Highlighter from 'react-highlight-words';
+
+export default ({ getColumnSearchProps, searchText }) => {
   const tableColumns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
       render: text => (
-        <span style={{ fontWeight: "700" }}>
+        <span style={{ fontWeight: '700' }}>
           <Highlighter
-            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[searchText]}
             autoEscape
             textToHighlight={text.toString()}
           />
         </span>
       ),
-      ...getColumnSearchProps("name")
+      ...getColumnSearchProps('name'),
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
       render: text => (
         <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
           searchWords={[searchText]}
           autoEscape
           textToHighlight={text.toString()}
         />
       ),
-      ...getColumnSearchProps("email")
+      ...getColumnSearchProps('email'),
     },
     {
-      title: "Level",
-      dataIndex: "level",
-      key: "level",
+      title: 'Level',
+      dataIndex: 'level',
+      key: 'level',
       render: text => (
-        <span style={{ fontWeight: "700" }}>
+        <span style={{ fontWeight: '700' }}>
           <Highlighter
-            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[searchText]}
             autoEscape
             textToHighlight={text.toString()}
           />
         </span>
       ),
-      ...getColumnSearchProps("level")
+      ...getColumnSearchProps('level'),
     },
     {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
+      title: 'Actions',
+      dataIndex: 'actions',
+      key: 'actions',
       render: text => (
-        <span style={{ fontWeight: "700" }}>
+        <span style={{ fontWeight: '700' }}>
           <Highlighter
-            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[searchText]}
             autoEscape
             textToHighlight={text.toString()}
           />
         </span>
       ),
-      ...getColumnSearchProps("actions")
+      ...getColumnSearchProps('actions'),
     },
   ];
 
   return tableColumns;
-}
+};
