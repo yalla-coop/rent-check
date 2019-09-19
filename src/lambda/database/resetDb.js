@@ -1,4 +1,4 @@
-import User from './models/users';
+import User from './models/User';
 
 const resetDB = async () => {
   try {

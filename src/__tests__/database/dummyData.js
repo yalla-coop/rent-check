@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import User from '../../lambda/database/models/users';
+import User from '../../lambda/database/models/User';
 import buildData from '../../lambda/database/data/index';
 
 describe('Test dummy data for schemas', () => {
