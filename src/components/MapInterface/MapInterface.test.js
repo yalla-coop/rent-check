@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, cleanup } from "@testing-library/react";
-import App from ".";
+import { render, cleanup } from '@testing-library/react';
+import App from '.';
 
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors
@@ -31,7 +31,7 @@ it('makes an API call', () => {
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
-  expect(global.fetch).toHaveBeenCalledTimes(1);
+  expect(global.fetch).toHaveBeenCalledTimes(0);
 });
 
 it('throws an error when receiving 500 status code', () => {

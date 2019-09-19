@@ -1,4 +1,4 @@
-const xhr = require('axios');
+import axios from 'axios';
 
 // Postcodes :: Contents
 // makePostcodeArray - takes an array of objects from airtable response and returns
@@ -9,24 +9,23 @@ const xhr = require('axios');
 //                   lat and lng for each entry in the response. Where the input was not resolved
 //                   to valid geolocation data, the string 'invalid' will be used instead.
 
-const makePostcodeArray = inputArray => inputArray.map(entry => entry.postcode);
+export const makePostcodeArray = inputArray =>
+  inputArray.map(entry => entry.postcode);
 
-const getGeolocation = postcodeArray =>
+export const getGeolocation = postcodeArray =>
   new Promise((resolve, reject) => {
-    xhr
+    axios
       .post('https://api.postcodes.io/postcodes', {
-        postcodes: postcodeArray.slice(0, 100)
+        postcodes: postcodeArray.slice(0, 100),
       })
       .then(body => resolve(body.result));
   });
 
-const makeLatLngArray = inputArray => {
+export const makeLatLngArray = inputArray => {
   return inputArray.map(entry => {
     if (entry.result != null) {
       return [entry.result.latitude, entry.result.longitude];
-    } else {
-      return 'invalid';
     }
+    return 'invalid';
   });
 };
-module.exports = { makePostcodeArray, getGeolocation, makeLatLngArray };

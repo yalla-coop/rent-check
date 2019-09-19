@@ -1,20 +1,21 @@
-import React, { Component } from "react";
-import Loading from "../Loading";
-import Header from "../Header";
-import Map from "../Map";
-import PostcodeForm from "../PostcodeForm";
+import React, { Component } from 'react';
+import axios from 'axios';
+import Loading from '../Loading';
+import Header from '../Header';
+import Map from '../Map';
+import PostcodeForm from '../PostcodeForm';
 import {
   FullScreenContainer,
   ModalContainer,
   ModalOverlay,
-} from "./MapInterface.style";
+} from './MapInterface.style';
 
 
 class MapInterface extends Component {
   state = {
     markers: false,
     loaded: false,
-    searchInput: "",
+    searchInput: '',
     center: [51.527329, -0.0554895],
     showFormWarning: false,
     legend: false,
@@ -23,26 +24,22 @@ class MapInterface extends Component {
   defaultLocation = [51.527329, -0.0554895];
 
   componentDidMount() {
-    //this.showLoadingScreen();
+    // this.showLoadingScreen();
     this.callApi().catch(err => console.log(err));
   }
 
   // api call made to backend to fetch airtable object
   callApi = async () => {
     this.calledTimes = 0;
-    const response = await fetch("/.netlify/functions/getLocations");
-    const body = await response.json();
-    if (response.status !== 200) console.error(body.message);
-    // if no results received, try again (make max 3 calls)
-    if (body.length > 0) {
-      this.setState({ markers: body, loaded: true });
+    const { data } = await axios('/.netlify/functions/getLocations');
+    if (data.length > 0) {
+      this.setState({ markers: data, loaded: true });
     } else if (this.calledTimes < 2) {
       setTimeout(this.callApi, 5000);
     }
   };
 
   // FORM FUNCTIONS
-
   openSearch = () => {
     this.setState({ center: false });
   };
@@ -53,19 +50,19 @@ class MapInterface extends Component {
 
   // handle input value in postcode field and update state
   handleChange = event => {
-    const value = event.target.value;
+    const { value } = event.target;
     this.setState({ searchInput: value, showFormWarning: false });
   };
 
   // grab postcode and make api call to postcodesIo to get lat Long
   handleSubmit = event => {
+    const { searchInput } = this.state;
     event.preventDefault();
-    const postcode = this.state.searchInput;
+    const postcode = searchInput;
     if (postcode.length === 0) {
-      return this.setState({ showFormWarning: "Please enter a postcode" });
-    } else {
-      this.apiCallGeo(postcode);
+      return this.setState({ showFormWarning: 'Please enter a postcode' });
     }
+    this.apiCallGeo(postcode);
   };
 
   apiCallGeo = postcode => {
@@ -80,7 +77,7 @@ class MapInterface extends Component {
   checkResponse = res => {
     if (res.status === 404) {
       return this.setState({
-        showFormWarning: "Please enter a valid postcode",
+        showFormWarning: 'Please enter a valid postcode',
         center: false,
       });
     }
@@ -91,7 +88,7 @@ class MapInterface extends Component {
     return this.setState({ showFormWarning: false, center: location });
   };
 
-  //function to either render form or map
+  // function to either render form or map
   // if the center is default then render form to put in postcode
   showPostcodeSearch = arr => {
     if (this.state.center === false) {

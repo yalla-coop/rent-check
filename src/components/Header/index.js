@@ -5,8 +5,9 @@ import {
   HeaderLink,
   HeaderTitle,
   BoldPink,
-  HeaderLogo
+  HeaderLogo,
 } from './Header.styles';
+
 export default props => (
   <MyHeader>
     <HeaderLink href="/">

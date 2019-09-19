@@ -1,10 +1,4 @@
-const Airtable = require('airtable');
-const {
-  makePostcodeArray,
-  getGeolocation,
-  makeLatLngArray,
-} = require('./postcodes');
-
+import Airtable from 'airtable';
 // Airtable configuration:
 
 /* istanbul ignore next */
@@ -31,7 +25,7 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 // requestRows - takes 2 arguments - airtable view and callback to be performed on
 //               each record.Returns an array of objects
 
-const getNoGeo = () =>
+export const getNoGeo = () =>
   new Promise((resolve, reject) => {
     requestRows('no_geolocation', (array, record) => {
       // if (record.fields.postcode != null) {
@@ -66,7 +60,7 @@ const isValidRow = ({
   return false;
 };
 
-const getAllValidRows = () =>
+export const getAllValidRows = () =>
   new Promise((resolve, reject) => {
     requestRows('valid_records', (array, record) => {
       if (isValidRow(record)) {
@@ -75,7 +69,7 @@ const getAllValidRows = () =>
     }).then(resolve);
   });
 
-const requestRows = (view, cb) =>
+export const requestRows = (view, cb) =>
   new Promise((resolve, reject) => {
     const outputArray = [];
     base('RENTCHECK')
@@ -99,9 +93,3 @@ const requestRows = (view, cb) =>
         }
       );
   });
-
-module.exports = {
-  getNoGeo,
-  getAllValidRows,
-  requestRows,
-};

@@ -1,3 +1,4 @@
+import L from 'leaflet';
 import React from './node_modules/react';
 import ReactDOMServer from './node_modules/react-dom/server';
 import {
@@ -5,18 +6,17 @@ import {
   Marker,
   Popup,
   TileLayer,
-  Tooltip
+  Tooltip,
 } from './node_modules/react-leaflet';
 import MarkerClusterGroup from './node_modules/react-leaflet-markercluster';
 import MapLegend from '../Legend';
 import Icon from '../MarkerIcon';
-import L from 'leaflet';
 import {
   PopupInfo,
   PopupLabel,
   CenteredSection,
   Pill,
-  Button
+  Button,
 } from './map.styles';
 // import styled from "styled-components";
 import './Map.css';
@@ -42,7 +42,7 @@ type Props = {|
   landlord_name: string,
   additional_comments: string,
   landlord_tenants_act: string,
-  service_charge: number
+  service_charge: number,
 |};
 
 type MarkerData = {| ...Props, key: string |};
@@ -52,19 +52,23 @@ export function formatDate(input) {
   if (input === undefined) {
     return input;
   }
-  var datePart = input.match(/\d+/g),
-    year = datePart[0].substring(2), // get only two digits
-    month = datePart[1],
-    day = datePart[2];
+  const datePart = input.match(/\d+/g);
 
-  return day + '/' + month + '/' + year;
+  const year = datePart[0].substring(2);
+  // get only two digits
+
+  const month = datePart[1];
+
+  const day = datePart[2];
+
+  return `${day}/${month}/${year}`;
 }
 //
 
 const iconSelect = useClass =>
   L.divIcon({
     className: 'custom-icon',
-    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />)
+    html: ReactDOMServer.renderToString(<Icon useClass={useClass} />),
   });
 
 const MarkerWithPopup = ({
@@ -85,17 +89,12 @@ const MarkerWithPopup = ({
   landlord_name,
   additional_comments,
   landlord_tenants_act,
-  service_charge
+  service_charge,
 }: Props) => {
   const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   return (
     <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
-      <Popup
-        offset={[33, 15]}
-        keepInView={true}
-        maxHeight={300}
-        className={'popup'}
-      >
+      <Popup offset={[33, 15]} keepInView maxHeight={300} className="popup">
         <div className="pa0 avenir f5 tl mw5">
           {(address || postcode) && <PopupLabel>Address:</PopupLabel>}
           <PopupInfo>
@@ -159,8 +158,8 @@ const MarkerWithPopup = ({
             </PopupInfo>
 
             <Button
-              href={'https://airtable.com/shrE0QRpUy9UH8Bor'}
-              target={'_blank'}
+              href="https://airtable.com/shrE0QRpUy9UH8Bor"
+              target="_blank"
             >
               Add my data
             </Button>
@@ -192,7 +191,7 @@ const createClusterCustomIcon = function(cluster) {
   return L.divIcon({
     html: `<span>${cluster.getChildCount()}</span>`,
     className: 'f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b',
-    iconSize: L.point(40, 40, true)
+    iconSize: L.point(40, 40, true),
   });
 };
 
@@ -203,10 +202,10 @@ export default props => {
       center={props.center}
       zoom={13}
       maxZoom={18}
-      preferCanvas={true}
+      preferCanvas
     >
       <TileLayer
-        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MarkerClusterGroup
