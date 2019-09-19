@@ -7,7 +7,6 @@ require('dotenv').config();
 const { getNoGeo, getAllValidRows } = require('./models/getRecords');
 const { updateGeo } = require('./models/updateRecords');
 
-// exports.handler = async (event, context) => {
 export async function handler(event, context) {
   try {
     const rowsWithNoGeolocation = await getNoGeo();
@@ -18,14 +17,14 @@ export async function handler(event, context) {
       body: JSON.stringify(locations),
     };
   } catch (err) {
-    console.log(err); // output to netlify function log
     return {
       statusCode: 500,
-      body: JSON.stringify({ msg: err.message }), // Could be a custom message or object i.e. JSON.stringify(err)
+      body: JSON.stringify({ msg: err.message }),
     };
   }
 }
 
+// uncomment this and change the function name to protect the route
 // const handler = middy(getLocations).use(authMiddleware());
 
 // export { handler };

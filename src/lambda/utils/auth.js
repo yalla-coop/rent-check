@@ -1,12 +1,14 @@
+// https://github.com/DavidWells/serverless-auth-strategies
+
 import jwt from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 
-// TODO: this needs cleaning just keeping it for now
-
-/* initialize the JWKS client */
-const auth0Domain = process.env.AUTH0_DOMAIN;
-const auth0Audience = process.env.AUTH0_AUDIENCE;
-const auth0Issuer = process.env.AUTH0_ISSUER;
+// initialize the JWKS client */
+const {
+  AUTH0_DOMAIN: auth0Domain,
+  AUTH0_AUDIENCE: auth0Audience,
+  AUTH0_ISSUER: auth0Issuer,
+} = process.env;
 
 const authClient = jwksClient({
   cache: true,
@@ -26,7 +28,6 @@ function checkAuth(event) {
         'Missing event.headers.authorization. You must be signed in to call this function';
       return reject(new Error(reason));
     }
-    console.log('event.headers', event.headers);
     // remove "bearer " word from token
     const authToken = authHeader.substring(7);
 
@@ -35,7 +36,6 @@ function checkAuth(event) {
     try {
       decodedToken = jwt.decode(authToken, { complete: true });
     } catch (err) {
-      console.log(err);
       return reject(new Error('JWT token is malformed'));
     }
 
@@ -44,7 +44,6 @@ function checkAuth(event) {
     }
 
     const { kid } = decodedToken.header;
-    // console.log('kid', kid)
     // Get Signing key from auth0
     authClient.getSigningKey(kid, (signError, key) => {
       if (signError) {
@@ -62,11 +61,6 @@ function checkAuth(event) {
             console.log('Token signature NOT VERIFIED', verifyError);
             return reject(new Error('Token signature NOT VERIFIED'));
           }
-          // output for logs
-          console.log('------------------');
-          console.log('decoded jwt token');
-          console.log(decoded);
-          console.log('------------------');
 
           /* if you want to allow only verified emails use this
           if (!decoded.email_verified) {
@@ -85,12 +79,9 @@ function checkAuth(event) {
             return reject(`Missing role ${requiredRole}`)
           }
           /* */
-
-          // Everything is ok!
           return resolve(decoded);
         });
       } catch (err) {
-        console.log('jwt.verify exception', err);
         return reject(err);
       }
     });
