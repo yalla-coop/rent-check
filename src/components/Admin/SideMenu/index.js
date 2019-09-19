@@ -21,9 +21,18 @@ export default class SideMenu extends Component {
     openKeys: [],
   }
 
+
+  componentDidMount() {
+    const resizeObserver = new ResizeObserver(entries => {
+      this.props.menuSizeObserver(entries[0].contentRect.width);
+    });
+    resizeObserver.observe(document.querySelector("#watcher"));
+  }
+
   toggleCollapsed = () => {
+    const {collapsed} = this.state
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed: !collapsed
     });
   };
 
@@ -40,12 +49,6 @@ export default class SideMenu extends Component {
     }
   };
 
-  componentDidMount() {
-    const resizeObserver = new ResizeObserver(entries => {
-      this.props.menuSizeObserver(entries[0].contentRect.width);
-    });
-    resizeObserver.observe(document.querySelector("#watcher"));
-  }
 
   render() {
 
