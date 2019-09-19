@@ -6,7 +6,6 @@ import logo from "../../../assets/logo.png";
 // NAV URLS
 import {
   LANDING_URL,
-  SIGNUP_URL,
   MAP_URL,
   ADD_RENTAL_URL,
   ACCOUNT_URL,
@@ -29,11 +28,11 @@ export default class Nav extends Component {
     const { menuOpen } = this.state;
 
     // this may need to change once we set up auth and what props to send through
-    const { role } = this.props;
+    const { role, openSearch } = this.props;
 
     return (
       <S.Header>
-        <NavLink to="/">
+        <NavLink to={LANDING_URL}>
           <S.Img src={logo} alt="East End Trades Guild logo" />
         </NavLink>
         <S.HeaderTitle>
@@ -53,24 +52,33 @@ export default class Nav extends Component {
         {menuOpen && (
           <S.Menu>
             <S.MenuLink
-              to="/"
-              onClick={() => {
-                this.toggleMenu();
-              }}
-            >
-              Add Rental Data
-            </S.MenuLink>
-            <S.MenuLink
-              to="/"
+              to={MAP_URL}
               onClick={() => {
                 this.toggleMenu();
               }}
             >
               Rental Map
             </S.MenuLink>
-            {loggedIn && role !== "standard" && (
+            <S.MenuLink
+              to={MAP_URL}
+              onClick={() => {
+                this.toggleMenu();
+                openSearch();
+              }}
+            >
+              Search Postcode
+            </S.MenuLink>
+            <S.MenuLink
+              to={ADD_RENTAL_URL}
+              onClick={() => {
+                this.toggleMenu();
+              }}
+            >
+              Add Rental Data
+            </S.MenuLink>
+            {role !== "standard" && (
               <S.MenuLink
-                to="/"
+                to={CONTROL_PANEL_URL}
                 onClick={() => {
                   this.toggleMenu();
                 }}
@@ -79,15 +87,16 @@ export default class Nav extends Component {
               </S.MenuLink>
             )}
             <S.MenuLink
-              to="/"
+              to={ACCOUNT_URL}
               onClick={() => {
                 this.toggleMenu();
               }}
             >
               My Account
             </S.MenuLink>
+            {/* THIS WILL NEED TO CLEAR COOKIE */}
             <S.MenuLink
-              to="/"
+              to={LANDING_URL}
               onClick={() => {
                 this.toggleMenu();
               }}
