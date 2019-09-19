@@ -136,7 +136,7 @@ class App extends Component {
         <FullScreenContainer>
           {(!loaded || !markers) && <Landing />}
           {/* <Header openSearch={this.openSearch} /> */}
-          <Nav />
+          <Nav loggedIn />
           {markers && loaded && (
             <Map
               markers={this.state.markers}

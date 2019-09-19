@@ -20,6 +20,9 @@ export default class Nav extends Component {
   render() {
     const { menuOpen } = this.state;
 
+    // this may need to change once we set up auth and what props to send through
+    const { role, loggedIn } = this.props;
+
     return (
       <S.Header>
         <NavLink to="/">
@@ -57,6 +60,16 @@ export default class Nav extends Component {
             >
               Rental Map
             </S.MenuLink>
+            {loggedIn && role !== "standard" && (
+              <S.MenuLink
+                to="/"
+                onClick={() => {
+                  this.toggleMenu();
+                }}
+              >
+                Control Panel
+              </S.MenuLink>
+            )}
             <S.MenuLink
               to="/"
               onClick={() => {
