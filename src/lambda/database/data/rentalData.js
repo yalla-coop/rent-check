@@ -1,4 +1,4 @@
-import RentalData from '../models/rentalData';
+import RentalData from '../models/RentalData';
 import User from '../models/users';
 
 // import constants

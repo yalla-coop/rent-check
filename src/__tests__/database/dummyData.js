@@ -1,5 +1,5 @@
 import User from '../../lambda/database/models/users';
-import RentalData from '../../lambda/database/models/rentalData';
+import RentalData from '../../lambda/database/models/RentalData';
 import buildData from '../../lambda/database/data/index';
 
 describe('Test dummy data for schemas', () => {
