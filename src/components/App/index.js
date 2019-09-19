@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Landing from "../Landing";
-import Header from "../Header";
+// import Header from "../Header";
 import Map from "../Map";
 import PostcodeForm from "../PostcodeForm";
 import {
