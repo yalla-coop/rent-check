@@ -1,4 +1,4 @@
-import User from '../models/users';
+import User from '../models/User';
 
 // import constants
 import { roles, status } from '../../../constants/users';

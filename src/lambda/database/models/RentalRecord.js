@@ -1,11 +1,10 @@
 // import constants
-import { statusEnum } from '../../../constants/rentalData';
+import { statusEnum } from '../../../constants/rentalRecords';
 
 const mongoose = require('mongoose');
 
 const { Schema, model } = mongoose;
 
-// This should be rewritten with the new full schema
 const schema = new mongoose.Schema({
   submittedBy: {
     type: Schema.Types.ObjectId,
@@ -33,7 +32,7 @@ const schema = new mongoose.Schema({
   leaseLength: String,
   landlordTenantsAct: {
     type: String,
-    enum: ['Yes', 'No', "Don't Know"],
+    enum: ['Yes', 'No', 'Not sure'],
   },
   lastRentReview: Date,
   nextRentReview: Date,
@@ -52,12 +51,12 @@ const schema = new mongoose.Schema({
   },
   restricted: {
     type: String,
-    enum: ['Restricted', 'Unrestricted', "Don't know"],
+    enum: ['Restricted', 'Unrestricted', 'Not sure'],
   },
   breakClauses: String,
   additionalComments: String,
 });
 
-const RentalData = model('rentalData', schema);
+const RentalRecord = model('rentalRecords', schema);
 
-export default RentalData;
+export default RentalRecord;

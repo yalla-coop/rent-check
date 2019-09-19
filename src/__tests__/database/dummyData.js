@@ -1,5 +1,5 @@
-import User from '../../lambda/database/models/users';
-import RentalData from '../../lambda/database/models/RentalData';
+import User from '../../lambda/database/models/User';
+import RentalRecord from '../../lambda/database/models/RentalRecord';
 import buildData from '../../lambda/database/data/index';
 
 describe('Test dummy data for schemas', () => {
@@ -22,8 +22,8 @@ describe('Test dummy data for schemas', () => {
   });
 
   test('rentalData should be built successfully', async done => {
-    expect(RentalData).toBeDefined();
-    const foundRentalData = await RentalData.find();
+    expect(RentalRecord).toBeDefined();
+    const foundRentalData = await RentalRecord.find();
 
     expect(foundRentalData).toBeDefined();
     expect(foundRentalData.length).toBeGreaterThan(0);

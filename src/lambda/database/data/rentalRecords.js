@@ -1,8 +1,8 @@
-import RentalData from '../models/RentalData';
-import User from '../models/users';
+import RentalRecord from '../models/RentalRecord';
+import User from '../models/User';
 
 // import constants
-import { status } from '../../../constants/rentalData';
+import { status } from '../../../constants/rentalRecords';
 import { roles, status as userStatus } from '../../../constants/users';
 
 export default async () => {
@@ -31,7 +31,7 @@ export default async () => {
       squareFeet: 4500.0,
       priceSqFt: 13.55,
       useClass: 'B2',
-      restricted: "Don't know",
+      restricted: 'Not sure',
       breakClauses: 'Half way through the lease in 2017',
     },
     // reviewed data by admin
@@ -52,7 +52,7 @@ export default async () => {
       serviceCharge: 50,
       useClass: 'A1',
       specification: 'Refurbished',
-      restricted: "Don't know",
+      restricted: 'Not sure',
       breakClauses: '3 years',
       landlord: 'Carol Smith',
       additionalComments:
@@ -107,5 +107,5 @@ export default async () => {
     },
   ];
 
-  return RentalData.create(rentalRecords);
+  return RentalRecord.create(rentalRecords);
 };
