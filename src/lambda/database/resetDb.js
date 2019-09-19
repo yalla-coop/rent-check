@@ -1,16 +1,8 @@
-import mongoose from 'mongoose';
+import User from './models/users';
 
 const resetDB = async () => {
   try {
-    const { connection } = mongoose;
-    const collections = await connection.db
-      .listCollections({}, { nameOnly: true })
-      .toArray();
-
-    const promises = collections.map(({ name }) =>
-      connection.dropCollection(name)
-    );
-    await Promise.all(promises);
+    return User.deleteMany();
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log('Error during resting the db, try again', err);
