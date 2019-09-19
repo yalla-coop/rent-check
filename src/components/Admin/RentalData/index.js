@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import AllRentalData from './AllRentalData';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Table from '../Table';
 
-import { routes } from './../../../constants/adminRoutes';
+import rentalDataColumns from './rentalDataColumns';
 
+import { routes } from '../../../constants/adminRoutes';
 
- const { RENTAL_DATA_ALL } = routes;
+const { RENTAL_DATA_ALL } = routes;
 
 export default class RentalData extends Component {
   render() {
@@ -17,6 +18,6 @@ export default class RentalData extends Component {
           render={props => <AllRentalData {...props} />}
         />
       </Switch>
-    )
+    );
   }
 }

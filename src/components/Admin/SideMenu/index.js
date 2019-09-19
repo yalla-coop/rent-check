@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Menu, Icon } from "antd";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Menu, Icon } from 'antd';
+import { Link } from 'react-router-dom';
 
-import { SideMenuWrapper, StyledButton as Button } from "./SideMenu.style";
+import { SideMenuWrapper, StyledButton as Button } from './SideMenu.style';
 
-import { menuElements } from "../../../constants/adminRoutes";
+import { menuElements } from '../../../constants/adminRoutes';
 
-const SubMenu = Menu.SubMenu;
+const {SubMenu} = Menu;
 
 const rootSubmenuKeys = menuElements.reduce((accu, current) => {
   if (current.items) {
@@ -19,20 +19,19 @@ export default class SideMenu extends Component {
   state = {
     collapsed: false,
     openKeys: [],
-  }
-
+  };
 
   componentDidMount() {
     const resizeObserver = new ResizeObserver(entries => {
       this.props.menuSizeObserver(entries[0].contentRect.width);
     });
-    resizeObserver.observe(document.querySelector("#watcher"));
+    resizeObserver.observe(document.querySelector('#watcher'));
   }
 
   toggleCollapsed = () => {
-    const {collapsed} = this.state
+    const { collapsed } = this.state;
     this.setState({
-      collapsed: !collapsed
+      collapsed: !collapsed,
     });
   };
 
@@ -44,25 +43,21 @@ export default class SideMenu extends Component {
       this.setState({ openKeys });
     } else {
       this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : []
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
       });
     }
   };
 
   render() {
-
     const { pathname } = window.location;
 
     return (
       <SideMenuWrapper>
-        <Button
-          type="primary"
-          onClick={this.toggleCollapsed}
-        >
-          <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
+        <Button type="primary" onClick={this.toggleCollapsed}>
+          <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
         </Button>
         <Menu
-          defaultSelectedKeys={["/"]}
+          defaultSelectedKeys={['/']}
           defaultOpenKeys={[menuElements[0].title]}
           mode="inline"
           theme="light"
@@ -70,14 +65,14 @@ export default class SideMenu extends Component {
           onOpenChange={this.onOpenChange}
           openKeys={
             this.state.openKeys || [
-              "/" + pathname.split("/admin")[1].split("/")[1]
+              '/' + pathname.split('/admin')[1].split('/')[1]
             ]
           }
         >
           {menuElements.map(element =>
             element.items ? (
               <SubMenu
-                style={{ textAlign: "left" }}
+                style={{ textAlign: 'left' }}
                 key={element.route}
                 title={
                   <span>
@@ -89,7 +84,7 @@ export default class SideMenu extends Component {
                 {element.items.map(item => (
                   <Menu.Item
                     key={element.route + item.route}
-                    style={{ textAlign: "left" }}
+                    style={{ textAlign: 'left' }}
                   >
                     <Link to={`/admin${element.route + item.route}`}>
                       {/* <Icon type={item.icon} /> */}
@@ -99,7 +94,7 @@ export default class SideMenu extends Component {
                 ))}
               </SubMenu>
             ) : (
-              <Menu.Item key={element.route} style={{ textAlign: "left" }}>
+              <Menu.Item key={element.route} style={{ textAlign: 'left' }}>
                 <Link to={`/admin${element.route}`}>
                   <Icon type={element.icon} />
                   <span>{element.title}</span>
@@ -107,14 +102,14 @@ export default class SideMenu extends Component {
               </Menu.Item>
             )
           )}
-          <Menu.Item style={{ textAlign: "left" }}>
-            <Link to='/'>
-            <Icon type="home" />
+          <Menu.Item style={{ textAlign: 'left' }}>
+            <Link to="/">
+              <Icon type="home" />
               <span>Vist Website</span>
             </Link>
           </Menu.Item>
         </Menu>
-       <div id="watcher" style={{ height: "1px", width: "100%" }} />
+        <div id="watcher" style={{ height: '1px', width: '100%' }} />
       </SideMenuWrapper>
     );
   }

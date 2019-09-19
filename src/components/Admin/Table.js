@@ -1,16 +1,10 @@
-import React, { Component } from 'react'
-import { Table, Input, Icon, Button } from "antd";
-import usersCol from './UsersColumns';
+// creates Table for Users and Rental Data
+import React, { Component } from 'react';
+import { Table, Input, Icon, Button } from 'antd';
 
-// fake data
-import { dataSource } from './dummyUsers'
-
-export default class AllUsers extends Component {
- state = {
-    data: [],
-    visible: false,
-    id: "",
-    searchText: ""
+export default class TableComponent extends Component {
+  state = {
+    searchText: '',
   };
 
   getColumnSearchProps = dataIndex => ({
@@ -18,7 +12,7 @@ export default class AllUsers extends Component {
       setSelectedKeys,
       selectedKeys,
       confirm,
-      clearFilters
+      clearFilters,
     }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -31,7 +25,7 @@ export default class AllUsers extends Component {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: "block" }}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
@@ -54,7 +48,7 @@ export default class AllUsers extends Component {
     filterIcon: filtered => (
       <Icon
         type="search"
-        style={{ fontSize: "20px", color: filtered ? "#1890ff" : undefined }}
+        style={{ fontSize: '20px', color: filtered ? '#1890ff' : undefined }}
       />
     ),
     onFilter: (value, record) => {
@@ -67,7 +61,7 @@ export default class AllUsers extends Component {
       if (visible) {
         setTimeout(() => this.searchInput.select());
       }
-    }
+    },
   });
 
   handleSearch = (selectedKeys, confirm) => {
@@ -77,20 +71,23 @@ export default class AllUsers extends Component {
 
   handleReset = clearFilters => {
     clearFilters();
-    this.setState({ searchText: "" });
+    this.setState({ searchText: '' });
   };
 
   render() {
+    const { searchText } = this.state;
+    const { columns, dataSource } = this.props;
+
     return (
-    <Table
-      columns={usersCol({
-        getColumnSearchProps: this.getColumnSearchProps,
-        searchText: this.state.searchText
-      })}
-      dataSource={dataSource}
-      style={{ backgroundColor: "#ffffff" }}
-      bordered
-    />
-    )
+      <Table
+        columns={columns({
+          getColumnSearchProps: this.getColumnSearchProps,
+          searchText,
+        })}
+        dataSource={dataSource}
+        style={{ backgroundColor: '#ffffff' }}
+        bordered
+      />
+    );
   }
 }

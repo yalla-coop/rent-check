@@ -2,7 +2,7 @@ const Airtable = require('airtable');
 const {
   makePostcodeArray,
   getGeolocation,
-  makeLatLngArray
+  makeLatLngArray,
 } = require('./postcodes');
 
 // Airtable configuration:
@@ -19,7 +19,7 @@ if (!apiKey || !process.env.AIRTABLE_BASE)
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey
+  apiKey,
 });
 const base = Airtable.base(process.env.AIRTABLE_BASE);
 
@@ -34,10 +34,10 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 const getNoGeo = () =>
   new Promise((resolve, reject) => {
     requestRows('no_geolocation', (array, record) => {
-      //if (record.fields.postcode != null) {
+      // if (record.fields.postcode != null) {
       const postcodeIdObj = {
         id: record.id,
-        postcode: record.fields.postcode
+        postcode: record.fields.postcode,
       };
       array.push(postcodeIdObj);
       // }
@@ -50,8 +50,8 @@ const isValidRow = ({
     price_sqft,
     use_class,
     date_of_last_rent_review,
-    geolocation
-  }
+    geolocation,
+  },
 }) => {
   if (
     postcode &&
@@ -82,7 +82,7 @@ const requestRows = (view, cb) =>
       .select({
         maxRecords: 1000,
         pageSize: 100,
-        view
+        view,
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -103,5 +103,5 @@ const requestRows = (view, cb) =>
 module.exports = {
   getNoGeo,
   getAllValidRows,
-  requestRows
+  requestRows,
 };

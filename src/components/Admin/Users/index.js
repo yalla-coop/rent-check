@@ -1,12 +1,16 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import AllUsers from './AllUsers';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Table from '../Table';
 
-import {routes} from './../../../constants/adminRoutes'
+import usersCol from './UsersColumns';
+// fake data
+import { dataSource } from './dummyUsers';
+
+import { routes } from '../../../constants/adminRoutes';
 
 // const { USERS_ALL, USERS_VERIFY, USERS_SUPER_REQ, USERS_VERIFIED, USERS_SUPER } = routes;
 
- const { USERS_ALL } = routes;
+const { USERS_ALL } = routes;
 
 export default class Users extends Component {
   render() {
@@ -15,7 +19,9 @@ export default class Users extends Component {
         <Route
           exact
           path={USERS_ALL}
-          render={props => <AllUsers {...props} />}
+          render={props => (
+            <Table columns={usersCol} dataSource={dataSource} {...props} />
+          )}
         />
         {/* <Route
           exact
@@ -38,6 +44,6 @@ export default class Users extends Component {
           render={props => <SuperUsers {...props} />}
         /> */}
       </Switch>
-    )
+    );
   }
 }
