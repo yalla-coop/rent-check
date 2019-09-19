@@ -26,7 +26,10 @@ const schema = new mongoose.Schema({
     required: true,
   },
   address: String,
-  postcode: String,
+  postcode: {
+    type: String,
+    required: true,
+  },
   leaseLength: String,
   landlordTenantsAct: {
     type: String,
