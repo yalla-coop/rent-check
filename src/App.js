@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import Routes from './components/';
-import { BrowserRouter as Router } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from "./components";
 
-import "./tachyons.css";
-
+import './tachyons.css';
 
 export default class App extends Component {
   render() {
@@ -13,6 +12,6 @@ export default class App extends Component {
           <Routes />
         </div>
       </Router>
-    )
+    );
   }
 }

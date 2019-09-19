@@ -118,6 +118,7 @@ class MapInterface extends Component {
 
   render() {
     const { loaded, markers, center } = this.state;
+    console.log(this.props);
     const modal = (
       <ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
     );
