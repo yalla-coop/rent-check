@@ -3,3 +3,5 @@ export const status = {
   VERIFIED: 'verified',
   REJECTED: 'rejected',
 };
+
+export const statusEnum = Object.values(status);

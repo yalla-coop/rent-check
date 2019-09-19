@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 
 const { Schema, model } = mongoose;
 
-// This should be rewritten with the new full schema
 const schema = new mongoose.Schema({
   name: {
     type: String,
