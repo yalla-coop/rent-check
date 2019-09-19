@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { breakpointsMax } from "./../../../constants/breakpoints";
 
 export const Header = styled.header`
   width: 100vw;
@@ -51,6 +52,12 @@ export const Menu = styled.nav`
   justify-content: center;
   padding: 0 1rem;
   transition: all ease 0.2s;
+
+  @media ${breakpointsMax.tablet} {
+    width: 100vw;
+    align-items: center;
+    border-left: none;
+  }
 `;
 
 export const MenuLink = styled(NavLink)`

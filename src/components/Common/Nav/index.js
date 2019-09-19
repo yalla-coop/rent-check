@@ -3,9 +3,17 @@ import { NavLink } from "react-router-dom";
 import { Icon } from "antd";
 import logo from "../../../assets/logo.png";
 
-// IMPORT NAV URLS HERE
+// NAV URLS
+import {
+  LANDING_URL,
+  SIGNUP_URL,
+  MAP_URL,
+  ADD_RENTAL_URL,
+  ACCOUNT_URL,
+  CONTROL_PANEL_URL
+} from "./../../../constants/navRoutes";
 
-// IMPORT STYLING HERE
+// STYLING
 import * as S from "./Nav.style";
 
 export default class Nav extends Component {
@@ -21,7 +29,7 @@ export default class Nav extends Component {
     const { menuOpen } = this.state;
 
     // this may need to change once we set up auth and what props to send through
-    const { role, loggedIn } = this.props;
+    const { role } = this.props;
 
     return (
       <S.Header>
