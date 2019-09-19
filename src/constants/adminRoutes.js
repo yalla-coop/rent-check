@@ -1,4 +1,5 @@
 export const routes = {
+  DASHBOARD: '/admin/',
   USERS: '/admin/users',
   USERS_ALL: '/admin/users/',
   USERS_VERIFY: '/admin/users/verify',
@@ -12,6 +13,11 @@ export const routes = {
 };
 
 export const menuElements = [
+  {
+    title: 'Dashboard',
+    icon: 'dashboard',
+    route: '/',
+  },
   {
     title: 'Users',
     route: '/users',

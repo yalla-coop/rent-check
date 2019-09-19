@@ -5,7 +5,7 @@ import Highlighter from 'react-highlight-words';
 export default ({ getColumnSearchProps, searchText }) => {
   const tableColumns = [
     {
-      title: 'Submitted',
+      title: 'Submitted by',
       dataIndex: 'submitted',
       key: 'submitted',
       render: text => (
@@ -35,9 +35,9 @@ export default ({ getColumnSearchProps, searchText }) => {
       ...getColumnSearchProps('status'),
     },
     {
-      title: 'Data',
-      dataIndex: 'data',
-      key: 'data',
+      title: 'Date submitted',
+      dataIndex: 'date',
+      key: 'date',
       render: text => (
         <span style={{ fontWeight: '700' }}>
           <Highlighter
@@ -48,7 +48,7 @@ export default ({ getColumnSearchProps, searchText }) => {
           />
         </span>
       ),
-      ...getColumnSearchProps('data'),
+      ...getColumnSearchProps('date'),
     },
     {
       title: 'Actions',
