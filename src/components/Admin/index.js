@@ -1,13 +1,23 @@
-import React, { Component } from 'react'
-import { Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+// import { Route, Switch } from "react-router-dom";
+ import SideMenu from './SideMenu/index';
+
 
 import { ContentWrapper, AdminWrapper } from "./Admin.style";
 
+
 export default class Admin extends Component {
+  state = {
+    menuWidth: 0
+  };
+
+  menuSizeObserver = width => {
+    this.setState({ menuWidth: width });
+  };
   render() {
     return (
       <AdminWrapper>
-        {/* <SideMenu /> */}
+       <SideMenu menuSizeObserver={this.menuSizeObserver} />
         {/* <ContentWrapper>
           <Switch>
             <Route
@@ -15,8 +25,9 @@ export default class Admin extends Component {
              render={props => <Users {...props} />} />
           </Switch>
         </ContentWrapper> */}
-        hello
+       <h1>hello</h1>
       </AdminWrapper>
     )
   }
 }
+

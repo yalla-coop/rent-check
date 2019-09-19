@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import Landing from "../Landing";
+import Loading from "../Loading";
 import Header from "../Header";
 import Map from "../Map";
 import PostcodeForm from "../PostcodeForm";
-import Admin from '../Admin'
 import {
   FullScreenContainer,
   ModalContainer,
   ModalOverlay,
-} from "./App.styles";
-import "./tachyons.css";
+} from "./MapInterface.style";
 
-class App extends Component {
+
+class MapInterface extends Component {
   state = {
     markers: false,
     loaded: false,
@@ -128,9 +127,8 @@ class App extends Component {
     );
     return (
       <React.Fragment>
-         <Admin />
-          {/* <FullScreenContainer>
-        {(!loaded || !markers) && <Landing />}
+        <FullScreenContainer>
+          {(!loaded || !markers) && <Loading />}
           <Header openSearch={this.openSearch} />
           {markers && loaded && (
             <Map
@@ -142,11 +140,12 @@ class App extends Component {
             />
           )}
         </FullScreenContainer>
-     {loaded && markers && !center && <ModalOverlay />}
-        {loaded && markers && !center && modal} */}
+
+        {loaded && markers && !center && <ModalOverlay />}
+        {loaded && markers && !center && modal}
       </React.Fragment>
     );
   }
 }
 
-export default App;
+export default MapInterface;
