@@ -49,26 +49,23 @@ export default class SideMenu extends Component {
     }
   };
 
-
   render() {
 
     const { pathname } = window.location;
 
     return (
-      <SideMenuWrapper style={{ height: "100%" }}>
+      <SideMenuWrapper>
         <Button
           type="primary"
           onClick={this.toggleCollapsed}
-          style={{ marginBottom: 16 }}
         >
           <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
         </Button>
-
         <Menu
           defaultSelectedKeys={["/"]}
           defaultOpenKeys={[menuElements[0].title]}
           mode="inline"
-          theme="dark"
+          theme="light"
           inlineCollapsed={this.state.collapsed}
           onOpenChange={this.onOpenChange}
           openKeys={
@@ -95,7 +92,7 @@ export default class SideMenu extends Component {
                     style={{ textAlign: "left" }}
                   >
                     <Link to={`/admin${element.route + item.route}`}>
-                      <Icon type={item.icon} />
+                      {/* <Icon type={item.icon} /> */}
                       <span>{item.title}</span>
                     </Link>
                   </Menu.Item>
@@ -112,6 +109,7 @@ export default class SideMenu extends Component {
           )}
           <Menu.Item style={{ textAlign: "left" }}>
             <Link to='/'>
+            <Icon type="home" />
               <span>Vist Website</span>
             </Link>
           </Menu.Item>

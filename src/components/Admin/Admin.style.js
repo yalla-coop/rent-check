@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const AdminWrapper = styled.div`
-  background: gray;
   min-height: 100vh;
 `;
 export const ContentWrapper = styled.div`

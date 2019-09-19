@@ -14,6 +14,7 @@ export const menuElements = [
   {
     title: "Users",
     route: "/users",
+    icon: "user",
     items: [
       {
         title: "All",
@@ -40,6 +41,7 @@ export const menuElements = [
   {
     title: "Rental Data",
     route: "/rental-data",
+    icon: "bar-chart",
     items: [
       {
         title: "All",
