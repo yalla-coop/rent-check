@@ -3,9 +3,10 @@ import RentalRecord from '../../lambda/database/models/RentalRecord';
 import buildData from '../../lambda/database/data/index';
 
 describe('Test dummy data for schemas', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildData();
+    done();
   });
 
   test('users should be built successfully', async done => {

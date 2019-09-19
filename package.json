@@ -29,9 +29,9 @@
     "build": "run-p build:**",
     "build:app": "react-scripts build",
     "build:lambda": "netlify-lambda build src/lambda",
-    "test": "react-scripts test",
+    "test": "react-scripts test --runInBand --detectOpenHandles --forceExit",
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
-    "test:coverage": "npm test -- --coverage",
+    "test:coverage": "npm test --coverage",
     "coverage": "codecov",
     "build:data:dev": "babel-node ./src/lambda/database/data"
   },
