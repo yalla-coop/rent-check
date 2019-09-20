@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import User from '../../lambda/database/models/User';
 import RentalRecord from '../../lambda/database/models/RentalRecord';
 import buildData from '../../lambda/database/data/index';
