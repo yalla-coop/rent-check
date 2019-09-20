@@ -36,7 +36,7 @@
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
     "test:coverage": "npm test --coverage",
     "coverage": "codecov",
-    "build:data:dev": "babel-node ./src/lambda/database/data"
+    "database:build:dev": "babel-node ./src/lambda/database/data"
   },
   "eslintConfig": {
     "extends": "react-app"
