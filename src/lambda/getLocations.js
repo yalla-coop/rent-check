@@ -4,9 +4,6 @@ import RentalRecord from './database/models/RentalRecord';
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 
-// const { getNoGeo, getAllValidRows } = require('./models/getRecords');
-// const { updateGeo } = require('./models/updateRecords');
-
 export async function handler(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
@@ -24,8 +21,3 @@ export async function handler(event, context) {
     };
   }
 }
-
-// uncomment this and change the function name to protect the route
-// const handler = middy(getLocations).use(authMiddleware());
-
-// export { handler };
