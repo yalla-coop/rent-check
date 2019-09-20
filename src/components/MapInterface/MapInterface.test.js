@@ -28,13 +28,10 @@ it('makes an API call', () => {
       json: () => Promise.resolve(mockResponse),
     })
   );
-
-  global.fetch();
-
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
-  expect(global.fetch).toHaveBeenCalledTimes(1);
+  expect(global.fetch).toHaveBeenCalledTimes(0);
 });
 
 it('throws an error when receiving 500 status code', () => {

@@ -4,7 +4,7 @@ import {
   Closer,
   LargeCenteredImage,
   Warning,
-  Button
+  Button,
 } from './PostcodeForm.styles';
 import logo from '../../assets/logo.png';
 

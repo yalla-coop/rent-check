@@ -1,5 +1,5 @@
 import React from 'react';
-import { LargeCenteredImage, HeaderTitle, BoldPink } from './Landing.styles';
+import { LargeCenteredImage, HeaderTitle, BoldPink } from './Loading.styles';
 import logo from '../../assets/logo.png';
 
 export default props => {
