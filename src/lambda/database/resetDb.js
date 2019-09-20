@@ -1,16 +1,10 @@
-import mongoose from 'mongoose';
+import User from './models/User';
+import RentalRecord from './models/RentalRecord';
 
 const resetDB = async () => {
   try {
-    const { connection } = mongoose;
-    const collections = await connection.db
-      .listCollections({}, { nameOnly: true })
-      .toArray();
-
-    const promises = collections.map(({ name }) =>
-      connection.dropCollection(name)
-    );
-    await Promise.all(promises);
+    await User.deleteMany();
+    return RentalRecord.deleteMany();
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log('Error during resting the db, try again', err);

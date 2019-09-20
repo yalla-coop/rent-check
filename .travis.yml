@@ -4,14 +4,35 @@ node_js:
 cache:
   directories:
     - "node_modules"
-    - "client/node_modules"
+
+env:
+  - MONGODB=4.0.0
+
 before_install:
   - sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev
     build-essential g++
+
 install:
-  - "npm i -D"
-  - "npm run build"
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
+  - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
+  - mongo --version
+  - npm install
+
+before_script:
+  - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath
+    ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath
+    ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
+  - npm run build
+  - npm run database:build:dev
+  - mongo --version
+
 script:
   - "npm run test:coverage"
+
 after_success:
   - "npm run coverage"
+
+after_script:
+  - pkill mongod
