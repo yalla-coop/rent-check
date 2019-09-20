@@ -26,7 +26,7 @@ const CenteredSection = styled.div.attrs({
 const Pill = styled.div.attrs({
   className: 'f6 br-pill ph3 pv2 mb2 dib black b  ml-auto mr-auto'
 })`
-  background: ${props => useClassColor[props.use_class]};
+  background: ${props => useClassColor[props.useClass]};
 `;
 
 const Button = styled.a.attrs({

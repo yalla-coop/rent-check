@@ -16,27 +16,28 @@ import {
 import './Map.css';
 
 type Props = {|
+  _id: string,
   name: string,
-  geolocation: string,
+  geoLocation: string,
   postcode: string,
   address: string,
-  price_sqft: number,
-  use_class: string,
-  lease_length: string,
-  date_of_last_rent_review: number,
-  date_of_next_rent_review: number,
-  square_feet: number,
-  break_clauses: string,
+  priceSqFt: number,
+  useClass: string,
+  leaseLength: string,
+  lastRentReview: number,
+  nextRentReview: number,
+  squareFeet: number,
+  breakClauses: string,
   useColor: object,
-  annual_rent: number,
-  yard_sqft: number,
-  yard_price_sqft: number,
+  annualRent: number,
+  yardSqFt: number,
+  yardPriceSqFt: number,
   restricted: string,
   specification: string,
-  landlord_name: string,
-  additional_comments: string,
-  landlord_tenants_act: string,
-  service_charge: number
+  landlordName: string,
+  additionalComments: string,
+  landlordTenantsAct: string,
+  serviceCharge: number
 |};
 
 type MarkerData = {| ...Props, key: string |};
@@ -62,28 +63,29 @@ const iconSelect = useClass =>
   });
 
 const MarkerWithPopup = ({
-  geolocation,
+  _id,
+  geoLocation,
   postcode,
   address,
-  price_sqft,
-  use_class,
-  lease_length,
-  date_of_last_rent_review,
-  date_of_next_rent_review,
-  square_feet,
-  break_clauses,
-  yard_sqft,
-  yard_price_sqft,
+  priceSqFt,
+  useClass,
+  leaseLength,
+  lastRentReview,
+  nextRentReview,
+  squareFeet,
+  breakClauses,
+  yardSqFt,
+  yardPriceSqFt,
   restricted,
   specification,
-  landlord_name,
-  additional_comments,
-  landlord_tenants_act,
-  service_charge
+  landlordName,
+  additionalComments,
+  landlordTenantsAct,
+  serviceCharge
 }: Props) => {
-  const price = price_sqft.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  const price = priceSqFt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   return (
-    <Marker position={JSON.parse(geolocation)} icon={iconSelect(use_class)}>
+    <Marker position={JSON.parse(geoLocation)} icon={iconSelect(useClass)}>
       <Popup
         offset={[33, 15]}
         keepInView={true}
@@ -96,46 +98,46 @@ const MarkerWithPopup = ({
             {address}, {postcode}
           </PopupInfo>
 
-          {landlord_name && <PopupLabel>Landlord name</PopupLabel>}
-          <PopupInfo>{landlord_name}</PopupInfo>
+          {landlordName && <PopupLabel>Landlord name</PopupLabel>}
+          <PopupInfo>{landlordName}</PopupInfo>
 
-          {use_class && <PopupLabel>Use Class: </PopupLabel>}
+          {useClass && <PopupLabel>Use Class: </PopupLabel>}
           <PopupInfo>
-            <Pill use_class={use_class}>{use_class}</Pill>
+            <Pill useClass={useClass}>{useClass}</Pill>
           </PopupInfo>
 
-          {square_feet && <PopupLabel>Square Feet</PopupLabel>}
-          <PopupInfo>{square_feet}</PopupInfo>
+          {squareFeet && <PopupLabel>Square Feet</PopupLabel>}
+          <PopupInfo>{squareFeet}</PopupInfo>
 
-          {yard_sqft && <PopupLabel>Yard square feet</PopupLabel>}
-          <PopupInfo>{yard_sqft}</PopupInfo>
+          {yardSqFt && <PopupLabel>Yard square feet</PopupLabel>}
+          <PopupInfo>{yardSqFt}</PopupInfo>
 
-          {yard_price_sqft && <PopupLabel>Yard price /sqft</PopupLabel>}
-          <PopupInfo>{yard_price_sqft}</PopupInfo>
+          {yardPriceSqFt && <PopupLabel>Yard price /sqft</PopupLabel>}
+          <PopupInfo>{yardPriceSqFt}</PopupInfo>
 
-          {lease_length && <PopupLabel>Lease Length</PopupLabel>}
-          <PopupInfo>{lease_length}</PopupInfo>
+          {leaseLength && <PopupLabel>Lease Length</PopupLabel>}
+          <PopupInfo>{leaseLength}</PopupInfo>
 
-          {date_of_last_rent_review && (
+          {lastRentReview && (
             <PopupLabel>Last rent review</PopupLabel>
           )}
-          <PopupInfo>{formatDate(date_of_last_rent_review)}</PopupInfo>
+          <PopupInfo>{formatDate(lastRentReview)}</PopupInfo>
 
-          {date_of_next_rent_review && (
+          {nextRentReview && (
             <PopupLabel>Next rent review</PopupLabel>
           )}
-          <PopupInfo>{formatDate(date_of_next_rent_review)}</PopupInfo>
+          <PopupInfo>{formatDate(nextRentReview)}</PopupInfo>
 
-          {landlord_tenants_act && (
+          {landlordTenantsAct && (
             <PopupLabel>Landlord tenants act</PopupLabel>
           )}
-          <PopupInfo>{landlord_tenants_act}</PopupInfo>
+          <PopupInfo>{landlordTenantsAct}</PopupInfo>
 
-          {service_charge && <PopupLabel>Service charge</PopupLabel>}
-          <PopupInfo>£{service_charge}</PopupInfo>
+          {serviceCharge && <PopupLabel>Service charge</PopupLabel>}
+          <PopupInfo>£{serviceCharge}</PopupInfo>
 
-          {break_clauses && <PopupLabel>Break Clause</PopupLabel>}
-          <PopupInfo>{break_clauses}</PopupInfo>
+          {breakClauses && <PopupLabel>Break Clause</PopupLabel>}
+          <PopupInfo>{breakClauses}</PopupInfo>
 
           {restricted && <PopupLabel>Restricted</PopupLabel>}
           <PopupInfo>{restricted}</PopupInfo>
@@ -143,8 +145,8 @@ const MarkerWithPopup = ({
           {specification && <PopupLabel>Specification</PopupLabel>}
           <PopupInfo>{specification}</PopupInfo>
 
-          {additional_comments && <PopupLabel>Additional comments</PopupLabel>}
-          <PopupInfo>{additional_comments}</PopupInfo>
+          {additionalComments && <PopupLabel>Additional comments</PopupLabel>}
+          <PopupInfo>{additionalComments}</PopupInfo>
 
           <CenteredSection>
             <PopupLabel>Was this useful?</PopupLabel>
