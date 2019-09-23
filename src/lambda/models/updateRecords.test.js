@@ -82,9 +82,13 @@ describe('table :: updateAirtable', () => {
     request.patch.mockClear();
   });
   it('handles error from airtable module', async () => {
-    await updateAirtable('givemeanerror', {
-      postcode: 'E2 3DD',
-    });
+    try {
+      await updateAirtable('givemeanerror', {
+        postcode: 'E2 3DD',
+      });
+    } catch (err) {
+      console.log('err', err);
+    }
     expect(request.patch.mock.calls).toHaveLength(1);
     request.patch.mockClear();
   });
