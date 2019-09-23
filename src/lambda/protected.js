@@ -1,12 +1,13 @@
 import middy from 'middy';
 import authMiddleware from './utils/middleware';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 
 // this is a protected demo route
 // http://localhost:9000/.netlify/functions/protected
 
-async function protectedHandler(event, context) {
+async function protectedHandler() {
   try {
     return {
       statusCode: 200,

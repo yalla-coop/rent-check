@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 import Airtable from 'airtable';
 // Airtable configuration:
 
 /* istanbul ignore next */
+// eslint-disable-next-line no-nested-ternary
 const apiKey = process.env.AIRTABLE_API_KEY
   ? process.env.AIRTABLE_API_KEY
   : process.env.NODE_ENV === 'production'
@@ -27,6 +29,7 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 
 export const getNoGeo = () =>
   new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-use-before-define
     requestRows('no_geolocation', (array, record) => {
       // if (record.fields.postcode != null) {
       const postcodeIdObj = {
@@ -35,7 +38,9 @@ export const getNoGeo = () =>
       };
       array.push(postcodeIdObj);
       // }
-    }).then(resolve);
+    })
+      .then(resolve)
+      .catch(reject);
   });
 
 const isValidRow = ({
@@ -53,7 +58,7 @@ const isValidRow = ({
     use_class &&
     date_of_last_rent_review &&
     geolocation &&
-    geolocation != 'invalid'
+    geolocation !== 'invalid'
   ) {
     return true;
   }
@@ -62,15 +67,18 @@ const isValidRow = ({
 
 export const getAllValidRows = () =>
   new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-use-before-define
     requestRows('valid_records', (array, record) => {
       if (isValidRow(record)) {
         array.push(record.fields);
       }
-    }).then(resolve);
+    })
+      .then(resolve)
+      .catch(reject);
   });
 
 export const requestRows = (view, cb) =>
-  new Promise((resolve, reject) => {
+  new Promise(resolve => {
     const outputArray = [];
     base('RENTCHECK')
       .select({
@@ -87,6 +95,7 @@ export const requestRows = (view, cb) =>
           fetchNextPage();
         },
         function done(err) {
+          // eslint-disable-next-line no-console
           if (err) console.error(err);
           // console.log(outputArray);
           resolve(outputArray);

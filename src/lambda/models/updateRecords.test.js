@@ -1,5 +1,5 @@
-const { updateGeo, joinWithIDs, updateAirtable } = require("./updateRecords");
-const request = require("request");
+const request = require('request');
+const { updateGeo, joinWithIDs, updateAirtable } = require('./updateRecords');
 
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors
@@ -14,19 +14,19 @@ afterEach(() => {
 const airtableResponse = [
   {
     id: 1,
-    postcode: "N4 3HF",
+    postcode: 'N4 3HF',
   },
   {
     id: 2,
-    postcode: "N4 3HH",
+    postcode: 'N4 3HH',
   },
   {
     id: 3,
-    postcode: "N4 3HQ",
+    postcode: 'N4 3HQ',
   },
   {
     id: 4,
-    postcode: "",
+    postcode: '',
   },
 ];
 
@@ -34,7 +34,7 @@ const geolocationOutput = [
   { lat: 51.564261, lng: -0.108292 },
   { lat: 51.530337, lng: -0.082451 },
   { lat: 51.540557, lng: -0.094451 },
-  "invalid",
+  'invalid',
 ];
 
 const joinedData = [
@@ -53,37 +53,37 @@ const joinedData = [
   { id: 4, fields: { geolocation: '"invalid"' } },
 ];
 
-describe("table :: joinWithIDs", () => {
-  it("returns an array with IDs and geolocation data", async () => {
+describe('table :: joinWithIDs', () => {
+  it('returns an array with IDs and geolocation data', async () => {
     const actual = await joinWithIDs(airtableResponse, geolocationOutput);
     expect(actual).toEqual(joinedData);
   });
 });
 
-describe("table :: updateGeo", () => {
+describe('table :: updateGeo', () => {
   // it('calls API once for each record', async () => {
   //   const response = await updateGeo(airtableResponse);
   //   expect(response).toBeTruthy();
   //   expect(request.patch.mock.calls).toHaveLength(4);
   //   request.patch.mockClear();
   // });
-  it("returns 0 when called with an empty array", async () => {
+  it('returns 0 when called with an empty array', async () => {
     const response = await updateGeo([]);
     expect(response).toBe(0);
   });
 });
 
-describe("table :: updateAirtable", () => {
-  it("makes one call to the request module", async () => {
-    const actual = await updateAirtable("sdkuhsg", {
-      postcode: "E2 3PD",
+describe('table :: updateAirtable', () => {
+  it('makes one call to the request module', async () => {
+    await updateAirtable('sdkuhsg', {
+      postcode: 'E2 3PD',
     });
     expect(request.patch.mock.calls).toHaveLength(1);
     request.patch.mockClear();
   });
-  it("handles error from airtable module", async () => {
-    const actual = await updateAirtable("givemeanerror", {
-      postcode: "E2 3DD",
+  it('handles error from airtable module', async () => {
+    await updateAirtable('givemeanerror', {
+      postcode: 'E2 3DD',
     });
     expect(request.patch.mock.calls).toHaveLength(1);
     request.patch.mockClear();

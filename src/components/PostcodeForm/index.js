@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import {
   Form,
@@ -10,15 +12,22 @@ import logo from '../../assets/logo.png';
 
 export default class SearchForm extends Component {
   render() {
+    const {
+      showWarning,
+      onSubmit,
+      closeSearch,
+      postcode,
+      onChange,
+    } = this.props;
     let inputClasses;
-    if (this.props.showWarning) {
+    if (showWarning) {
       inputClasses = 'input-reset ba b--black-20 pa2 db mt2 dark-pink';
     } else {
       inputClasses = 'input-reset ba b--black-20 pa2 db mt2';
     }
     return (
-      <Form onSubmit={this.props.onSubmit}>
-        <Closer onClick={this.props.closeSearch}>&times;</Closer>
+      <Form onSubmit={onSubmit}>
+        <Closer onClick={closeSearch}>&times;</Closer>
         <LargeCenteredImage src={logo} />
         <label htmlFor="postcode">
           Enter your postcode to compare business rental prices
@@ -28,10 +37,10 @@ export default class SearchForm extends Component {
           type="text"
           id="postcode"
           name="postcode"
-          value={this.props.postcode}
-          onChange={this.props.onChange}
+          value={postcode}
+          onChange={onChange}
         />
-        <Warning>{this.props.showWarning}</Warning>
+        <Warning>{showWarning}</Warning>
         <Button type="submit">Show me</Button>
       </Form>
     );

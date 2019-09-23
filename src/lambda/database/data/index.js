@@ -4,6 +4,7 @@ import resetDb from '../resetDb';
 import users from './users';
 import rentalRecords from './rentalRecords';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 
 const buildData = () =>

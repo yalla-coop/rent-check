@@ -14,6 +14,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'consistent-return': 0,
     'import/prefer-default-export': 0,
     'react/jsx-no-undef': 1,
     // disables the windows/unix linebreak checks.

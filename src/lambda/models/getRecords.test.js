@@ -36,12 +36,14 @@ const triggerError = () =>
   new Promise((resolve, reject) => {
     requestRows('throw_error', (array, record) => {
       array.push(record.fields);
-    }).then(resolve);
+    })
+      .then(resolve)
+      .catch(reject);
   });
 
 describe('table :: requestRows', () => {
   it('handles error from Airtable module', async () => {
-    const actual = await triggerError();
+    await triggerError();
     expect(global.console.error.mock.calls).toHaveLength(1);
   });
 });
