@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Loading from '../Loading';
 import Header from '../Header';
@@ -11,142 +10,147 @@ import {
   ModalOverlay,
 } from './MapInterface.style';
 
-class MapInterface extends Component {
-  state = {
-    markers: false,
-    loaded: false,
-    searchInput: '',
-    center: [51.527329, -0.0554895],
-    showFormWarning: false,
-    legend: false,
+function MapInterface() {
+  const defaultLocation = [51.527329, -0.0554895];
+
+  // TODO: consider replacing all this useState with useReducer
+  const [loaded, setLoaded] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const [markers, setMarkers] = useState([]);
+  const [center, setCenter] = useState([51.527329, -0.0554895]);
+  const [showFormWarning, setShowFormWarning] = useState(false);
+  const [legend, setLegend] = useState(false);
+
+  // ref to keep track of how many times the
+  // fetch function was called
+  const calledTimes = useRef(0);
+
+  // Loading Screen Function
+  const showLoadingScreen = () => {
+    const loadingTime = 2000;
+    setTimeout(() => setLoaded(true), loadingTime);
   };
 
-  defaultLocation = [51.527329, -0.0554895];
-
-  componentDidMount() {
-    // this.showLoadingScreen();
-    this.callApi().catch(err => console.log(err));
-  }
-
-  // api call made to backend to fetch airtable object
-  callApi = async () => {
-    this.calledTimes = 0;
-    const { data } = await axios('/.netlify/functions/getLocations');
-    console.log('data', data);
-    if (data.length > 0) {
-      this.setState({ markers: data, loaded: true });
-    } else if (this.calledTimes < 2) {
-      setTimeout(this.callApi, 5000);
-    }
-  };
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        calledTimes.current += 1;
+        const { data } = await axios('/.netlify/functions/getLocations');
+        if (data.length) {
+          setMarkers(data);
+        } else if (calledTimes.current < 2) {
+          setTimeout(fetchLocations, 5000);
+        }
+        setMarkers(data);
+      } catch (err) {
+        // TODO: Common retch error handling logic
+        // eslint-disable-next-line no-console
+        console.log('err', err);
+      }
+    };
+    fetchLocations();
+    showLoadingScreen();
+  }, []);
 
   // FORM FUNCTIONS
-  openSearch = () => {
-    this.setState({ center: false });
+  const openSearch = () => {
+    setCenter(false);
   };
 
-  closeSearch = () => {
-    this.setState({ center: this.defaultLocation });
+  const closeSearch = () => {
+    setCenter(defaultLocation);
   };
 
   // handle input value in postcode field and update state
-  handleChange = event => {
-    const { value } = event.target;
-    this.setState({ searchInput: value, showFormWarning: false });
-  };
-
-  // grab postcode and make api call to postcodesIo to get lat Long
-  handleSubmit = event => {
-    const { searchInput } = this.state;
-    event.preventDefault();
-    const postcode = searchInput;
-    if (postcode.length === 0) {
-      return this.setState({ showFormWarning: 'Please enter a postcode' });
-    }
-    this.apiCallGeo(postcode);
-  };
-
-  apiCallGeo = postcode => {
-    fetch(`https://api.postcodes.io/postcodes/${postcode}`)
-      .then(res => res.json())
-      .then(res => this.checkResponse(res));
+  const handleChange = e => {
+    const { value } = e.target;
+    setSearchInput(value);
+    setShowFormWarning(false);
   };
 
   // function to create lat long array to update the center key in state
   // Check if postcode exists or not depending on status code
   // if status code 404 update status and keep center at default location, otherwise return lat long array
-  checkResponse = res => {
-    if (res.status === 404) {
-      return this.setState({
-        showFormWarning: 'Please enter a valid postcode',
-        center: false,
-      });
-    }
+  const checkResponse = res => {
+    // TODO: check What is this about!! 7?? 6??
     const location = [
       Object.values(res.result)[7],
       Object.values(res.result)[6],
     ];
-    return this.setState({ showFormWarning: false, center: location });
+    setCenter(location);
+    setShowFormWarning(false);
+  };
+
+  const apiCallGeo = async postcode => {
+    try {
+      const { data } = await axios.get(
+        `https://api.postcodes.io/postcodes/${postcode}`
+      );
+      checkResponse(data);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('err', error);
+      setShowFormWarning('Please enter a postcode');
+    }
+  };
+
+  // grab postcode and make api call to postcodesIo to get lat Long
+  const handleSubmit = e => {
+    e.preventDefault();
+    // const { searchInput } = this.state;
+    const postcode = searchInput;
+    if (postcode.length === 0) {
+      // return this.setState({ showFormWarning: 'Please enter a postcode' });
+      return setShowFormWarning('Please enter a postcode');
+    }
+    apiCallGeo(postcode);
   };
 
   // function to either render form or map
   // if the center is default then render form to put in postcode
-  showPostcodeSearch = () => {
-    const { center, searchInput, showFormWarning } = this.state;
+  const showPostcodeSearch = () => {
     if (center === false) {
       return (
         <div>
           <PostcodeForm
-            onSubmit={this.handleSubmit}
+            onSubmit={handleSubmit}
             postcode={searchInput}
-            onChange={this.handleChange}
+            onChange={handleChange}
             showWarning={showFormWarning}
-            closeSearch={this.closeSearch}
+            closeSearch={closeSearch}
           />
         </div>
       );
     }
   };
 
-  // Loading Screen Function
-  showLoadingScreen = () => {
-    const loadingTime = 2000;
-    setTimeout(() => this.setState({ loaded: true }), loadingTime);
-  };
-
   // toggle Legend
-  toggleLegend = () => {
-    this.setState(preState => {
-      return { legend: !preState.legend };
-    });
+  const toggleLegend = () => {
+    setLegend(!legend);
   };
 
-  render() {
-    const { loaded, markers, center, useClassColor, legend } = this.state;
-    const modal = (
-      <ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
-    );
-    return (
-      <React.Fragment>
-        <FullScreenContainer>
-          {(!loaded || !markers) && <Loading />}
-          <Header openSearch={this.openSearch} />
-          {markers && loaded && (
-            <Map
-              markers={markers}
-              center={center || this.defaultLocation}
-              useColor={useClassColor}
-              toggleLegend={this.toggleLegend}
-              legend={legend}
-            />
-          )}
-        </FullScreenContainer>
+  const modal = <ModalContainer>{showPostcodeSearch}</ModalContainer>;
 
-        {loaded && markers && !center && <ModalOverlay />}
-        {loaded && markers && !center && modal}
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <FullScreenContainer>
+        {(!loaded || !markers) && <Loading />}
+        <Header openSearch={openSearch} />
+        {markers && loaded && (
+          <Map
+            markers={markers}
+            center={center || defaultLocation}
+            // useColor={useClassColor} // checkthis!!: useClassColor is not defined anywhere
+            toggleLegend={toggleLegend}
+            legend={legend}
+          />
+        )}
+      </FullScreenContainer>
+
+      {loaded && markers && !center && <ModalOverlay />}
+      {loaded && markers && !center && modal}
+    </React.Fragment>
+  );
 }
 
 export default MapInterface;

@@ -8,7 +8,7 @@ import {
   HeaderLogo,
 } from './Header.styles';
 
-export default ({ openSearch }) => (
+const Header = ({ openSearch }) => (
   <MyHeader>
     <HeaderLink href="/">
       <HeaderLogo src={logo} alt="East End Trades Guild" />
@@ -22,3 +22,4 @@ export default ({ openSearch }) => (
     </HeaderLink>
   </MyHeader>
 );
+export default Header;
