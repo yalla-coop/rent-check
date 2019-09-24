@@ -1,14 +1,24 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import { Table, Input, Icon, Button } from 'antd';
 
-export default class TableComponent extends Component {
-  state = {
-    searchText: '',
+export default function TableComponent({ columns, dataSource }) {
+  const [searchText, setSearchText] = useState('');
+
+  const searchInputRef = useRef(null);
+
+  const handleSearch = (selectedKeys, confirm) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
   };
 
-  getColumnSearchProps = dataIndex => ({
+  const handleReset = clearFilters => {
+    clearFilters();
+    setSearchText('');
+  };
+
+  const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -17,20 +27,18 @@ export default class TableComponent extends Component {
     }) => (
       <div style={{ padding: 8 }}>
         <Input
-          ref={node => {
-            this.searchInput = node;
-          }}
+          ref={searchInputRef}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
           onChange={e =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+          onPressEnter={() => handleSearch(selectedKeys, confirm)}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={() => this.handleSearch(selectedKeys, confirm)}
+          onClick={() => handleSearch(selectedKeys, confirm)}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -38,7 +46,7 @@ export default class TableComponent extends Component {
           Search
         </Button>
         <Button
-          onClick={() => this.handleReset(clearFilters)}
+          onClick={() => handleReset(clearFilters)}
           size="small"
           style={{ width: 90 }}
         >
@@ -60,35 +68,20 @@ export default class TableComponent extends Component {
     },
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
-        setTimeout(() => this.searchInput.select());
+        setTimeout(() => searchInputRef.current.select());
       }
     },
   });
 
-  handleSearch = (selectedKeys, confirm) => {
-    confirm();
-    this.setState({ searchText: selectedKeys[0] });
-  };
-
-  handleReset = clearFilters => {
-    clearFilters();
-    this.setState({ searchText: '' });
-  };
-
-  render() {
-    const { searchText } = this.state;
-    const { columns, dataSource } = this.props;
-
-    return (
-      <Table
-        columns={columns({
-          getColumnSearchProps: this.getColumnSearchProps,
-          searchText,
-        })}
-        dataSource={dataSource}
-        style={{ backgroundColor: '#ffffff' }}
-        bordered
-      />
-    );
-  }
+  return (
+    <Table
+      columns={columns({
+        getColumnSearchProps,
+        searchText,
+      })}
+      dataSource={dataSource}
+      style={{ backgroundColor: '#ffffff' }}
+      bordered
+    />
+  );
 }

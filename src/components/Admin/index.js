@@ -1,6 +1,7 @@
 // Router Component for admin routes
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { Layout } from 'antd';
 
 // Components
 import SideMenu from './SideMenu';
@@ -8,30 +9,21 @@ import Dashboard from './Dashboard';
 import Users from './Users';
 import RentalData from './RentalData';
 
-// Styles
-import { ContentWrapper, AdminWrapper } from './Admin.style';
-
 // Routes
 import { routes } from '../../constants/adminRoutes';
 
 const { DASHBOARD, USERS, RENTAL_DATA } = routes;
+const { Header, Content, Footer } = Layout;
 
-export default class Admin extends Component {
-  state = {
-    menuWidth: 0,
-  };
-
-  menuSizeObserver = width => {
-    this.setState({ menuWidth: width });
-  };
-
-  render() {
-    const { menuWidth } = this.state;
-
-    return (
-      <AdminWrapper>
-        <SideMenu menuSizeObserver={this.menuSizeObserver} />
-        <ContentWrapper marginLeft={`${Math.ceil(menuWidth)}`}>
+export default function Admin() {
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <SideMenu />
+      <Layout>
+        <Header style={{ background: 'grey', padding: 0 }}>
+          Header text and stuff
+        </Header>
+        <Content style={{ margin: '0 16px' }}>
           <Switch>
             <Route
               path={DASHBOARD}
@@ -44,8 +36,9 @@ export default class Admin extends Component {
               render={props => <RentalData {...props} />}
             />
           </Switch>
-        </ContentWrapper>
-      </AdminWrapper>
-    );
-  }
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>©2019 Created by Yalla</Footer>
+      </Layout>
+    </Layout>
+  );
 }

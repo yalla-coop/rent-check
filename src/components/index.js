@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import MapInterface from './MapInterface';
 import Admin from './Admin';
 
-export default function index() {
+export default function Router() {
   return (
     <Switch>
       <Route exact path="/" component={MapInterface} />
