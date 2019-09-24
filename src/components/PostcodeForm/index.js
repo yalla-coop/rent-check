@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import {
   Form,
@@ -16,6 +14,7 @@ const SearchForm = ({
   closeSearch,
   postcode,
   onChange,
+  postcodesLoading,
 }) => {
   let inputClasses;
   if (showWarning) {
@@ -25,7 +24,7 @@ const SearchForm = ({
   }
   return (
     <Form onSubmit={onSubmit}>
-      <Closer onClick={closeSearch}>&times;</Closer>
+      <Closer onClick={() => closeSearch(false)}>&times;</Closer>
       <LargeCenteredImage src={logo} />
       <label htmlFor="postcode">
         Enter your postcode to compare business rental prices
@@ -39,7 +38,10 @@ const SearchForm = ({
         onChange={onChange}
       />
       <Warning>{showWarning}</Warning>
-      <Button type="submit">Show me</Button>
+      <Button type="submit">
+        {/* TODO: Add spinning wheel instead of loading... */}
+        {!postcodesLoading ? <div>Show me</div> : <div>Loading...</div>}
+      </Button>
     </Form>
   );
 };

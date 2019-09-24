@@ -17,7 +17,7 @@ const Header = ({ openSearch }) => (
       RENT
       <BoldPink>CHECK</BoldPink>
     </HeaderTitle>
-    <HeaderLink href="#" onClick={openSearch}>
+    <HeaderLink as="button" onClick={openSearch}>
       Search
     </HeaderLink>
   </MyHeader>
