@@ -86,7 +86,6 @@ function MapInterface() {
           <Map
             markers={markers}
             center={center}
-            // useColor={useClassColor} // checkthis!!: useClassColor is not defined anywhere
             toggleLegend={() => setLegend(!legend)}
             legend={legend}
           />
