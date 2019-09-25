@@ -1,5 +1,5 @@
 // Router for Rental Data
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Components
@@ -14,22 +14,20 @@ import { routes } from '../../../constants/adminRoutes';
 
 const { RENTAL_DATA_ALL } = routes;
 
-export default class RentalData extends Component {
-  render() {
-    return (
-      <Switch>
-        <Route
-          exact
-          path={RENTAL_DATA_ALL}
-          render={props => (
-            <Table
-              columns={rentalDataColumns}
-              dataSource={dataSource}
-              {...props}
-            />
-          )}
-        />
-      </Switch>
-    );
-  }
+export default function RentalData() {
+  return (
+    <Switch>
+      <Route
+        exact
+        path={RENTAL_DATA_ALL}
+        render={props => (
+          <Table
+            columns={rentalDataColumns}
+            dataSource={dataSource}
+            {...props}
+          />
+        )}
+      />
+    </Switch>
+  );
 }
