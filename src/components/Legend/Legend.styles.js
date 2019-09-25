@@ -35,7 +35,7 @@ export const AnimateCircle = styled.div.attrs({
 `;
 
 export const UseText = styled.p.attrs({
-  className: 'avenir black',
+  className: 'avenir black ma0',
 })``;
 
 export const ClassListItems = styled.ul.attrs({

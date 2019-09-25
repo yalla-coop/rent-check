@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, TileLayer } from 'react-leaflet';
+import { Map as MapLeaflet, TileLayer } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
 import MapLegend from '../Legend';
@@ -16,9 +16,9 @@ const createClusterCustomIcon = cluster => {
   });
 };
 
-export default ({ center, markers, toggleLegend, legend }) => {
+const Map = ({ center, markers, toggleLegend, legend }) => {
   return (
-    <Map
+    <MapLeaflet
       className="h-100 w-100"
       center={center}
       zoom={13}
@@ -37,6 +37,8 @@ export default ({ center, markers, toggleLegend, legend }) => {
         <Markers markers={markers} />
       </MarkerClusterGroup>
       <MapLegend toggleLegend={toggleLegend} legend={legend} />
-    </Map>
+    </MapLeaflet>
   );
 };
+
+export default Map;
