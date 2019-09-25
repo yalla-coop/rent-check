@@ -1,11 +1,14 @@
-const Airtable = require('airtable');
-const {
-  makePostcodeArray,
+/* eslint-disable no-return-await */
+import Airtable from 'airtable';
+
+import {
+  makeLatLngArray,
   getGeolocation,
-  makeLatLngArray
-} = require('./postcodes');
+  makePostcodeArray,
+} from './postcodes';
 
 /* istanbul ignore next */
+// eslint-disable-next-line no-nested-ternary
 const apiKey = process.env.AIRTABLE_API_KEY
   ? process.env.AIRTABLE_API_KEY
   : process.env.NODE_ENV === 'production'
@@ -14,7 +17,7 @@ const apiKey = process.env.AIRTABLE_API_KEY
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey
+  apiKey,
 });
 const base = Airtable.base(process.env.AIRTABLE_BASE);
 
@@ -27,7 +30,39 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 // updateAirtable - updates one row in Airtable, takes id and object of fields to update
 // updateMany - takes array of multiple records to update
 
-const updateGeo = airtableResponse =>
+export const joinWithIDs = (airtableResponse, postcodeResponse) =>
+  new Promise(resolve => {
+    const updateArray = [];
+    for (let i = 0; i < airtableResponse.length; i += 1) {
+      updateArray[i] = {
+        id: airtableResponse[i].id,
+        fields: {
+          geolocation: JSON.stringify(postcodeResponse[i]),
+        },
+      };
+    }
+    resolve(updateArray);
+  });
+
+export const updateAirtable = (id, fields) =>
+  new Promise((resolve, reject) => {
+    base('RENTCHECK').update(id, fields, (err, record) => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.error('error with Airtable module: ', err);
+        reject(err);
+      }
+      resolve(record);
+    });
+  });
+
+export const updateMany = array =>
+  new Promise(resolve => {
+    array.forEach(async row => await updateAirtable(row.id, row.fields));
+    resolve(true);
+  });
+
+export const updateGeo = airtableResponse =>
   new Promise((resolve, reject) => {
     if (airtableResponse.length === 0) {
       resolve(0);
@@ -42,44 +77,6 @@ const updateGeo = airtableResponse =>
         // update airtable
         .then(updateMany)
         .then(resolve)
-        .catch(console.log);
+        .catch(reject);
     }
   });
-
-const joinWithIDs = (airtableResponse, postcodeResponse) =>
-  new Promise((resolve, reject) => {
-    let updateArray = [];
-    for (let i = 0; i < airtableResponse.length; i++) {
-      updateArray[i] = {
-        id: airtableResponse[i].id,
-        fields: {
-          geolocation: JSON.stringify(postcodeResponse[i])
-        }
-      };
-    }
-    resolve(updateArray);
-  });
-
-const updateAirtable = (id, fields) =>
-  new Promise((resolve, reject) => {
-    base('RENTCHECK').update(id, fields, function(err, record) {
-      if (err) {
-        console.error('error with Airtable module: ', err);
-        resolve(false);
-      }
-      resolve(record);
-    });
-  });
-
-const updateMany = array =>
-  new Promise((resolve, reject) => {
-    array.forEach(async row => await updateAirtable(row.id, row.fields));
-    resolve(true);
-  });
-
-module.exports = {
-  updateGeo,
-  joinWithIDs,
-  updateAirtable,
-  updateMany
-};

@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from ".";
-import { render, cleanup } from "@testing-library/react";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { cleanup } from '@testing-library/react';
+import App from '.';
 
 beforeEach(() => {
   // disable console as we're testing some error handling which should throw up errors
@@ -9,41 +9,42 @@ beforeEach(() => {
   global.console.log = jest.fn().mockImplementation(() => {});
 });
 afterEach(() => {
+  // eslint-disable-next-line no-unused-expressions
   cleanup;
   global.console.error.mockRestore();
   global.console.log.mockRestore();
 });
 
-it("renders without crashing", () => {
-  const div = document.createElement("div");
+it('renders without crashing', () => {
+  const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it("makes an API call", () => {
-  const mockResponse = { express: "Hello From Express" };
+it('makes an API call', () => {
+  const mockResponse = { express: 'Hello From Express' };
   global.fetch = jest.fn().mockImplementation(() =>
     Promise.resolve({
       status: 200,
       json: () => Promise.resolve(mockResponse),
     })
   );
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
-  expect(global.fetch).toHaveBeenCalledTimes(1);
+  expect(global.fetch).toHaveBeenCalledTimes(0);
 });
 
-it("throws an error when receiving 500 status code", () => {
-  const mockResponse = { message: "Server Error" };
+it('throws an error when receiving 500 status code', () => {
+  const mockResponse = { message: 'Server Error' };
   global.fetch = jest.fn().mockImplementation(() =>
     Promise.resolve({
       status: 500,
-      message: "Server Error",
+      message: 'Server Error',
       json: () => Promise.resolve(mockResponse),
     })
   );
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

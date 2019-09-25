@@ -1,13 +1,9 @@
-const Airtable = require('airtable');
-const {
-  makePostcodeArray,
-  getGeolocation,
-  makeLatLngArray
-} = require('./postcodes');
-
+/* eslint-disable camelcase */
+import Airtable from 'airtable';
 // Airtable configuration:
 
 /* istanbul ignore next */
+// eslint-disable-next-line no-nested-ternary
 const apiKey = process.env.AIRTABLE_API_KEY
   ? process.env.AIRTABLE_API_KEY
   : process.env.NODE_ENV === 'production'
@@ -19,7 +15,7 @@ if (!apiKey || !process.env.AIRTABLE_BASE)
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
-  apiKey
+  apiKey,
 });
 const base = Airtable.base(process.env.AIRTABLE_BASE);
 
@@ -31,17 +27,20 @@ const base = Airtable.base(process.env.AIRTABLE_BASE);
 // requestRows - takes 2 arguments - airtable view and callback to be performed on
 //               each record.Returns an array of objects
 
-const getNoGeo = () =>
+export const getNoGeo = () =>
   new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-use-before-define
     requestRows('no_geolocation', (array, record) => {
-      //if (record.fields.postcode != null) {
+      // if (record.fields.postcode != null) {
       const postcodeIdObj = {
         id: record.id,
-        postcode: record.fields.postcode
+        postcode: record.fields.postcode,
       };
       array.push(postcodeIdObj);
       // }
-    }).then(resolve);
+    })
+      .then(resolve)
+      .catch(reject);
   });
 
 const isValidRow = ({
@@ -50,8 +49,8 @@ const isValidRow = ({
     price_sqft,
     use_class,
     date_of_last_rent_review,
-    geolocation
-  }
+    geolocation,
+  },
 }) => {
   if (
     postcode &&
@@ -59,30 +58,33 @@ const isValidRow = ({
     use_class &&
     date_of_last_rent_review &&
     geolocation &&
-    geolocation != 'invalid'
+    geolocation !== 'invalid'
   ) {
     return true;
   }
   return false;
 };
 
-const getAllValidRows = () =>
+export const getAllValidRows = () =>
   new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-use-before-define
     requestRows('valid_records', (array, record) => {
       if (isValidRow(record)) {
         array.push(record.fields);
       }
-    }).then(resolve);
+    })
+      .then(resolve)
+      .catch(reject);
   });
 
-const requestRows = (view, cb) =>
-  new Promise((resolve, reject) => {
+export const requestRows = (view, cb) =>
+  new Promise(resolve => {
     const outputArray = [];
     base('RENTCHECK')
       .select({
         maxRecords: 1000,
         pageSize: 100,
-        view
+        view,
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -93,15 +95,10 @@ const requestRows = (view, cb) =>
           fetchNextPage();
         },
         function done(err) {
+          // eslint-disable-next-line no-console
           if (err) console.error(err);
           // console.log(outputArray);
           resolve(outputArray);
         }
       );
   });
-
-module.exports = {
-  getNoGeo,
-  getAllValidRows,
-  requestRows
-};

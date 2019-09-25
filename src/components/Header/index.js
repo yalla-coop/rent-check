@@ -5,9 +5,10 @@ import {
   HeaderLink,
   HeaderTitle,
   BoldPink,
-  HeaderLogo
+  HeaderLogo,
 } from './Header.styles';
-export default props => (
+
+const Header = ({ openSearch }) => (
   <MyHeader>
     <HeaderLink href="/">
       <HeaderLogo src={logo} alt="East End Trades Guild" />
@@ -16,8 +17,9 @@ export default props => (
       RENT
       <BoldPink>CHECK</BoldPink>
     </HeaderTitle>
-    <HeaderLink href="#" onClick={props.openSearch}>
+    <HeaderLink as="button" onClick={openSearch}>
       Search
     </HeaderLink>
   </MyHeader>
 );
+export default Header;
