@@ -16,7 +16,6 @@ function MapInterface({ location }) {
   const [showFormWarning, setShowFormWarning] = useState(false);
   const [legend, setLegend] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const { state } = location;
 
   // fetch locations
   const [{ data: markers, isLoading }] = useFetch(
@@ -74,13 +73,10 @@ function MapInterface({ location }) {
   }, [postCodeInfo]);
 
   useEffect(() => {
-    if (state && state.search) {
-      setShowSearch(state.search);
+    if (location && location.state && location.state.search) {
+      setShowSearch(location.state.search);
     }
-    // return () => {
-    //   setShowSearch(false);
-    // };
-  }, [state]);
+  }, [location]);
 
   return (
     <React.Fragment>
