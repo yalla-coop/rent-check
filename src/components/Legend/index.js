@@ -33,8 +33,10 @@ const createLegend = open => {
   );
 };
 
-export default ({ toggleLegend, legend }) => (
+const Legend = ({ toggleLegend, legend }) => (
   <LegendUseclass onClick={toggleLegend}>
     <ClassListItems>{createLegend(legend)}</ClassListItems>
   </LegendUseclass>
 );
+
+export default Legend;
