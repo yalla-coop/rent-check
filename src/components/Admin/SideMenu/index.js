@@ -40,8 +40,9 @@ export default class SideMenu extends Component {
   };
 
   onOpenChange = openKeys => {
+    const { openKeys: openKeysState } = this.state;
     const latestOpenKey = openKeys.find(
-      key => this.state.openKeys.indexOf(key) === -1
+      key => openKeysState.indexOf(key) === -1
     );
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });

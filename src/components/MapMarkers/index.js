@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import L from 'leaflet';

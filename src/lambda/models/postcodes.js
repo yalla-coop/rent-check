@@ -18,7 +18,8 @@ export const getGeolocation = postcodeArray =>
       .post('https://api.postcodes.io/postcodes', {
         postcodes: postcodeArray.slice(0, 100),
       })
-      .then(body => resolve(body.result));
+      .then(body => resolve(body.result))
+      .catch(reject);
   });
 
 export const makeLatLngArray = inputArray => {

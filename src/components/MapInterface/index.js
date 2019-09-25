@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import axios from 'axios';
 import Loading from '../Loading';
@@ -9,7 +10,6 @@ import {
   ModalContainer,
   ModalOverlay,
 } from './MapInterface.style';
-
 
 class MapInterface extends Component {
   state = {
@@ -32,6 +32,7 @@ class MapInterface extends Component {
   callApi = async () => {
     this.calledTimes = 0;
     const { data } = await axios('/.netlify/functions/getLocations');
+    console.log('data', data);
     if (data.length > 0) {
       this.setState({ markers: data, loaded: true });
     } else if (this.calledTimes < 2) {
@@ -90,15 +91,16 @@ class MapInterface extends Component {
 
   // function to either render form or map
   // if the center is default then render form to put in postcode
-  showPostcodeSearch = arr => {
-    if (this.state.center === false) {
+  showPostcodeSearch = () => {
+    const { center, searchInput, showFormWarning } = this.state;
+    if (center === false) {
       return (
         <div>
           <PostcodeForm
             onSubmit={this.handleSubmit}
-            postcode={this.state.searchInput}
+            postcode={searchInput}
             onChange={this.handleChange}
-            showWarning={this.state.showFormWarning}
+            showWarning={showFormWarning}
             closeSearch={this.closeSearch}
           />
         </div>
@@ -114,11 +116,13 @@ class MapInterface extends Component {
 
   // toggle Legend
   toggleLegend = () => {
-    this.setState({ legend: !this.state.legend });
+    this.setState(preState => {
+      return { legend: !preState.legend };
+    });
   };
 
   render() {
-    const { loaded, markers, center } = this.state;
+    const { loaded, markers, center, useClassColor, legend } = this.state;
     const modal = (
       <ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
     );
@@ -129,11 +133,11 @@ class MapInterface extends Component {
           <Header openSearch={this.openSearch} />
           {markers && loaded && (
             <Map
-              markers={this.state.markers}
-              center={this.state.center || this.defaultLocation}
-              useColor={this.state.useClassColor}
+              markers={markers}
+              center={center || this.defaultLocation}
+              useColor={useClassColor}
               toggleLegend={this.toggleLegend}
-              legend={this.state.legend}
+              legend={legend}
             />
           )}
         </FullScreenContainer>
