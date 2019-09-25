@@ -6,15 +6,23 @@ export const MyHeader = styled.header.attrs({
 })``;
 
 export const HeaderLogo = styled.img.attrs({
-  className: 'pt1 pl1',
+  className: '',
 })`
   height: 40px;
-  width: 40px;
+  width: auto;
 `;
 
 export const HeaderTitle = styled.span.attrs({
-  className: 'f3 avenir',
-})``;
+  className: 'f3 avenir pa0',
+})`
+  display: block;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  @media all and (max-width: 320px) {
+    display: none;
+  }
+`;
 
 export const BoldPink = styled.span.attrs({
   className: 'fw7 dark-pink',
