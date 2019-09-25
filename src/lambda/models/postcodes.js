@@ -12,6 +12,19 @@ import axios from 'axios';
 export const makePostcodeArray = inputArray =>
   inputArray.map(entry => entry.postcode);
 
+export const getSingleGeo = async postcode => {
+  try {
+    const {
+      data: {
+        result: { latitude, longitude },
+      },
+    } = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
+    return [latitude, longitude];
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
 export const getGeolocation = postcodeArray =>
   new Promise((resolve, reject) => {
     axios
