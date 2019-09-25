@@ -5,7 +5,7 @@ import User from './database/models/User';
 
 // Stub - function to be replaced with one that gets ID of logged in user
 const getCurrentUserId = async () => {
-  const user = await User.findOne({ "Michael Watts" });
+  const user = await User.findOne({ name: 'Michael Watts' });
   return user._id;
 };
 
@@ -17,7 +17,7 @@ const addRentalRecord = async record => {
 const getGeoLocation = async location => {
   const geo = await getSingleGeo(location.postcode);
   return JSON.stringify(geo);
-}
+};
 
 export async function handler(event, context) {
   // eslint-disable-next-line no-param-reassign
