@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Loading from '../Loading';
 import Header from '../Header';
+import Nav from '../Common/Nav';
 import Map from '../Map';
 import PostcodeForm from '../PostcodeForm';
 import {
@@ -81,7 +82,7 @@ function MapInterface() {
     <React.Fragment>
       <FullScreenContainer>
         {isLoading && <Loading />}
-        <Header openSearch={openSearch} />
+        <Nav openSearch={openSearch} />
         {markers && (
           <Map
             markers={markers}
