@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LargeCenteredImage = styled.img.attrs({
-  className: 'w-40 w-70-l pv2 mb2',
+  className: 'w-40 w-70-l pv2 mb3',
 })``;
 
 export const Form = styled.form.attrs({
