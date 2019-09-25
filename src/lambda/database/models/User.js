@@ -1,4 +1,3 @@
-// import constants
 import { roleEnum, statusEnum } from '../../../constants/users';
 
 const mongoose = require('mongoose');

@@ -1,6 +1,6 @@
 import checkAuth from './auth';
 
-function authMiddleware(config) {
+function authMiddleware() {
   return {
     before: (handler, next) => {
       checkAuth(handler.event)

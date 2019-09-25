@@ -4,8 +4,9 @@ import {
   LegendUseclass,
   ClassListItems,
   AnimateCircle,
-  UseText
+  UseText,
 } from './Legend.styles';
+
 const colors = [
   'A1:#ff80cc',
   'A3:#9eebcf',
@@ -14,7 +15,7 @@ const colors = [
   'B8:#ffb700',
   'D1:#a463f2',
   'D2:#ff6300',
-  'other:#fff'
+  'other:#fff',
 ];
 
 const createLegend = open => {
@@ -32,8 +33,8 @@ const createLegend = open => {
   );
 };
 
-export default props => (
-  <LegendUseclass onClick={props.toggleLegend}>
-    <ClassListItems>{createLegend(props.legend)}</ClassListItems>
+export default ({ toggleLegend, legend }) => (
+  <LegendUseclass onClick={toggleLegend}>
+    <ClassListItems>{createLegend(legend)}</ClassListItems>
   </LegendUseclass>
 );
