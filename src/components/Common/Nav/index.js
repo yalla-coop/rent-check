@@ -15,7 +15,7 @@ import {
 // STYLING
 import * as S from './Nav.style';
 
-const Nav = ({ openSearch, role }) => {
+const Nav = ({ role }) => {
   const [menuView, setMenuView] = useState(false);
 
   const toggleMenu = () => {
@@ -52,10 +52,12 @@ const Nav = ({ openSearch, role }) => {
             Rental Map
           </S.MenuLink>
           <S.MenuLink
-            to={MAP_URL}
+            to={{
+              pathname: MAP_URL,
+              state: { search: true },
+            }}
             onClick={() => {
               toggleMenu();
-              openSearch();
             }}
           >
             Search Postcode

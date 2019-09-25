@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Loading from '../Loading';
-import Header from '../Header';
-import Nav from '../Common/Nav';
 import Map from '../Map';
 import PostcodeForm from '../PostcodeForm';
 import {
@@ -12,12 +10,13 @@ import {
 
 import useFetch from '../../useFetch';
 
-function MapInterface() {
+function MapInterface({ location }) {
   const [searchInput, setSearchInput] = useState('');
   const [center, setCenter] = useState([51.527329, -0.0554895]);
   const [showFormWarning, setShowFormWarning] = useState(false);
   const [legend, setLegend] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const { state } = location;
 
   // fetch locations
   const [{ data: markers, isLoading }] = useFetch(
@@ -29,10 +28,6 @@ function MapInterface() {
     { data: postCodeInfo, isLoading: postcodesLoading },
     fetchPostCodes,
   ] = useFetch();
-
-  const openSearch = () => {
-    setShowSearch(true);
-  };
 
   // handle input value in postcode field and update state
   const handleChange = e => {
@@ -78,11 +73,20 @@ function MapInterface() {
     }
   }, [postCodeInfo]);
 
+  useEffect(() => {
+    if (state && state.search) {
+      setShowSearch(state.search);
+    }
+    // return () => {
+    //   setShowSearch(false);
+    // };
+  }, [state]);
+
   return (
     <React.Fragment>
       <FullScreenContainer>
         {isLoading && <Loading />}
-        <Nav openSearch={openSearch} />
+        {/* <Nav openSearch={openSearch} /> */}
         {markers && (
           <Map
             markers={markers}
