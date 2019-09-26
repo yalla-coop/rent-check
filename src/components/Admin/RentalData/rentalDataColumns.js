@@ -1,6 +1,8 @@
 // creates columns for rental data
 import React from 'react';
 import Highlighter from 'react-highlight-words';
+import { Button } from 'antd';
+import moment from 'moment';
 
 const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
   const tableColumns = [
@@ -32,39 +34,55 @@ const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
           textToHighlight={text.toString()}
         />
       ),
-      ...getColumnSearchProps('status'),
+      sorter: (a, b) => a.status.localeCompare(b.status),
+      filters: [
+        {
+          text: 'verified',
+          value: 'verified',
+        },
+        {
+          text: 'unverified',
+          value: 'unverified',
+        },
+        {
+          text: 'rejected',
+          value: 'rejected',
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
     {
       title: 'Date submitted',
       dataIndex: 'date',
       key: 'date',
-      render: text => (
+      render: date => (
         <span style={{ fontWeight: '700' }}>
           <Highlighter
             highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[searchText]}
             autoEscape
-            textToHighlight={text.toString()}
+            textToHighlight={date ? moment(date).format('DD/MM/YYYY') : '-'}
           />
         </span>
       ),
-      ...getColumnSearchProps('date'),
+      sorter: (a, b) =>
+        moment(a.date || 0).valueOf() - moment(b.date || 0).valueOf(),
     },
     {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: text => (
-        <span style={{ fontWeight: '700' }}>
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={text.toString()}
-          />
-        </span>
+      render: (text, record) => (
+        <div className="flex items-center justify-between">
+          <Button
+            style={{ color: '#219653', borderColor: '#219653' }}
+            className="mr1"
+            ghost
+          >
+            View
+          </Button>
+        </div>
       ),
-      ...getColumnSearchProps('actions'),
     },
   ];
 
