@@ -18,7 +18,7 @@ function rotationBuilder() {
 }
 
 export const LegendUseclass = styled.div.attrs({
-  className: 'fixed left-0 bottom-0 z-max',
+  className: 'fixed left-0 bottom-0 z-9999',
 })``;
 
 export const Circle = styled.div.attrs({
