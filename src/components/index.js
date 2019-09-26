@@ -1,6 +1,9 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 
+// import routes here
+import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
+
 // import components here
 import MapInterface from './MapInterface';
 import Admin from './Admin';
