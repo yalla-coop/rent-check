@@ -26,8 +26,8 @@ function Index() {
   if (loading) return <h2>Loading...</h2>;
   return (
     <Switch>
-      <PrivateRoute exact path="/" component={MapInterface} />
-      <PrivateRoute path="/admin" component={Admin} />
+      <PrivateRoute exact path={MAP_URL} component={MapInterface} />
+      <PrivateRoute path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>
   );
 }
