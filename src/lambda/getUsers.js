@@ -5,8 +5,11 @@ import User from './database/models/User';
 require('dotenv').config();
 
 export async function handler(event, context) {
-  // eslint-disable-next-line no-param-reassign
-  context.callbackWaitsForEmptyEventLoop = false;
+  if (process.env.NODE_ENV !== 'test') {
+    // eslint-disable-next-line no-param-reassign
+    context.callbackWaitsForEmptyEventLoop = false;
+  }
+
   try {
     await connectToDatabase();
     const user = await User.find();
