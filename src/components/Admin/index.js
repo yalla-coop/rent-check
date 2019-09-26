@@ -19,10 +19,10 @@ export default function Admin() {
   return (
     <Layout style={{ minHeight: '100vh', paddingTop: '3rem' }}>
       <SideMenu />
-      <Layout>
-        <Header style={{ background: 'grey', padding: 0 }}>
+      <Layout style={{ paddingTop: '2rem' }}>
+        {/* <Header style={{ background: 'grey', padding: 0 }}>
           Header text and stuff
-        </Header>
+        </Header> */}
         <Content style={{ margin: '0 16px' }}>
           <Switch>
             <Route

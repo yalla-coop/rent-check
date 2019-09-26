@@ -1,7 +1,7 @@
 // creates columns for rental data
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button } from 'antd';
+import { Button, Tag } from 'antd';
 import moment from 'moment';
 
 const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
@@ -13,7 +13,11 @@ const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
       render: text => (
         <span style={{ fontWeight: '700' }}>
           <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            highlightStyle={{
+              backgroundColor: 'var(--blue)',
+              padding: 0,
+              color: 'var(--white)',
+            }}
             searchWords={[searchText]}
             autoEscape
             textToHighlight={text.toString()}
@@ -27,12 +31,14 @@ const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
       dataIndex: 'status',
       key: 'status',
       render: text => (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text.toString()}
-        />
+        <Tag color={`var(--${text})`} style={{ textTransform: 'capitalize' }}>
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={text.toString()}
+          />
+        </Tag>
       ),
       sorter: (a, b) => a.status.localeCompare(b.status),
       filters: [
@@ -73,9 +79,9 @@ const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
       dataIndex: 'actions',
       key: 'actions',
       render: (text, record) => (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <Button
-            style={{ color: '#219653', borderColor: '#219653' }}
+            style={{ color: 'var(--blue)', borderColor: 'var(--blue)' }}
             className="mr1"
             ghost
           >

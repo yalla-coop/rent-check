@@ -31,7 +31,7 @@ export default function RentalData() {
       key: _id,
       status,
       submitted: submittedBy.email,
-      date: createdAt.toString(),
+      date: createdAt,
     }));
 
   return (
@@ -43,6 +43,7 @@ export default function RentalData() {
         render={props => (
           <>
             {console.log('hello', msg)}
+            <div>Add rental data</div>
             <Table
               columns={rentalDataColumns}
               dataSource={rentalRecords}

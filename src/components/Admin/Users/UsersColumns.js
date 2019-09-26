@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Tag } from 'antd';
 import { renderUserDetails } from '../../../constants/users';
 
 export default ({ getColumnSearchProps, searchText }) => {
@@ -59,7 +59,9 @@ export default ({ getColumnSearchProps, searchText }) => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (text, record) => <span>{renderUserDetails[text]}</span>,
+      render: (text, record) => (
+        <Tag color={`var(--${text})`}>{renderUserDetails[text]}</Tag>
+      ),
     },
     {
       title: 'Actions',

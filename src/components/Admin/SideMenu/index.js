@@ -19,6 +19,7 @@ export default function SideMenu() {
         setCollapsed(value);
       }}
       theme="light"
+      style={{ paddingTop: '2rem' }}
     >
       <div className="logo" />
       <Menu
