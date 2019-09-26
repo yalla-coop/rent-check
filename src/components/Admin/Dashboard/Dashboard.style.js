@@ -5,11 +5,14 @@ export const DashboardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 `;
 
 export const Logo = styled.img`
-  height: 250px;
-  width: 250px;
+  width: 50vw;
+  heightL auto;
 `;
 
-export const Headline = styled.h1``;
+export const Headline = styled.h1.attrs({
+  className: 'avenir f4 f2-l mb3 mb5-l',
+})``;
