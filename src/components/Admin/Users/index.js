@@ -29,6 +29,7 @@ export default function Users() {
       status,
     }));
 
+  console.log(users);
   return (
     <Switch>
       {isLoading && <Loading />}
