@@ -3,9 +3,6 @@ import connectToDatabase from './database/dbConnection';
 // import db query
 import { getLocations } from './database/queries/rentalData';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-require('dotenv').config();
-
 export async function handler(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
