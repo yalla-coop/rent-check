@@ -12,10 +12,10 @@ describe('Test getUsers query', () => {
   });
 
   test('users should be found', async done => {
-    const getUsers = await handler();
+    const getUsers = await handler(null, {});
     expect(getUsers.statusCode).toBe(200);
     expect(getUsers.body).toBeDefined();
-    expect(getUsers).toBeDefined();
+
     done();
   });
 });
