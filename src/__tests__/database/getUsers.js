@@ -15,7 +15,6 @@ describe('Test getUsers query', () => {
     const getUsers = await handler(null, {});
     expect(getUsers.statusCode).toBe(200);
     expect(getUsers.body).toBeDefined();
-
     done();
   });
 });

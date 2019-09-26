@@ -19,7 +19,6 @@ export async function handler(event, context) {
       body: JSON.stringify({ msg: users }),
     };
   } catch (err) {
-    console.log(err);
     return {
       statusCode: 500,
       body: JSON.stringify({ msg: err.message }),
