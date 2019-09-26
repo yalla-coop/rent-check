@@ -1,5 +1,7 @@
 import RentalRecord from '../../models/RentalRecord';
 
+export const getLocations = () => RentalRecord.find();
+
 export const getAllData = () =>
   RentalRecord.aggregate([
     // get details of the user who submitted it
