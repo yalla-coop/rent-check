@@ -14,3 +14,15 @@ export const status = {
 };
 
 export const statusEnum = Object.values(status);
+
+export const renderUserDetails = {
+  // role
+  user: 'User',
+  superUser: 'Super User',
+  admin: 'Admin',
+  // status
+  unverified: 'Unverified',
+  verified: 'Verified',
+  rejected: 'Rejected',
+  awaitingSuperUser: 'Awaiting Super User',
+};
