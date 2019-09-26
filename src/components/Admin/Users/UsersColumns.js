@@ -56,24 +56,27 @@ export default ({ getColumnSearchProps, searchText }) => {
       ),
     },
     {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text, record) => <span>{renderUserDetails[text]}</span>,
+    },
+    {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
       render: (text, record) => (
         <div className="flex items-center justify-between">
-          <span>{renderUserDetails[text]}</span>
-          <div>
-            <Button
-              style={{ color: '#219653', borderColor: '#219653' }}
-              className="mr1"
-              ghost
-            >
-              Approve
-            </Button>
-            <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
-              Reject
-            </Button>
-          </div>
+          <Button
+            style={{ color: '#219653', borderColor: '#219653' }}
+            className="mr1"
+            ghost
+          >
+            Approve
+          </Button>
+          <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
+            Reject
+          </Button>
         </div>
       ),
     },

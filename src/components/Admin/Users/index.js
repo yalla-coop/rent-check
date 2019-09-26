@@ -26,7 +26,7 @@ export default function Users() {
       name,
       email,
       level: role,
-      actions: status,
+      status,
     }));
 
   return (
