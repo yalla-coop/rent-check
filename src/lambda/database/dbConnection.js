@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 
 let mongoURI = process.env.MONGO_URI;

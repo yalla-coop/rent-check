@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import Loading from '../Loading';
 import Header from '../Header';
 import Map from '../Map';
@@ -10,139 +9,97 @@ import {
   ModalOverlay,
 } from './MapInterface.style';
 
+import useFetch from '../../useFetch';
 
-class MapInterface extends Component {
-  state = {
-    markers: false,
-    loaded: false,
-    searchInput: '',
-    center: [51.527329, -0.0554895],
-    showFormWarning: false,
-    legend: false,
-  };
+function MapInterface() {
+  const [searchInput, setSearchInput] = useState('');
+  const [center, setCenter] = useState([51.527329, -0.0554895]);
+  const [showFormWarning, setShowFormWarning] = useState(false);
+  const [legend, setLegend] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
-  defaultLocation = [51.527329, -0.0554895];
+  // fetch locations
+  const [{ data: markers, isLoading }] = useFetch(
+    '/.netlify/functions/getLocations'
+  );
 
-  componentDidMount() {
-    // this.showLoadingScreen();
-    this.callApi().catch(err => console.log(err));
-  }
+  // fetch postCode data
+  const [
+    { data: postCodeInfo, isLoading: postcodesLoading },
+    fetchPostCodes,
+  ] = useFetch();
 
-  // api call made to backend to fetch airtable object
-  callApi = async () => {
-    this.calledTimes = 0;
-    const { data } = await axios('/.netlify/functions/getLocations');
-    if (data.length > 0) {
-      this.setState({ markers: data, loaded: true });
-    } else if (this.calledTimes < 2) {
-      setTimeout(this.callApi, 5000);
-    }
-  };
-
-  // FORM FUNCTIONS
-  openSearch = () => {
-    this.setState({ center: false });
-  };
-
-  closeSearch = () => {
-    this.setState({ center: this.defaultLocation });
+  const openSearch = () => {
+    setShowSearch(true);
   };
 
   // handle input value in postcode field and update state
-  handleChange = event => {
-    const { value } = event.target;
-    this.setState({ searchInput: value, showFormWarning: false });
+  const handleChange = e => {
+    const { value } = e.target;
+    setSearchInput(value);
+    setShowFormWarning(false);
   };
 
   // grab postcode and make api call to postcodesIo to get lat Long
-  handleSubmit = event => {
-    const { searchInput } = this.state;
-    event.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
     const postcode = searchInput;
     if (postcode.length === 0) {
-      return this.setState({ showFormWarning: 'Please enter a postcode' });
+      return setShowFormWarning('Please enter a postcode');
     }
-    this.apiCallGeo(postcode);
+
+    fetchPostCodes(`https://api.postcodes.io/postcodes/${postcode}`);
+    setShowSearch(false);
   };
 
-  apiCallGeo = postcode => {
-    fetch(`https://api.postcodes.io/postcodes/${postcode}`)
-      .then(res => res.json())
-      .then(res => this.checkResponse(res));
-  };
-
-  // function to create lat long array to update the center key in state
-  // Check if postcode exists or not depending on status code
-  // if status code 404 update status and keep center at default location, otherwise return lat long array
-  checkResponse = res => {
-    if (res.status === 404) {
-      return this.setState({
-        showFormWarning: 'Please enter a valid postcode',
-        center: false,
-      });
-    }
-    const location = [
-      Object.values(res.result)[7],
-      Object.values(res.result)[6],
-    ];
-    return this.setState({ showFormWarning: false, center: location });
-  };
-
-  // function to either render form or map
-  // if the center is default then render form to put in postcode
-  showPostcodeSearch = arr => {
-    if (this.state.center === false) {
-      return (
-        <div>
-          <PostcodeForm
-            onSubmit={this.handleSubmit}
-            postcode={this.state.searchInput}
-            onChange={this.handleChange}
-            showWarning={this.state.showFormWarning}
-            closeSearch={this.closeSearch}
-          />
-        </div>
-      );
-    }
-  };
-
-  // Loading Screen Function
-  showLoadingScreen = () => {
-    const loadingTime = 2000;
-    setTimeout(() => this.setState({ loaded: true }), loadingTime);
-  };
-
-  // toggle Legend
-  toggleLegend = () => {
-    this.setState({ legend: !this.state.legend });
-  };
-
-  render() {
-    const { loaded, markers, center } = this.state;
-    const modal = (
-      <ModalContainer>{this.showPostcodeSearch(center)}</ModalContainer>
-    );
+  const showPostcodeSearch = () => {
     return (
-      <React.Fragment>
-        <FullScreenContainer>
-          {(!loaded || !markers) && <Loading />}
-          <Header openSearch={this.openSearch} />
-          {markers && loaded && (
-            <Map
-              markers={this.state.markers}
-              center={this.state.center || this.defaultLocation}
-              useColor={this.state.useClassColor}
-              toggleLegend={this.toggleLegend}
-              legend={this.state.legend}
-            />
-          )}
-        </FullScreenContainer>
-
-        {loaded && markers && !center && <ModalOverlay />}
-        {loaded && markers && !center && modal}
-      </React.Fragment>
+      <div>
+        <PostcodeForm
+          onSubmit={handleSubmit}
+          postcode={searchInput}
+          onChange={handleChange}
+          showWarning={showFormWarning}
+          closeSearch={setShowSearch}
+          postcodesLoading={postcodesLoading}
+        />
+      </div>
     );
-  }
+  };
+
+  useEffect(() => {
+    if (postCodeInfo) {
+      const locations = [
+        postCodeInfo.result.latitude,
+        postCodeInfo.result.longitude,
+      ];
+      setCenter(locations);
+    }
+  }, [postCodeInfo]);
+
+  return (
+    <React.Fragment>
+      <FullScreenContainer>
+        {isLoading && <Loading />}
+        <Header openSearch={openSearch} />
+        {markers && (
+          <Map
+            markers={markers}
+            center={center}
+            toggleLegend={() => setLegend(!legend)}
+            legend={legend}
+          />
+        )}
+      </FullScreenContainer>
+
+      {(showSearch || postcodesLoading) && (
+        <>
+          <ModalOverlay />
+          <ModalContainer>{showPostcodeSearch()}</ModalContainer>
+        </>
+      )}
+    </React.Fragment>
+  );
 }
 
 export default MapInterface;

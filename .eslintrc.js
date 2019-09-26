@@ -14,6 +14,9 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'jsx-a11y/label-has-associated-control': 0,
+    'jsx-a11y/label-has-for':0,
+    'consistent-return': 0,
     'import/prefer-default-export': 0,
     'react/jsx-no-undef': 1,
     // disables the windows/unix linebreak checks.

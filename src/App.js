@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './components';
 
 import './tachyons.css';
 import 'antd/dist/antd.css';
 
-export default class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <Routes />
-        </div>
-      </Router>
-    );
-  }
+export default function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes />
+      </div>
+    </Router>
+  );
 }

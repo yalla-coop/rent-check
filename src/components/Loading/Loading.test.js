@@ -1,11 +1,12 @@
-const { render, cleanup } = require("@testing-library/react");
-import React from "react";
-import Landing from ".";
+import React from 'react';
+import Landing from '.';
+
+const { render, cleanup } = require('@testing-library/react');
 
 afterAll(cleanup);
 
-describe("Landing", () => {
-  it("renders without crashing", () => {
+describe('Landing', () => {
+  it('renders without crashing', () => {
     render(<Landing />);
   });
 });

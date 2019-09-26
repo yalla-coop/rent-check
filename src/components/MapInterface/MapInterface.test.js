@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import App from '.';
 
 beforeEach(() => {
@@ -9,6 +9,7 @@ beforeEach(() => {
   global.console.log = jest.fn().mockImplementation(() => {});
 });
 afterEach(() => {
+  // eslint-disable-next-line no-unused-expressions
   cleanup;
   global.console.error.mockRestore();
   global.console.log.mockRestore();

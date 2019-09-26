@@ -2,7 +2,7 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 
-export default ({ getColumnSearchProps, searchText }) => {
+const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
   const tableColumns = [
     {
       title: 'Submitted by',
@@ -70,3 +70,5 @@ export default ({ getColumnSearchProps, searchText }) => {
 
   return tableColumns;
 };
+
+export default rentalDataColumns;

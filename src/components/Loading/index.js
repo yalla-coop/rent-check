@@ -2,7 +2,7 @@ import React from 'react';
 import { LargeCenteredImage, HeaderTitle, BoldPink } from './Loading.styles';
 import logo from '../../assets/logo.png';
 
-export default props => {
+const Loading = () => {
   return (
     <div className="w-70 w-40-ns h-100 mw5 center flex flex-column items-center justify-center">
       <LargeCenteredImage src={logo} />
@@ -13,3 +13,5 @@ export default props => {
     </div>
   );
 };
+
+export default Loading;
