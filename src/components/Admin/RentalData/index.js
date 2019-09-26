@@ -1,37 +1,43 @@
 // Router for Rental Data
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Loading from '../../Loading';
 
 // Components
+import { Icon } from 'antd';
+import Loading from '../../Loading';
 import Table from '../Table';
+import RentalRecord from './RentalRecord';
+
+// Styling
+import * as S from './RentalData.style';
 
 // Table props
 import rentalDataColumns from './rentalDataColumns';
-import { dataSource } from './dummyData';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
+import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
 
 // custom hooks
 import useFetch from '../../../useFetch';
 
-const { RENTAL_DATA_ALL } = routes;
+const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
-export default function RentalData() {
+function RentalData() {
   // fetch data
   const [{ data: msg, isLoading }] = useFetch(
     '/.netlify/functions/getRentalData'
   );
 
-  // create table friendly data sets
+  // create table friendly data sets and also pass on all rental details
   const rentalRecords =
     msg &&
-    msg.map(({ _id, status, submittedBy, createdAt }) => ({
-      key: _id,
-      status,
-      submitted: submittedBy.email,
-      date: createdAt,
+    msg.map(record => ({
+      key: record._id,
+      status: record.status,
+      submitted: record.submittedBy.email,
+      date: record.createdAt,
+      rentalData: record,
     }));
 
   return (
@@ -42,8 +48,16 @@ export default function RentalData() {
         path={RENTAL_DATA_ALL}
         render={props => (
           <>
-            {console.log('hello', msg)}
-            <div>Add rental data</div>
+            <S.Wrapper>
+              <S.StyledLink to={ADD_RENTAL_URL}>
+                Add new rental data{' '}
+                <Icon
+                  type="arrow-right"
+                  fontSize={32}
+                  style={{ paddingLeft: '0.25rem' }}
+                />
+              </S.StyledLink>
+            </S.Wrapper>
             <Table
               columns={rentalDataColumns}
               dataSource={rentalRecords}
@@ -52,6 +66,13 @@ export default function RentalData() {
           </>
         )}
       />
+      <Route
+        exact
+        path={RENTAL_DATA_SINGLE}
+        render={props => <RentalRecord {...props} />}
+      />
     </Switch>
   );
 }
+
+export default RentalData;

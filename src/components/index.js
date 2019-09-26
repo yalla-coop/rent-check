@@ -8,7 +8,8 @@ import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
 import MapInterface from './MapInterface';
 import Admin from './Admin';
 
-export default function Router() {
+export default function Router(props) {
+  console.log('prop', props);
   return (
     <Switch>
       <Route exact path={MAP_URL} component={MapInterface} />

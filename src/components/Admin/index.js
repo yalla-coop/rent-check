@@ -13,16 +13,13 @@ import RentalData from './RentalData';
 import { routes } from '../../constants/adminRoutes';
 
 const { DASHBOARD, USERS, RENTAL_DATA } = routes;
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 export default function Admin() {
   return (
     <Layout style={{ minHeight: '100vh', paddingTop: '3rem' }}>
       <SideMenu />
       <Layout style={{ paddingTop: '2rem' }}>
-        {/* <Header style={{ background: 'grey', padding: 0 }}>
-          Header text and stuff
-        </Header> */}
         <Content style={{ margin: '0 16px' }}>
           <Switch>
             <Route

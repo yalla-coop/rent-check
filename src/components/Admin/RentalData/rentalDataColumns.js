@@ -1,28 +1,34 @@
 // creates columns for rental data
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Tag } from 'antd';
+import { Button, Tag, Icon } from 'antd';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
-const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
+// routes
+import { routes } from '../../../constants/adminRoutes';
+
+const { RENTAL_DATA_SINGLE } = routes;
+
+const rentalDataColumns = props => {
+  const { getColumnSearchProps, searchText } = props;
+  console.log('column', props);
   const tableColumns = [
     {
       title: 'Submitted by',
       dataIndex: 'submitted',
       key: 'submitted',
       render: text => (
-        <span style={{ fontWeight: '700' }}>
-          <Highlighter
-            highlightStyle={{
-              backgroundColor: 'var(--blue)',
-              padding: 0,
-              color: 'var(--white)',
-            }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={text.toString()}
-          />
-        </span>
+        <Highlighter
+          highlightStyle={{
+            backgroundColor: 'var(--blue)',
+            padding: 0,
+            color: 'var(--white)',
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text.toString()}
+        />
       ),
       ...getColumnSearchProps('submitted'),
     },
@@ -62,30 +68,43 @@ const rentalDataColumns = ({ getColumnSearchProps, searchText }) => {
       dataIndex: 'date',
       key: 'date',
       render: date => (
-        <span style={{ fontWeight: '700' }}>
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={date ? moment(date).format('DD/MM/YYYY') : '-'}
-          />
-        </span>
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={date ? moment(date).format('DD/MM/YYYY') : '-'}
+        />
       ),
       sorter: (a, b) =>
         moment(a.date || 0).valueOf() - moment(b.date || 0).valueOf(),
     },
     {
       title: 'Actions',
-      dataIndex: 'actions',
+      dataIndex: 'rentalData',
       key: 'actions',
-      render: (text, record) => (
-        <div className="flex items-center justify-center">
+      render: (data, record) => (
+        <div className="flex items-center">
+          <Link
+            to={{ pathname: RENTAL_DATA_SINGLE, state: { rentalData: data } }}
+          >
+            <Button
+              style={{
+                color: 'var(--blue)',
+                borderColor: 'var(--blue)',
+                marginRight: '1rem',
+              }}
+              className="mr1"
+              ghost
+            >
+              View
+            </Button>
+          </Link>
           <Button
-            style={{ color: 'var(--blue)', borderColor: 'var(--blue)' }}
+            style={{ color: 'var(--red)', borderColor: 'var(--red)' }}
             className="mr1"
             ghost
           >
-            View
+            <Icon type="delete" />
           </Button>
         </div>
       ),
