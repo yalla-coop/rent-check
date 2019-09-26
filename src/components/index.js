@@ -36,8 +36,8 @@ function Index() {
 const Routes = () => {
   return (
     <Auth0Provider
-      domain="dev-8ho9rcxd.auth0.com"
-      client_id="CFV8U2DREQdjLVMWN4ALJ0xNqldwxHsV"
+      domain={process.env.REACT_APP_AUTH0_DOMAIN}
+      client_id={process.env.REACT_APP_AUTH0_CLIENT_ID}
       redirect_uri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
     >
