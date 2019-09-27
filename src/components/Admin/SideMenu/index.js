@@ -44,7 +44,7 @@ export default function SideMenu() {
                   key={element.route + item.route}
                   style={{ textAlign: 'left' }}
                 >
-                  <Link to={`/admin${element.route + item.route}`}>
+                  <Link to={`/control-panel${element.route + item.route}`}>
                     <span>{item.title}</span>
                   </Link>
                 </Menu.Item>
@@ -52,7 +52,7 @@ export default function SideMenu() {
             </SubMenu>
           ) : (
             <Menu.Item key={element.route} style={{ textAlign: 'left' }}>
-              <Link to={`/admin${element.route}`}>
+              <Link to={`/control-panel${element.route}`}>
                 <Icon type={element.icon} />
                 <span>{element.title}</span>
               </Link>

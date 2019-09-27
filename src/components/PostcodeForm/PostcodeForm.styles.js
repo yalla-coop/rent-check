@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const LargeCenteredImage = styled.img.attrs({
-  className: 'w-40 w-70-l pv2 mb2',
+  className: 'w-80 pv2 mb2',
 })``;
 
 export const Form = styled.form.attrs({
   className:
-    'w5 center flex flex-column items-center justify-center avenir bg-white pa3 br3 o-100 tc',
+    'f5 w5 center flex flex-column items-center justify-center avenir bg-white pa3 br3 o-100 tc',
 })``;
 
 export const Button = styled.button.attrs({

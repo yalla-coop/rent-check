@@ -1,15 +1,15 @@
 export const routes = {
-  DASHBOARD: '/admin/',
-  USERS: '/admin/users',
-  USERS_ALL: '/admin/users/',
-  USERS_VERIFY: '/admin/users/verify',
-  USERS_SUPER_REQ: '/admin/users/super-req',
-  USERS_VERIFIED: '/admin/users/verified',
-  USERS_SUPER: '/admin/users/super',
-  RENTAL_DATA: '/admin/rental-data',
-  RENTAL_DATA_ALL: '/admin/rental-data/',
-  RENTAL_DATA_VERIFY: '/admin/rental-data/verify',
-  RENTAL_DATA_VERIFIED: '/admin/rental-data/verified',
+  DASHBOARD: '/control-panel/',
+  USERS: '/control-panel/users',
+  USERS_ALL: '/control-panel/users/',
+  USERS_VERIFY: '/control-panel/users/verify',
+  USERS_SUPER_REQ: '/control-panel/users/super-req',
+  USERS_VERIFIED: '/control-panel/users/verified',
+  USERS_SUPER: '/control-panel/users/super',
+  RENTAL_DATA: '/control-panel/rental-data',
+  RENTAL_DATA_ALL: '/control-panel/rental-data/',
+  RENTAL_DATA_VERIFY: '/control-panel/rental-data/verify',
+  RENTAL_DATA_VERIFIED: '/control-panel/rental-data/verified',
 };
 
 export const menuElements = [
