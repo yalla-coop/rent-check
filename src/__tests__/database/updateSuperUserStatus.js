@@ -1,15 +1,19 @@
 /**
  * @jest-environment node
  */
-
+import mongoose from 'mongoose';
 import User from '../../lambda/database/models/User';
 import buildData from '../../lambda/database/data/index';
+import resetDb from '../../lambda/database/resetDb';
 import { roles, status } from '../../constants/users';
 
-import { rejectSuperUser } from '../../lambda/database/queries/user';
+import {
+  rejectSuperUser,
+  approveSuperUser,
+} from '../../lambda/database/queries/user';
 
 describe('Test queries to update status for awaitingSuperUser', () => {
-  beforeAll(async done => {
+  beforeEach(async done => {
     // build dummy data
     await buildData();
     done();
@@ -22,9 +26,28 @@ describe('Test queries to update status for awaitingSuperUser', () => {
     });
     const userId = awaitingSuperUserStatus._id;
     expect(userId).toBeDefined();
-    await rejectSuperUser(userId).then(res => {
-      expect(res).toBeDefined();
-      expect(res.status).toBe('verified');
+
+    rejectSuperUser(userId).then(updatedUser => {
+      expect(updatedUser).toBeDefined();
+      expect(updatedUser.status).toBe(status.VERIFIED);
+      done();
+    });
+  });
+
+  test('approveSuperUser', async done => {
+    expect(User).toBeDefined();
+    const awaitingSuperUserStatus = await User.findOne({
+      status: status.AWAITING_SUPER,
+    });
+    expect(awaitingSuperUserStatus).toBeDefined();
+    const userId = awaitingSuperUserStatus._id;
+    expect(userId).toBeDefined();
+
+    approveSuperUser(userId).then(updatedUser => {
+      expect(updatedUser).toBeDefined();
+      expect(updatedUser.status).toBe(status.VERIFIED);
+      expect(updatedUser.role).toBe(roles.SUPERUSER);
+      expect(updatedUser.grantedSuperBy.toString()).toBe(userId.toString());
       done();
     });
   });
