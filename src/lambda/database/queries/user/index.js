@@ -16,9 +16,9 @@ export const rejectSuperUser = id =>
   );
 
 // updates awaitingSuperUser status if approved
-export const approveSuperUser = id =>
+export const approveSuperUser = (userId, adminId) =>
   User.findOneAndUpdate(
-    { _id: id },
-    { role: roles.SUPERUSER, status: status.VERIFIED, grantedSuperBy: id },
+    { _id: userId },
+    { role: roles.SUPERUSER, status: status.VERIFIED, grantedSuperBy: adminId },
     { new: true }
   );
