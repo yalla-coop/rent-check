@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import moment from 'moment';
 
 import * as options from '../../constants/rentalRecords';
 
@@ -11,21 +10,10 @@ export default yup.object().shape({
     .string()
     .oneOf(options.landlordTenantsActEnum, 'Select a value')
     .required(),
-  // dateOfRentReview: yup.object({
-  //   last: yup.string().required('Required field'),
-  //   next: yup
-  //     .string()
-  //     .required('Required')
-  //     .test('is-end-date-valid', 'not valid', function isValid(next) {
-  //       console.log('this', this, next);
-  //       // const { doLastRentReview } = this.parent;
-  //       // console.log(doLastRentReview, 'next', doNextRentReview);
-  //       // const isBefore =
-  //       //   moment(doNextRentReview).valueOf() >=
-  //       //   moment(doLastRentReview).valueOf();
-  //       // return isBefore;
-  //     }),
-  // }),
+
+  doLastRentReview: yup.mixed().required('Required field'),
+  doNextRentReview: yup.mixed().required('Required field'),
+
   landLordName: yup.string().required('Required field'),
   specifications: yup
     .string()

@@ -22,7 +22,6 @@ formData().forEach(item => {
 
 const RentalForm = () => {
   function onSubmitForm(state) {
-    console.log('hiiiii');
     alert(JSON.stringify(state, null, 2));
   }
   const {
@@ -32,29 +31,24 @@ const RentalForm = () => {
     handleOnSubmit,
   } = useForm(initValues, validationSchema, onSubmitForm);
 
+  const disabledStartDate = startValue => {
+    const { doNextRentReview: endValue } = values;
+    // false mean not disabled
+    if (!startValue || !endValue) {
+      return false;
+    }
+
+    return startValue.valueOf() > endValue.valueOf();
+  };
+
   const disabledEndDate = endValue => {
     const { doLastRentReview: startValue } = values;
-    console.log('End', startValue, endValue);
     if (!endValue || !startValue) {
-      return endValue && endValue < moment().subtract(1, 'day');
+      return false;
     }
     return (
       endValue.valueOf() <= startValue.valueOf() ||
       (endValue && endValue < moment().subtract(1, 'day'))
-    );
-  };
-
-  const disabledStartDate = startValue => {
-    const { doNextRentReview: endValue } = values;
-    console.log('start', startValue, endValue);
-    // false mean not disabled
-    if (!startValue || !endValue) {
-      return startValue && startValue < moment().subtract(1, 'day');
-    }
-
-    return (
-      startValue.valueOf() > endValue.valueOf() ||
-      (startValue && startValue < moment().subtract(1, 'day'))
     );
   };
 

@@ -3,10 +3,10 @@ import { Select as AntSelect } from 'antd';
 
 const { Option } = AntSelect;
 
-const Select = ({ options, name, handleChange, value }) => {
+const Select = ({ options, name, handleChange, value, placeholder }) => {
   return (
     <AntSelect
-      placeholder="Select a value"
+      placeholder={placeholder}
       value={value || undefined}
       onChange={v => handleChange(name, v)}
     >

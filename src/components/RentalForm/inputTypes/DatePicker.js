@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { DatePicker as DatePickerAnt } from 'antd';
 
 const DatePicker = ({
@@ -8,8 +7,8 @@ const DatePicker = ({
   disabledStartDate,
   disabledEndDate,
   value,
+  placeholder,
 }) => {
-  console.log('value', value);
   return (
     <DatePickerAnt
       onChange={v => handleChange(name, v)}
@@ -18,7 +17,7 @@ const DatePicker = ({
       }
       value={value}
       format="YYYY-MM-DD"
-      placeholder="Start Date"
+      placeholder={placeholder}
     />
   );
 };
