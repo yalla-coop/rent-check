@@ -14,7 +14,12 @@ const FormItem = ({ label, type, ...formProps }) => {
       <Col span={7}>
         <Label>{label}</Label>
       </Col>
-      <Col span={16}>{getInputComponent(type)(formProps)}</Col>
+      <Col span={16}>
+        {getInputComponent(type)(formProps)}
+        <div key={formProps.label} style={{ color: 'red' }}>
+          {formProps.error}
+        </div>
+      </Col>
     </Row>
   );
 };

@@ -1,72 +1,102 @@
 import React from 'react';
+import moment from 'moment';
 import { Row, Col } from 'antd';
 
 import FormItem from './FormItem';
 import formData from './rental-form.config';
-import { useForm } from '../../hooks/useForm';
+import useForm from '../../hooks/useForm2';
+import validationSchema from './rentalForm.validation';
+
+import * as S from './RentalForm.style';
+
+import Button from '../Common/Button';
 
 const initValues = {};
 formData().forEach(item => {
-  initValues[item.name] = '';
+  if (item.type === 'date') {
+    initValues[item.name] = null;
+  } else {
+    initValues[item.name] = '';
+  }
 });
 
 const RentalForm = () => {
-  const [values, handleChange] = useForm(initValues);
+  function onSubmitForm(state) {
+    console.log('hiiiii');
+    alert(JSON.stringify(state, null, 2));
+  }
+  const {
+    state: values,
+    errors,
+    handleOnChange: handleChange,
+    handleOnSubmit,
+  } = useForm(initValues, validationSchema, onSubmitForm);
+
+  const disabledEndDate = endValue => {
+    const { doLastRentReview: startValue } = values;
+    console.log('End', startValue, endValue);
+    if (!endValue || !startValue) {
+      return endValue && endValue < moment().subtract(1, 'day');
+    }
+    return (
+      endValue.valueOf() <= startValue.valueOf() ||
+      (endValue && endValue < moment().subtract(1, 'day'))
+    );
+  };
+
+  const disabledStartDate = startValue => {
+    const { doNextRentReview: endValue } = values;
+    console.log('start', startValue, endValue);
+    // false mean not disabled
+    if (!startValue || !endValue) {
+      return startValue && startValue < moment().subtract(1, 'day');
+    }
+
+    return (
+      startValue.valueOf() > endValue.valueOf() ||
+      (startValue && startValue < moment().subtract(1, 'day'))
+    );
+  };
+
+  const renderCol = num => {
+    return formData().map(({ col, ...rest }) => {
+      if (col === num) {
+        return (
+          <FormItem
+            key={rest.label}
+            {...rest}
+            handleChange={handleChange}
+            disabledStartDate={disabledStartDate}
+            disabledEndDate={disabledEndDate}
+            value={values[rest.name]}
+            error={errors[rest.name]}
+          />
+        );
+      }
+      return null;
+    });
+  };
 
   return (
-    <form style={{ width: '65%', margin: '0 auto' }}>
+    <S.Form onSubmit={handleOnSubmit}>
       <h2>Add Rental Data</h2>
 
       <Row type="flex" justify="space-between">
         <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-          {formData().map(({ col, ...rest }) => {
-            if (col === 1) {
-              return (
-                <FormItem
-                  key={rest.label}
-                  {...rest}
-                  handleChange={handleChange}
-                  value={values[rest.name]}
-                />
-              );
-            }
-            return null;
-          })}
+          {renderCol(1)}
         </Col>
         <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-          {formData().map(({ col, ...rest }) => {
-            if (col === 2) {
-              return (
-                <FormItem
-                  key={rest.label}
-                  {...rest}
-                  handleChange={handleChange}
-                  value={values[rest.name]}
-                />
-              );
-            }
-            return null;
-          })}
+          {renderCol(2)}
         </Col>
       </Row>
       <Row type="flex" justify="space-between">
-        <Col xs={20} sm={20} md={20} lg={20} xl={20}>
-          {formData().map(({ col, ...rest }) => {
-            if (col === 3) {
-              return (
-                <FormItem
-                  key={rest.label}
-                  {...rest}
-                  handleChange={handleChange}
-                  value={values[rest.name]}
-                />
-              );
-            }
-            return null;
-          })}
+        <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+          {renderCol(3)}
         </Col>
       </Row>
-    </form>
+
+      <Button type="primary" text="Submit" style={{ margin: '0 auto' }} />
+    </S.Form>
   );
 };
 

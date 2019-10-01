@@ -4,8 +4,8 @@ import { InputNumber as InputNumberAnt } from 'antd';
 const InputNumber = ({ name, handleChange, value }) => {
   return (
     <InputNumberAnt
+      style={{ width: '100%' }}
       min={1}
-      max={10}
       defaultValue={1}
       onChange={v => handleChange(name, v)}
       value={value}

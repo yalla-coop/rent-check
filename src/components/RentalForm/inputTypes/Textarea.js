@@ -5,6 +5,7 @@ const TextArea = ({ name, handleChange, value }) => {
   return (
     <div>
       <Input.TextArea
+        style={{ width: '100%' }}
         rows={4}
         onChange={e => handleChange(name, e.target.value)}
         value={value}

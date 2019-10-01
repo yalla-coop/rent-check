@@ -5,7 +5,11 @@ const { Option } = AntSelect;
 
 const Select = ({ options, name, handleChange, value }) => {
   return (
-    <AntSelect value={value} onChange={v => handleChange(name, v)}>
+    <AntSelect
+      placeholder="Select a value"
+      value={value || undefined}
+      onChange={v => handleChange(name, v)}
+    >
       {!!options &&
         options.map(option => (
           <Option key={option} value={option}>
