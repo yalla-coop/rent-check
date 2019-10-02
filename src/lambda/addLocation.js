@@ -12,25 +12,31 @@ const getCurrentUserId = async () => {
 export async function handler(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
-  if (event.httpMethod === 'POST') {
-    const location = JSON.parse(event.body);
-    try {
-      await connectToDatabase();
-      location.submittedBy = await getCurrentUserId();
-      location.geoLocation = await getSingleGeo(location);
-      const result = await addRentalRecord(location);
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+    };
+  }
+  try {
+    const rentalRecord = JSON.parse(event.body);
+    if (!rentalRecord.postcode) {
       return {
-        statusCode: 200,
-        body: JSON.stringify(result),
-      };
-    } catch (err) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Server error' }),
+        statusCode: 400,
+        body: { error: 'Location must include postcode' },
       };
     }
+    await connectToDatabase();
+    rentalRecord.submittedBy = await getCurrentUserId();
+    rentalRecord.geoLocation = await getSingleGeo(rentalRecord.postcode);
+    const result = await addRentalRecord(rentalRecord);
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Server error' }),
+    };
   }
-  return {
-    statusCode: 405,
-  };
 }
