@@ -4,6 +4,7 @@ import createAuth0Client from '@auth0/auth0-spa-js';
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
+export { createAuth0Client };
 export const Auth0Context = React.createContext();
 export const useAuth0 = () => useContext(Auth0Context);
 
@@ -18,11 +19,12 @@ export const Auth0Provider = ({
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
       setAuth0(auth0FromHook);
-
+      const token = auth0FromHook.cache.cache['default::openid profile email'];
+      localStorage.setItem('token', JSON.stringify(token));
       if (window.location.search.includes('code=')) {
         const { appState } = await auth0FromHook.handleRedirectCallback();
         onRedirectCallback(appState);
@@ -74,6 +76,7 @@ export const Auth0Provider = ({
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,
+        auth0Client,
         getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
         loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
         getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),

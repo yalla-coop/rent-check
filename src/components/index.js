@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Switch } from 'react-router-dom';
 
 // import routes here
@@ -7,7 +7,11 @@ import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
 // import components here
 import MapInterface from './MapInterface';
 import Admin from './Admin';
-import { useAuth0, Auth0Provider } from './Auth0Login/Auth0Wrapper';
+import {
+  useAuth0,
+  Auth0Provider,
+  Auth0Context,
+} from './Auth0Login/Auth0Wrapper';
 import PrivateRoute from './Auth0Login/PrivateRoute';
 // import { routes } from '../constants/adminRoutes';
 
@@ -22,11 +26,15 @@ const onRedirectCallback = appState => {
 };
 
 function Index() {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log(token);
+  }, []);
   const { loading } = useAuth0();
   if (loading) return <h2>Loading...</h2>;
   return (
     <Switch>
-      <PrivateRoute exact path={MAP_URL} component={MapInterface} />
+      <PrivateRoute exact path="/" component={MapInterface} />
       <PrivateRoute path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>
   );
