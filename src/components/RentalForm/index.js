@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 
 import FormItem from './FormItem';
 import formData from './rental-form.config';
-import useForm from '../../hooks/useForm2';
+import useForm from '../../hooks/useForm';
 import validationSchema from './rentalForm.validation';
 
 import * as S from './RentalForm.style';
