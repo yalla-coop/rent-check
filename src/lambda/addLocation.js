@@ -2,6 +2,7 @@ import connectToDatabase from './database/dbConnection';
 import User from './database/models/User';
 import { getSingleGeo } from './utils/postcodes';
 import { addRentalRecord } from './database/queries/rentalRecord';
+import { status } from '../constants/rentalRecords';
 
 // Stub - function to be replaced with one that gets ID of logged in user
 const getCurrentUserId = async () => {
@@ -28,6 +29,7 @@ export async function handler(event, context) {
     await connectToDatabase();
     rentalRecord.submittedBy = await getCurrentUserId();
     rentalRecord.geoLocation = await getSingleGeo(rentalRecord.postcode);
+    rentalRecord.status = status.UNVERIFIED;
     const result = await addRentalRecord(rentalRecord);
     return {
       statusCode: 200,
