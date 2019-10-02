@@ -17,7 +17,7 @@ const { Header, Content, Footer } = Layout;
 
 export default function Admin() {
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', paddingTop: '3rem' }}>
       <SideMenu />
       <Layout>
         <Header style={{ background: 'grey', padding: 0 }}>

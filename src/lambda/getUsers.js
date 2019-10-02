@@ -5,8 +5,11 @@ import getAllUsers from './database/queries/user';
 require('dotenv').config();
 
 export async function handler(event, context) {
-  // eslint-disable-next-line no-param-reassign
-  context.callbackWaitsForEmptyEventLoop = false;
+  if (process.env.NODE_ENV !== 'test') {
+    // eslint-disable-next-line no-param-reassign
+    context.callbackWaitsForEmptyEventLoop = false;
+  }
+
   try {
     await connectToDatabase();
     const users = await getAllUsers();
