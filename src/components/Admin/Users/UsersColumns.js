@@ -3,14 +3,8 @@ import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Icon } from 'antd';
 import { renderUserDetails } from '../../../constants/users';
-import usePatch from '../../../usePatch';
 
-export default ({ getColumnSearchProps, searchText }) => {
-  const [{ data }, apiCall] = usePatch({
-    url: '/.netlify/functions/manageSuperUserStatus',
-  });
-  console.log('ressss', data);
-
+export default ({ getColumnSearchProps, searchText, apiCall }) => {
   // admin for request (just for testing)
   const admin = '5d8b623e8bdf5519b8627ca9';
 
@@ -90,7 +84,17 @@ export default ({ getColumnSearchProps, searchText }) => {
             >
               Approve
             </Button>
-            <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
+            <Button
+              ghost
+              style={{ color: '#EB5757', borderColor: '#EB5757' }}
+              onClick={() =>
+                apiCall({
+                  admin,
+                  user: record.key,
+                  action: 'reject',
+                })
+              }
+            >
               Reject
             </Button>
           </div>

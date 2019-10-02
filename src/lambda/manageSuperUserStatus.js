@@ -11,10 +11,10 @@ export async function handler(event, context) {
   try {
     await connectToDatabase();
     const { user, admin, action } = JSON.parse(event.body);
-    console.log(user);
+
     let update;
     let msg;
-    // console.log('reachedddddddd', JSON.parse(event.body));
+
     switch (action) {
       case 'approve':
         update = await approveSuperUser(user, admin);

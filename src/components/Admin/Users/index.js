@@ -11,6 +11,7 @@ import usersCol from './UsersColumns';
 // routes
 import { routes } from '../../../constants/adminRoutes';
 import useFetch from '../../../useFetch';
+import usePatch from '../../../usePatch';
 
 const { USERS_ALL } = routes;
 
