@@ -5,8 +5,8 @@ const InputNumber = ({ name, handleChange, value }) => {
   return (
     <InputNumberAnt
       style={{ width: '100%' }}
-      min={1}
-      defaultValue={1}
+      min={0}
+      defaultValue={0}
       onChange={v => handleChange(name, v)}
       value={value}
     />

@@ -16,6 +16,8 @@ const initValues = {};
 formData().forEach(item => {
   if (item.type === 'date') {
     initValues[item.name] = null;
+  } else if (item.type === 'number') {
+    initValues[item.name] = undefined;
   } else {
     initValues[item.name] = '';
   }
