@@ -1,3 +1,6 @@
+// handles request to approve/ reject user awaiting super user status
+// receives request { adminId, userId, action }
+
 import connectToDatabase from './database/dbConnection';
 import { approveSuperUser, rejectSuperUser } from './database/queries/user';
 
@@ -7,18 +10,19 @@ export async function handler(event, context) {
 
   try {
     await connectToDatabase();
-
+    const { user, admin, action } = JSON.parse(event.body);
+    console.log(user);
     let update;
     let msg;
-
-    switch (event.action) {
+    // console.log('reachedddddddd', JSON.parse(event.body));
+    switch (action) {
       case 'approve':
-        update = await approveSuperUser(event.user, event.admin);
+        update = await approveSuperUser(user, admin);
         msg = 'approved user to be super user';
         break;
 
       case 'reject':
-        update = await rejectSuperUser(event.user);
+        update = await rejectSuperUser(user);
         msg = 'rejected user to become super user';
         break;
 

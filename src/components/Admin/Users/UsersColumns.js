@@ -1,11 +1,19 @@
 // sets columns for user table
-
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Icon } from 'antd';
 import { renderUserDetails } from '../../../constants/users';
+import usePatch from '../../../usePatch';
 
 export default ({ getColumnSearchProps, searchText }) => {
+  const [{ data }, apiCall] = usePatch({
+    url: '/.netlify/functions/manageSuperUserStatus',
+  });
+  console.log('ressss', data);
+
+  // admin for request (just for testing)
+  const admin = '5d8b623e8bdf5519b8627ca9';
+
   const tableColumns = [
     {
       title: 'Name',
@@ -65,20 +73,29 @@ export default ({ getColumnSearchProps, searchText }) => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (text, record) => (
-        <div className="flex items-center justify-between">
-          <Button
-            style={{ color: '#219653', borderColor: '#219653' }}
-            className="mr1"
-            ghost
-          >
-            Approve
-          </Button>
-          <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
-            Reject
-          </Button>
-        </div>
-      ),
+      render: (text, record) => {
+        return (
+          <div className="flex items-center justify-between">
+            <Button
+              style={{ color: '#219653', borderColor: '#219653' }}
+              className="mr1"
+              ghost
+              onClick={() =>
+                apiCall({
+                  admin,
+                  user: record.key,
+                  action: 'approve',
+                })
+              }
+            >
+              Approve
+            </Button>
+            <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
+              Reject
+            </Button>
+          </div>
+        );
+      },
     },
   ];
 
