@@ -1,11 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import { Row, Col } from 'antd';
+import axios from 'axios';
 
 import FormItem from './FormItem';
 import formData from './rental-form.config';
 import useForm from '../../hooks/useForm';
-// import usePost from '../../hooks/usePost';
 import validationSchema from './rentalForm.validation';
 
 import * as S from './RentalForm.style';
@@ -23,9 +23,7 @@ formData().forEach(item => {
 
 const RentalForm = () => {
   const onSubmitForm = state => {
-    console.log('submitted', state);
-    alert(JSON.stringify(state));
-    // fetchPostCodes('/.netlify/functions/addLocation');
+    return axios.post('/.netlify/functions/addLocation', state);
   };
 
   const {
@@ -33,9 +31,8 @@ const RentalForm = () => {
     errors,
     handleOnChange: handleChange,
     handleOnSubmit,
+    isSubmitting,
   } = useForm(initValues, validationSchema, onSubmitForm);
-
-  // const [{ data, isLoading }, fetchPostCodes] = usePost(null, null, values);
 
   const disabledStartDate = startValue => {
     const { doNextRentReview: endValue } = values;
@@ -98,7 +95,7 @@ const RentalForm = () => {
       <Button
         type="primary"
         text="Submit"
-        // loading={isLoading}
+        loading={isSubmitting}
         style={{ margin: '0 auto' }}
       />
     </S.Form>

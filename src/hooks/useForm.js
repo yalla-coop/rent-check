@@ -13,6 +13,7 @@ function useForm2(stateSchema = {}, validationSchema = {}, callback) {
   const [state, setState] = useState(stateSchema);
   const [errors, setErrors] = useState({});
   const [canSubmit, setCanSubmit] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // TODO: consider using useCallback for performance optimization
   const validateField = (fieldName, value) => {
@@ -48,15 +49,23 @@ function useForm2(stateSchema = {}, validationSchema = {}, callback) {
   };
 
   const handleOnSubmit = async event => {
+    setIsSubmitting(true);
     event.preventDefault();
     try {
       await validateState();
       const hasErrors = Object.values(errors).some(item => !!item);
       setCanSubmit(true);
       if (!hasErrors && canSubmit) {
-        callback(state);
+        try {
+          await callback(state);
+          setIsSubmitting(false);
+        } catch (error) {
+          console.log('errrrr', error);
+          setIsSubmitting(false);
+        }
       }
     } catch (errs) {
+      setIsSubmitting(false);
       const errorsObj = {};
       errs.inner.forEach(err => {
         const field = err.path.split('.')[0];
@@ -71,6 +80,7 @@ function useForm2(stateSchema = {}, validationSchema = {}, callback) {
     handleOnSubmit,
     state,
     errors,
+    isSubmitting,
   };
 }
 
