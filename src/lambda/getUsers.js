@@ -1,5 +1,5 @@
 import connectToDatabase from './database/dbConnection';
-import getAllUsers from './database/queries/user';
+import { getAllUsers } from './database/queries/user';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
@@ -12,10 +12,10 @@ export async function handler(event, context) {
 
   try {
     await connectToDatabase();
-    const users = await getAllUsers();
+    const user = await getAllUsers();
     return {
       statusCode: 200,
-      body: JSON.stringify({ msg: users }),
+      body: JSON.stringify({ msg: user }),
     };
   } catch (err) {
     return {
