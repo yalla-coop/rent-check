@@ -10,6 +10,13 @@ const formLabels = () => {
       col: 1,
     },
     {
+      label: 'Postcode',
+      name: 'postcode',
+      placeholder: 'postecode',
+      type: 'text',
+      col: 1,
+    },
+    {
       label: 'Lease length',
       name: 'leaseLength',
       placeholder: 'E.g. 30 months or 5 years',

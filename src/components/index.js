@@ -14,7 +14,7 @@ export default function Router() {
     <Switch>
       <Route exact path="/" component={MapInterface} />
       <Route path="/admin" component={Admin} />
-      <Route path="/profile" component={RentalForm} />
+      <Route path="/add-rental-data" component={RentalForm} />
       <Route exact path={MAP_URL} component={MapInterface} />
       <Route path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>

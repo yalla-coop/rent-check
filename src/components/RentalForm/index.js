@@ -5,6 +5,7 @@ import { Row, Col } from 'antd';
 import FormItem from './FormItem';
 import formData from './rental-form.config';
 import useForm from '../../hooks/useForm';
+// import usePost from '../../hooks/usePost';
 import validationSchema from './rentalForm.validation';
 
 import * as S from './RentalForm.style';
@@ -21,15 +22,20 @@ formData().forEach(item => {
 });
 
 const RentalForm = () => {
-  function onSubmitForm(state) {
-    alert(JSON.stringify(state, null, 2));
-  }
+  const onSubmitForm = state => {
+    console.log('submitted', state);
+    alert(JSON.stringify(state));
+    // fetchPostCodes('/.netlify/functions/addLocation');
+  };
+
   const {
     state: values,
     errors,
     handleOnChange: handleChange,
     handleOnSubmit,
   } = useForm(initValues, validationSchema, onSubmitForm);
+
+  // const [{ data, isLoading }, fetchPostCodes] = usePost(null, null, values);
 
   const disabledStartDate = startValue => {
     const { doNextRentReview: endValue } = values;
@@ -89,7 +95,12 @@ const RentalForm = () => {
         </Col>
       </Row>
 
-      <Button type="primary" text="Submit" style={{ margin: '0 auto' }} />
+      <Button
+        type="primary"
+        text="Submit"
+        // loading={isLoading}
+        style={{ margin: '0 auto' }}
+      />
     </S.Form>
   );
 };
