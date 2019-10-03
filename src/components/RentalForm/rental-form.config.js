@@ -82,6 +82,21 @@ const formLabels = () => {
       type: 'number',
       col: 2,
     },
+
+    {
+      label: 'Yard SqFt',
+      name: 'yardSquareFeet',
+      placeholder: 'Yard SqFt',
+      type: 'number',
+      col: 2,
+    },
+    {
+      label: 'Yard Price SqFt',
+      name: 'yardPriceSqFt',
+      placeholder: 'Yard Price SqFt',
+      type: 'number',
+      col: 2,
+    },
     {
       label: 'Service charge',
       name: 'serviceCharge',

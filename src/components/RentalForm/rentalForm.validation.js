@@ -38,7 +38,20 @@ export default yup.object().shape({
     .number()
     .typeError('Must be a number')
     .required('Required'),
-  serviceCharge: yup.number().nullable(),
+
+  yardSquareFeet: yup
+    .number()
+    .typeError('Must be a number')
+    .nullable(),
+  yardPriceSqFt: yup
+    .number()
+    .typeError('Must be a number')
+    .nullable(),
+
+  serviceCharge: yup
+    .number()
+    .typeError('Must be a number')
+    .nullable(),
 
   useClass: yup
     .string()
