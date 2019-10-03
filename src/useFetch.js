@@ -27,7 +27,6 @@ const dataFetchReducer = (state, action) => {
 };
 
 const useFetch = (initialUrl, initialData) => {
-  console.log(initialUrl);
   const [url, setUrl] = useState(initialUrl);
 
   const [state, dispatch] = useReducer(dataFetchReducer, {

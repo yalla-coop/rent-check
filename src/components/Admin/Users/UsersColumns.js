@@ -4,19 +4,7 @@ import Highlighter from 'react-highlight-words';
 import { Button, Icon } from 'antd';
 import { renderUserDetails } from '../../../constants/users';
 
-import useAPI from '../../../useAPI';
-
-export default ({ getColumnSearchProps, searchText }) => {
-  // admin for request (just for testing)
-  const admin = '5d8b623e8bdf5519b8627ca9';
-
-  // patch function to manage super user status
-  const [{ data }, apiCall] = useAPI({
-    url: '/.netlify/functions/manageSuperUserStatus',
-    method: 'patch',
-  });
-  console.log(data);
-
+export default ({ getColumnSearchProps, searchText, approveSuperUser }) => {
   const tableColumns = [
     {
       title: 'Name',
@@ -83,27 +71,11 @@ export default ({ getColumnSearchProps, searchText }) => {
               style={{ color: '#219653', borderColor: '#219653' }}
               className="mr1"
               ghost
-              onClick={() =>
-                apiCall({
-                  admin,
-                  user: record.key,
-                  action: 'approve',
-                })
-              }
+              onClick={() => approveSuperUser(record.key)}
             >
               Approve
             </Button>
-            <Button
-              ghost
-              style={{ color: '#EB5757', borderColor: '#EB5757' }}
-              onClick={() =>
-                apiCall({
-                  admin,
-                  user: record.key,
-                  action: 'reject',
-                })
-              }
-            >
+            <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
               Reject
             </Button>
           </div>

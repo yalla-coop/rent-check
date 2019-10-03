@@ -1,10 +1,30 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
 import React, { useState, useRef } from 'react';
-import { Table, Input, Icon, Button } from 'antd';
+import { Table, Input, Icon, Button, message } from 'antd';
+import axios from 'axios';
+import usePostPatchPut from '../../hooks/usePostPatchPut';
 
-export default function TableComponent({ columns, dataSource }) {
+const admin = '5d8b623e8bdf5519b8627ca9';
+
+const updateUsers = async () => {
+  const request = await axios.get('/.netlify/functions/getUsers');
+  return request;
+};
+
+export default function TableComponent({
+  columns,
+  dataSource,
+  setUsers,
+  createUserTable,
+}) {
+  const [{ data }, apiCall] = usePostPatchPut({
+    url: '/.netlify/functions/manageSuperUserStatus',
+    method: 'patch',
+  });
+
   const [searchText, setSearchText] = useState('');
+  const [managingSuperStatus, setManagingSuperStatus] = useState(false);
 
   const searchInputRef = useRef(null);
 
@@ -16,6 +36,27 @@ export default function TableComponent({ columns, dataSource }) {
   const handleReset = clearFilters => {
     clearFilters();
     setSearchText('');
+  };
+
+  // validate/reject super user status
+  // patch function to manage super user status
+
+  const approveSuperUser = user => {
+    setManagingSuperStatus(true);
+    apiCall({
+      admin,
+      user,
+      action: 'approve',
+    });
+    if (data && Object.keys({ data }).length > 0) {
+      setManagingSuperStatus(false);
+      message.success(data.msg);
+      updateUsers().then(({ data: msg }) => {
+        console.log(msg);
+        const newUsers = createUserTable(msg.msg);
+        setUsers(newUsers);
+      });
+    }
   };
 
   const getColumnSearchProps = dataIndex => ({
@@ -78,6 +119,7 @@ export default function TableComponent({ columns, dataSource }) {
       columns={columns({
         getColumnSearchProps,
         searchText,
+        approveSuperUser,
       })}
       dataSource={dataSource}
       style={{ backgroundColor: '#ffffff' }}
