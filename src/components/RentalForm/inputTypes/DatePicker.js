@@ -13,7 +13,7 @@ const DatePicker = ({
     <DatePickerAnt
       onChange={v => handleChange(name, v)}
       disabledDate={
-        name === 'doLastRentReview' ? disabledStartDate : disabledEndDate
+        name === 'lastRentReview' ? disabledStartDate : disabledEndDate
       }
       value={value}
       format="YYYY-MM-DD"

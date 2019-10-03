@@ -12,16 +12,16 @@ export default yup.object().shape({
     )
     .required('Required'),
   leaseLength: yup.string().required('Required'),
-  landlordTenantAct: yup
+  landlordTenantsAct: yup
     .string()
     .oneOf(options.landlordTenantsActEnum, 'Select a value')
     .required(),
 
-  doLastRentReview: yup.mixed().required('Required'),
-  doNextRentReview: yup.mixed().required('Required'),
+  lastRentReview: yup.mixed().required('Required'),
+  nextRentReview: yup.mixed().required('Required'),
 
-  landLordName: yup.string(),
-  specifications: yup
+  landlord: yup.string(),
+  specification: yup
     .string()
     .oneOf(options.specificationEnum, 'Select a value')
     .required('Required'),
@@ -29,7 +29,7 @@ export default yup.object().shape({
     .number()
     .typeError('Must be a number')
     .required('Required'),
-  sqFt: yup
+  squareFeet: yup
     .number()
     .typeError('Must be a number')
     .required('Required'),
