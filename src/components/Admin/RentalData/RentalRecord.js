@@ -44,7 +44,7 @@ function RentalRecord({ location, history }) {
 
   useEffect(() => {
     setTablet(device.isTablet);
-  });
+  }, [device]);
 
   return (
     <>

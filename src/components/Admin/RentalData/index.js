@@ -1,5 +1,5 @@
 // Router for Rental Data
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Components

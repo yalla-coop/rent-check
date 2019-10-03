@@ -12,7 +12,6 @@ const { RENTAL_DATA_SINGLE } = routes;
 
 const rentalDataColumns = props => {
   const { getColumnSearchProps, searchText } = props;
-  console.log('column', props);
   const tableColumns = [
     {
       title: 'Submitted by',

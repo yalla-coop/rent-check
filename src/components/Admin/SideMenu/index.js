@@ -18,7 +18,7 @@ export default function SideMenu() {
 
   useEffect(() => {
     setCollapsed(device.isTablet);
-  });
+  }, [device]);
 
   return (
     <Sider
