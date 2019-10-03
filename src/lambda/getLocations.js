@@ -5,7 +5,6 @@ import RentalRecord from './database/models/RentalRecord';
 require('dotenv').config();
 
 export async function handler(event, context) {
-  console.log(event.headers);
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
   try {
