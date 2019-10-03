@@ -18,13 +18,11 @@ export default function TableComponent({
   setUsers,
   createUserTable,
 }) {
-  const [{ data }, apiCall] = usePostPatchPut({
+  const [{ data: superStatusUpdate }, superStatusCall] = usePostPatchPut({
     url: '/.netlify/functions/manageSuperUserStatus',
     method: 'patch',
   });
-
   const [searchText, setSearchText] = useState('');
-  const [managingSuperStatus, setManagingSuperStatus] = useState(false);
 
   const searchInputRef = useRef(null);
 
@@ -42,20 +40,22 @@ export default function TableComponent({
   // patch function to manage super user status
 
   const approveSuperUser = user => {
-    setManagingSuperStatus(true);
-    apiCall({
-      admin,
-      user,
-      action: 'approve',
-    });
-    if (data && Object.keys({ data }).length > 0) {
-      setManagingSuperStatus(false);
-      message.success(data.msg);
-      updateUsers().then(({ data: msg }) => {
-        console.log(msg);
-        const newUsers = createUserTable(msg.msg);
-        setUsers(newUsers);
+    try {
+      superStatusCall({
+        admin,
+        user,
+        action: 'approve',
       });
+      if (superStatusUpdate && Object.keys({ superStatusUpdate }).length > 0) {
+        message.success(superStatusUpdate.msg);
+
+        updateUsers().then(({ data: users }) => {
+          const newUsers = createUserTable(users.msg);
+          setUsers(newUsers);
+        });
+      }
+    } catch (err) {
+      message.error(err);
     }
   };
 
