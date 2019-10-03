@@ -65,6 +65,12 @@ export const Summary = styled.section`
     left: -1rem;
     height: 100%;
   }
+
+  @media ${breakpointsMax.tablet} {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
 `;
 
 export const Stat = styled.span`
