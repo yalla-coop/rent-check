@@ -2,17 +2,15 @@ import * as yup from 'yup';
 
 import * as options from '../../constants/rentalRecords';
 
-yup.addMethod(yup.mixed, 'defined', function() {
-  return this.test(
-    'defined',
-    '{path} must be defined',
-    value => value !== undefined || value !== null
-  );
-});
-
 export default yup.object().shape({
   address: yup.string().required('Required'),
-  postcode: yup.string().required('Required'),
+  postcode: yup
+    .string()
+    .matches(
+      /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/,
+      'Invalid postcode'
+    )
+    .required('Required'),
   leaseLength: yup.string().required('Required'),
   landlordTenantAct: yup
     .string()
