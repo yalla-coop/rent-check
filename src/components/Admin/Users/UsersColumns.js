@@ -13,7 +13,9 @@ export default ({ getColumnSearchProps, searchText }) => {
   // patch function to manage super user status
   const [{ data }, apiCall] = useAPI({
     url: '/.netlify/functions/manageSuperUserStatus',
+    method: 'patch',
   });
+  console.log(data);
 
   const tableColumns = [
     {
