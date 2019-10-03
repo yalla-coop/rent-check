@@ -2,15 +2,8 @@
 // gets fed data source and column files as props
 import React, { useState, useRef } from 'react';
 import { Table, Input, Icon, Button } from 'antd';
-import usePatch from '../../usePatch';
 
 export default function TableComponent({ columns, dataSource }) {
-  const [{ data }, apiCall] = usePatch({
-    url: '/.netlify/functions/manageSuperUserStatus',
-  });
-
-  console.log('dataaa', data);
-
   const [searchText, setSearchText] = useState('');
 
   const searchInputRef = useRef(null);
@@ -85,7 +78,6 @@ export default function TableComponent({ columns, dataSource }) {
       columns={columns({
         getColumnSearchProps,
         searchText,
-        apiCall,
       })}
       dataSource={dataSource}
       style={{ backgroundColor: '#ffffff' }}

@@ -4,9 +4,16 @@ import Highlighter from 'react-highlight-words';
 import { Button, Icon } from 'antd';
 import { renderUserDetails } from '../../../constants/users';
 
-export default ({ getColumnSearchProps, searchText, apiCall }) => {
+import useAPI from '../../../useAPI';
+
+export default ({ getColumnSearchProps, searchText }) => {
   // admin for request (just for testing)
   const admin = '5d8b623e8bdf5519b8627ca9';
+
+  // patch function to manage super user status
+  const [{ data }, apiCall] = useAPI({
+    url: '/.netlify/functions/manageSuperUserStatus',
+  });
 
   const tableColumns = [
     {

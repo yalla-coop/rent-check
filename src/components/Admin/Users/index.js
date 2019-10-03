@@ -11,7 +11,6 @@ import usersCol from './UsersColumns';
 // routes
 import { routes } from '../../../constants/adminRoutes';
 import useFetch from '../../../useFetch';
-import usePatch from '../../../usePatch';
 
 const { USERS_ALL } = routes;
 
@@ -30,7 +29,6 @@ export default function Users() {
       status,
     }));
 
-  console.log(users);
   return (
     <Switch>
       {isLoading && <Loading />}
