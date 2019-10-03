@@ -1,14 +1,14 @@
 import connectToDatabase from './database/dbConnection';
 
 // import db query
-import { getLocations } from './database/queries/rentalData';
+import { getAllValidRecords } from './database/queries/rentalRecord';
 
 export async function handler(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
   try {
     await connectToDatabase();
-    const locations = await getLocations();
+    const locations = await getAllValidRecords();
     return {
       statusCode: 200,
       body: JSON.stringify(locations),
