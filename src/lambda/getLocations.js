@@ -1,5 +1,5 @@
 import connectToDatabase from './database/dbConnection';
-import RentalRecord from './database/models/RentalRecord';
+import { getAllValidRecords } from './database/queries/rentalRecord';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
@@ -10,7 +10,7 @@ export async function handler(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
   try {
     await connectToDatabase();
-    const locations = await RentalRecord.find();
+    const locations = await getAllValidRecords();
     return {
       statusCode: 200,
       body: JSON.stringify(locations),
