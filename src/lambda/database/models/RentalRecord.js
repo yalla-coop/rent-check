@@ -44,6 +44,8 @@ const schema = new mongoose.Schema({
   annualRent: Number,
   squareFeet: Number,
   priceSqFt: Number,
+  yardSquareFeet: Number,
+  yardPriceSqFt: Number,
   serviceCharge: Number,
   useClass: {
     type: String,
