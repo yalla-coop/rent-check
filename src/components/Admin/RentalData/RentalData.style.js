@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { breakpointsMax } from '../../../constants/breakpoints';
 
 export const TopSection = styled.section`
-  padding: 1rem 0 1.5rem 1.5rem;
+  padding: 1rem 0 1.5rem 1rem;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   @media ${breakpointsMax.tablet} {
     flex-direction: column;
@@ -25,7 +27,6 @@ export const StyledLink = styled(Link)`
 `;
 
 export const BtnWrapper = styled.span`
-  margin: 0 auto;
   display: flex;
 
   @media ${breakpointsMax.tablet} {
@@ -39,7 +40,6 @@ export const GoBackBtn = styled.button`
   border: none;
   color: var(--gray);
   cursor: pointer;
-  margin-bottom: 0.5rem;
   font-weight: 500;
 
   :hover,

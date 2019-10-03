@@ -7,6 +7,9 @@ import Button from '../../Common/Button';
 // Styling
 import * as S from './RentalData.style';
 
+// constants
+import { status as constStatus } from '../../../constants/rentalRecords';
+
 // custom hooks
 import useWindowWidth from '../../../useWindowWidth';
 
@@ -50,18 +53,22 @@ function RentalRecord({ location, history }) {
           {'< Go Back'}
         </S.GoBackBtn>
         <S.BtnWrapper>
-          <Button
-            text="Approve"
-            type="outline"
-            color="var(--green)"
-            margin="0.5rem"
-          />
-          <Button
-            text="Reject"
-            type="outline"
-            color="var(--red)"
-            margin="0.5rem"
-          />
+          {status && status !== constStatus.VERIFIED && (
+            <Button
+              text="Approve"
+              type="outline"
+              color="var(--green)"
+              margin="0.5rem"
+            />
+          )}
+          {status && status !== constStatus.REJECTED && (
+            <Button
+              text="Reject"
+              type="outline"
+              color="var(--red)"
+              margin="0.5rem"
+            />
+          )}
         </S.BtnWrapper>
       </S.TopSection>
       {state && rentalData ? (
