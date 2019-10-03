@@ -48,7 +48,7 @@ function RentalData() {
         path={RENTAL_DATA_ALL}
         render={props => (
           <>
-            <S.Wrapper>
+            <S.TopSection>
               <S.StyledLink to={ADD_RENTAL_URL}>
                 Add new rental data{' '}
                 <Icon
@@ -57,7 +57,7 @@ function RentalData() {
                   style={{ paddingLeft: '0.25rem' }}
                 />
               </S.StyledLink>
-            </S.Wrapper>
+            </S.TopSection>
             <Table
               columns={rentalDataColumns}
               dataSource={rentalRecords}
