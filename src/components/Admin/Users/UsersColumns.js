@@ -2,9 +2,29 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Icon } from 'antd';
-import { renderUserDetails } from '../../../constants/users';
+import { renderUserDetails, status } from '../../../constants/users';
 
-export default ({ getColumnSearchProps, searchText, approveSuperUser }) => {
+export default ({
+  getColumnSearchProps,
+  searchText,
+  manageUserStatusOnClick,
+}) => {
+  const renderActionBtn = (
+    userId,
+    userStatus,
+    action,
+    { color, borderColor }
+  ) => (
+    <Button
+      style={{ color, borderColor }}
+      className="mr1"
+      ghost
+      onClick={() => manageUserStatusOnClick(userId, 'approve', userStatus)}
+    >
+      {action}
+    </Button>
+  );
+
   const tableColumns = [
     {
       title: 'Name',
@@ -65,21 +85,41 @@ export default ({ getColumnSearchProps, searchText, approveSuperUser }) => {
       dataIndex: 'actions',
       key: 'actions',
       render: (text, record) => {
-        return (
-          <div className="flex items-center justify-between">
-            <Button
-              style={{ color: '#219653', borderColor: '#219653' }}
-              className="mr1"
-              ghost
-              onClick={() => approveSuperUser(record.key)}
-            >
-              Approve
-            </Button>
-            <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
-              Reject
-            </Button>
-          </div>
-        );
+        switch (record.status) {
+          case status.UNVERIFIED || status.AWAITING_SUPER:
+            return (
+              <div className="flex items-center justify-between">
+                {renderActionBtn(record.key, record.status, 'approve', {
+                  color: '#219653',
+                  borderColor: '#219653',
+                })}
+                {renderActionBtn(record.key, record.status, 'reject', {
+                  color: '#EB5757',
+                  borderColor: '#EB5757',
+                })}
+              </div>
+            );
+          case status.VERIFIED:
+            return (
+              <div className="flex items-center justify-between">
+                {renderActionBtn(record.key, record.status, 'reject', {
+                  color: '#EB5757',
+                  borderColor: '#EB5757',
+                })}
+              </div>
+            );
+          case status.REJECTED:
+            return (
+              <div className="flex items-center justify-between">
+                {renderActionBtn(record.key, record.status, 'approve', {
+                  color: '#219653',
+                  borderColor: '#219653',
+                })}
+              </div>
+            );
+          default:
+            return null;
+        }
       },
     },
   ];

@@ -22,3 +22,19 @@ export const approveSuperUser = (userId, adminId) =>
     { role: roles.SUPERUSER, status: status.VERIFIED, grantedSuperBy: adminId },
     { new: true }
   );
+
+// upates unverified status if rejected
+export const rejectUser = id =>
+  User.findOneAndUpdate(
+    { _id: id },
+    { status: status.REJECTED },
+    { new: true }
+  );
+
+// updates unverified status if approved
+export const approveUser = (userId, adminId) =>
+  User.findOneAndUpdate(
+    { _id: userId },
+    { status: status.VERIFIED, verifiedBy: adminId },
+    { new: true }
+  );

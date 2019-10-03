@@ -18,10 +18,11 @@ export default function TableComponent({
   setUsers,
   createUserTable,
 }) {
-  const [{ data: superStatusUpdate }, superStatusCall] = usePostPatchPut({
-    url: '/.netlify/functions/manageSuperUserStatus',
+  const [{ data: updateUserStatus }, updateUserStatusCall] = usePostPatchPut({
+    url: '/.netlify/functions/manageUserStatus',
     method: 'patch',
   });
+
   const [searchText, setSearchText] = useState('');
 
   const searchInputRef = useRef(null);
@@ -38,24 +39,24 @@ export default function TableComponent({
 
   // validate/reject super user status
   // patch function to manage super user status
+  // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
-  const approveSuperUser = user => {
-    try {
-      superStatusCall({
-        admin,
-        user,
-        action: 'approve',
-      });
-      if (superStatusUpdate && Object.keys({ superStatusUpdate }).length > 0) {
-        message.success(superStatusUpdate.msg);
+  const manageUserStatusOnClick = (user, action, userStatus) => {
+    updateUserStatusCall({
+      admin,
+      user,
+      action,
+      userStatus,
+    });
+    if (updateUserStatus && Object.keys({ updateUserStatus }).length > 0) {
+      message.success(updateUserStatus.msg);
 
-        updateUsers().then(({ data: users }) => {
+      updateUsers()
+        .then(({ data: users }) => {
           const newUsers = createUserTable(users.msg);
           setUsers(newUsers);
-        });
-      }
-    } catch (err) {
-      message.error(err);
+        })
+        .catch(err => message.error(err));
     }
   };
 
@@ -119,7 +120,7 @@ export default function TableComponent({
       columns={columns({
         getColumnSearchProps,
         searchText,
-        approveSuperUser,
+        manageUserStatusOnClick,
       })}
       dataSource={dataSource}
       style={{ backgroundColor: '#ffffff' }}
