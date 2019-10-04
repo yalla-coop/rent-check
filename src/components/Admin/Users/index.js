@@ -1,75 +1,52 @@
 // Router for User routes
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Loading from '../../Loading';
-// components
-import Table from '../Table';
 
-// Table props
-import usersCol from './UsersColumns';
+// components
+import AllUsers from './AllUsers';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
-import useFetch from '../../../useFetch';
-import UsersColumns from './UsersColumns';
+
+// status as filter base of users
+import { status, roles } from '../../../constants/users';
+
 // import { status } from '../../../constants/users';
 
-const { USERS_ALL, USERS_VERIFY } = routes;
-
-// create table friendly data sets
-const createUserTable = arr =>
-  arr.map(({ _id, name, email, role, status }) => ({
-    key: _id,
-    name,
-    email,
-    level: role,
-    status,
-  }));
+const {
+  USERS_ALL,
+  USERS_VERIFY,
+  USERS_SUPER_REQ,
+  USERS_VERIFIED,
+  USERS_SUPER,
+} = routes;
 
 export default function Users() {
-  const [users, setUsers] = useState(null);
-  // fetch users
-  const [{ data: allUsers, isLoading }] = useFetch(
-    '/.netlify/functions/getUsers'
-  );
-
-  useEffect(() => {
-    if (!isLoading && allUsers && allUsers.msg.length > 0) {
-      const newUsers = createUserTable(allUsers.msg);
-      setUsers(newUsers);
-    }
-  }, [allUsers, isLoading]);
-  console.log(users && users.filter(u => u.status === 'unverified'));
-
-  const tableProps = {
-    colums: usersCol,
-    dataSource: users,
-    setUsers,
-    createUserTable,
-  };
-
   return (
     <Switch>
-      {isLoading && <Loading />}
+      <Route exact path={USERS_ALL} render={props => <AllUsers {...props} />} />
       <Route
         exact
-        path={USERS_ALL}
-        render={props => <Table {...tableProps, props} />}
-      />
-      {/* <Route
-        exact
         path={USERS_VERIFY}
+        render={props => <AllUsers {...props} statusProp={status.UNVERIFIED} />}
+      />
+      <Route
+        exact
+        path={USERS_SUPER_REQ}
         render={props => (
-          <Table
-            columns={usersCol}
-            dataSource={users && users.filter(u => u.status === 'unverified')}
-            setUsers={setUsers}
-            createUserTable={createUserTable}
-            {...props}
-          />
+          <AllUsers {...props} statusProp={status.AWAITING_SUPER} />
         )}
-      />{' '} */}
-      *
+      />
+      <Route
+        exact
+        path={USERS_VERIFIED}
+        render={props => <AllUsers {...props} statusProp={status.VERIFIED} />}
+      />
+      <Route
+        exact
+        path={USERS_SUPER}
+        render={props => <AllUsers {...props} statusProp={roles.SUPERUSER} />}
+      />
     </Switch>
   );
 }
