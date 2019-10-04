@@ -7,6 +7,7 @@ import Loading from '../../Loading';
 import usePostPatchPut from '../../../hooks/usePostPatchPut';
 import useFetch from '../../../hooks/useFetch';
 // import UsersColumns from './UsersColumns';
+import ListWithFilter from './ListWithFilter';
 import UserListItem from './UserListItem';
 import { status as statusConst, roles } from '../../../constants/users';
 
@@ -29,7 +30,7 @@ const filterUsersByStatus = (userStatus, users) => {
       return users.filter(el => el.status === statusConst.VERIFIED);
 
     case roles.SUPERUSER:
-      return users.filter(el => el.level === roles.SUPERUSER);
+      return users.filter(el => el.role === roles.SUPERUSER);
 
     default:
       return users;
@@ -41,16 +42,6 @@ const updateUsers = async () => {
   const request = await axios.get('/.netlify/functions/getUsers');
   return request;
 };
-
-// create table friendly data sets
-// const createUserTable = arr =>
-//   arr.map(({ _id, name, email, role, status }) => ({
-//     key: _id,
-//     name,
-//     email,
-//     level: role,
-//     status,
-//   }));
 
 export default function AllUsers({ statusProp }) {
   // fetch users
@@ -114,7 +105,7 @@ export default function AllUsers({ statusProp }) {
   return (
     <Fragment>
       {isLoading && <Loading />}
-      <List
+      <ListWithFilter
         dataSource={filterUsersByStatus(statusProp, users)}
         renderItem={UserListItem}
         pagination={{ position: 'bottom' }}
