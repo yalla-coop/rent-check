@@ -6,8 +6,8 @@ import axios from 'axios';
 import Loading from '../../Loading';
 import usePostPatchPut from '../../../hooks/usePostPatchPut';
 import useFetch from '../../../hooks/useFetch';
-import UsersColumns from './UsersColumns';
-
+// import UsersColumns from './UsersColumns';
+import UserListItem from './UserListItem';
 import { status as statusConst, roles } from '../../../constants/users';
 
 // admin user -> please change id for testing
@@ -43,14 +43,14 @@ const updateUsers = async () => {
 };
 
 // create table friendly data sets
-const createUserTable = arr =>
-  arr.map(({ _id, name, email, role, status }) => ({
-    key: _id,
-    name,
-    email,
-    level: role,
-    status,
-  }));
+// const createUserTable = arr =>
+//   arr.map(({ _id, name, email, role, status }) => ({
+//     key: _id,
+//     name,
+//     email,
+//     level: role,
+//     status,
+//   }));
 
 export default function AllUsers({ statusProp }) {
   // fetch users
@@ -72,8 +72,7 @@ export default function AllUsers({ statusProp }) {
   // sets users
   useEffect(() => {
     if (allUsers && allUsers.msg) {
-      const newUsers = createUserTable(allUsers.msg);
-      setUsers(newUsers);
+      setUsers(allUsers.msg);
     }
   }, [allUsers]);
 
@@ -83,8 +82,7 @@ export default function AllUsers({ statusProp }) {
     if (updateUserStatus && updateUserStatus.msg) {
       updateUsers()
         .then(({ data: updatedUsers }) => {
-          const updateAllUsers = createUserTable(updatedUsers.msg);
-          setUsers(updateAllUsers);
+          setUsers(updatedUsers.msg);
         })
         .catch(err => message.error(err));
       return message.success(updateUserStatus && updateUserStatus.msg);
@@ -113,67 +111,13 @@ export default function AllUsers({ statusProp }) {
     setSearchText('');
   };
 
-  const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={searchInputRef}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
-        />
-        <Button
-          type="primary"
-          onClick={() => handleSearch(selectedKeys, confirm)}
-          icon="search"
-          size="small"
-          style={{ width: 90, marginRight: 8 }}
-        >
-          Search
-        </Button>
-        <Button
-          onClick={() => handleReset(clearFilters)}
-          size="small"
-          style={{ width: 90 }}
-        >
-          Reset
-        </Button>
-      </div>
-    ),
-    filterIcon: filtered => (
-      <Icon
-        type="search"
-        style={{ fontSize: '20px', color: filtered ? '#1890ff' : undefined }}
-      />
-    ),
-    onFilter: (value, record) => {
-      return record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes(value.toLowerCase());
-    },
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => searchInputRef.current.select());
-      }
-    },
-  });
-
   return (
     <Fragment>
       {isLoading && <Loading />}
       <List
         dataSource={filterUsersByStatus(statusProp, users)}
-        renderItem={() => <p>Hello</p>}
+        renderItem={UserListItem}
+        pagination={{ position: 'bottom' }}
       />
     </Fragment>
   );
