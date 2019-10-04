@@ -11,8 +11,6 @@ import { routes } from '../../../constants/adminRoutes';
 // status as filter base of users
 import { status, roles } from '../../../constants/users';
 
-// import { status } from '../../../constants/users';
-
 const {
   USERS_ALL,
   USERS_VERIFY,

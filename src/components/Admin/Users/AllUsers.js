@@ -14,7 +14,6 @@ const admin = '5d8b623e8bdf5519b8627ca9';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, users) => {
-  console.log(users);
   switch (userStatus) {
     case statusConst.UNVERIFIED:
       return users.filter(el => el.status === statusConst.UNVERIFIED);

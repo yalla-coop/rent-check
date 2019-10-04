@@ -8,6 +8,8 @@ import { roles, status } from '../../constants/users';
 import {
   rejectSuperUser,
   approveSuperUser,
+  rejectUser,
+  approveUser,
 } from '../../lambda/database/queries/user';
 
 describe('Test queries to update status for awaitingSuperUser', () => {
@@ -29,6 +31,18 @@ describe('Test queries to update status for awaitingSuperUser', () => {
     });
   });
 
+  test('rejectUser', async done => {
+    const userRequest = await User.findOne({
+      status: status.UNVERIFIED,
+    });
+
+    rejectUser(userRequest._id).then(updatedUser => {
+      expect(updatedUser).toBeDefined();
+      expect(updatedUser.status).toBe(status.REJECTED);
+      done();
+    });
+  });
+
   test('approveSuperUser', async done => {
     const superUserRequest = await User.findOne({
       status: status.AWAITING_SUPER,
@@ -45,6 +59,23 @@ describe('Test queries to update status for awaitingSuperUser', () => {
       expect(updatedUser.grantedSuperBy.toString()).toBe(
         adminUser._id.toString()
       );
+      done();
+    });
+  });
+
+  test('approveUser', async done => {
+    const userRequest = await User.findOne({
+      status: status.UNVERIFIED,
+    });
+
+    const adminUser = await User.findOne({
+      role: roles.ADMIN,
+    });
+
+    approveUser(userRequest._id, adminUser._id).then(updatedUser => {
+      expect(updatedUser).toBeDefined();
+      expect(updatedUser.status).toBe(status.VERIFIED);
+      expect(updatedUser.verifiedBy.toString()).toBe(adminUser._id.toString());
       done();
     });
   });

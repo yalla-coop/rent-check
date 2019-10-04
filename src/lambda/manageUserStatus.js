@@ -19,7 +19,7 @@ export async function handler(event, context) {
 
     let update;
     let msg;
-    console.log(event.body);
+
     switch (action) {
       case 'approve':
         if (userStatus === status.AWAITING_SUPER) {
@@ -33,11 +33,9 @@ export async function handler(event, context) {
 
       case 'reject':
         if (userStatus === status.AWAITING_SUPER) {
-          console.log('super reject');
           update = await rejectSuperUser(user);
           msg = 'rejected super user status!';
         } else {
-          console.log('normal reject');
           update = await rejectUser(user);
           msg = 'rejected user!';
         }

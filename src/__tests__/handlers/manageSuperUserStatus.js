@@ -4,7 +4,7 @@
 import buildData from '../../lambda/database/data/index';
 import User from '../../lambda/database/models/User';
 import { roles, status } from '../../constants/users';
-import { handler } from '../../lambda/manageSuperUserStatus';
+import { handler } from '../../lambda/manageUserStatus';
 
 describe('Test manageSuperUserStatus handler', () => {
   beforeEach(async done => {
@@ -23,9 +23,12 @@ describe('Test manageSuperUserStatus handler', () => {
     });
 
     const request = {
-      admin: adminUser._id,
-      user: superUserRequest._id,
-      action: 'approve',
+      body: JSON.stringify({
+        admin: adminUser._id,
+        user: superUserRequest._id,
+        action: 'approve',
+        userStatus: superUserRequest.status,
+      }),
     };
 
     const manageSuperUserStatus = await handler(request, {});
@@ -53,9 +56,12 @@ describe('Test manageSuperUserStatus handler', () => {
     });
 
     const request = {
-      admin: adminUser._id,
-      user: superUserRequest._id,
-      action: 'reject',
+      body: JSON.stringify({
+        admin: adminUser._id,
+        user: superUserRequest._id,
+        action: 'reject',
+        userStatus: superUserRequest.status,
+      }),
     };
 
     const manageSuperUserStatus = await handler(request, {});
