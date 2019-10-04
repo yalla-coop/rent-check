@@ -1,7 +1,12 @@
+import middy from 'middy';
+
 import connectToDatabase from './database/dbConnection';
 import User from './database/models/User';
 import { getSingleGeo } from './utils/postcodes';
 import { addRentalRecord } from './database/queries/rentalRecord';
+import { status } from '../constants/rentalRecords';
+import validaitonMiddelware from './utils/validation';
+import rentalValidationSchema from '../components/RentalForm/rentalForm.validation';
 
 // Stub - function to be replaced with one that gets ID of logged in user
 const getCurrentUserId = async () => {
@@ -9,7 +14,7 @@ const getCurrentUserId = async () => {
   return user._id;
 };
 
-export async function handler(event, context) {
+async function addLocation(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
   if (event.httpMethod !== 'POST') {
@@ -28,6 +33,7 @@ export async function handler(event, context) {
     await connectToDatabase();
     rentalRecord.submittedBy = await getCurrentUserId();
     rentalRecord.geoLocation = await getSingleGeo(rentalRecord.postcode);
+    rentalRecord.status = status.UNVERIFIED;
     const result = await addRentalRecord(rentalRecord);
     return {
       statusCode: 200,
@@ -40,3 +46,8 @@ export async function handler(event, context) {
     };
   }
 }
+
+const handler = middy(addLocation).use(
+  validaitonMiddelware(rentalValidationSchema)
+);
+export { handler };
