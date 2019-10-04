@@ -1,7 +1,7 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { Table, Input, Icon, Button, message } from 'antd';
+import { List, Input, Icon, Button, message } from 'antd';
 import axios from 'axios';
 import Loading from '../../Loading';
 import usePostPatchPut from '../../../hooks/usePostPatchPut';
@@ -9,11 +9,15 @@ import useFetch from '../../../hooks/useFetch';
 import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';
+
 // admin user -> please change id for testing
 const admin = '5d8b623e8bdf5519b8627ca9';
 
 // chooses data base for user table depending on section
-const decideUserData = (userStatus, users) => {
+const filterUsersByStatus = (userStatus, users) => {
+  if (!users) {
+    return [];
+  }
   switch (userStatus) {
     case statusConst.UNVERIFIED:
       return users.filter(el => el.status === statusConst.UNVERIFIED);
@@ -167,15 +171,9 @@ export default function AllUsers({ statusProp }) {
   return (
     <Fragment>
       {isLoading && <Loading />}
-      <Table
-        columns={UsersColumns({
-          getColumnSearchProps,
-          searchText,
-          manageUserStatusOnClick,
-        })}
-        dataSource={users && decideUserData(statusProp, users)}
-        style={{ backgroundColor: '#ffffff' }}
-        bordered
+      <List
+        dataSource={filterUsersByStatus(statusProp, users)}
+        renderItem={() => <p>Hello</p>}
       />
     </Fragment>
   );
