@@ -18,7 +18,7 @@ const schema = new mongoose.Schema(
     },
     status: {
       type: String,
-    enum: rentEnum.statusEnum,
+      enum: rentEnum.statusEnum,
       required: true,
     },
     geoLocation: {
@@ -33,7 +33,7 @@ const schema = new mongoose.Schema(
     leaseLength: String,
     landlordTenantsAct: {
       type: String,
-      enum: rentEnum.landlordTenantsActEnum,,
+      enum: rentEnum.landlordTenantsActEnum,
     },
     lastRentReview: Date,
     nextRentReview: Date,
