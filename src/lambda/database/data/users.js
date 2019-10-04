@@ -47,6 +47,19 @@ export default async () => {
       },
       verifiedBy: storedAdmin._id,
     },
+    {
+      name: 'Chloe Moore',
+      email: 'chloemoore@test2.com',
+      role: roles.USER,
+      status: status.AWAITING_SUPER,
+      companyName: 'Moore Company',
+      companyAddress: {
+        addressLine1: '212 Moore Lane',
+        city: 'London',
+        postcode: 'E3 8KP',
+      },
+      verifiedBy: storedAdmin._id,
+    },
   ];
 
   await User.create(superUsers);
@@ -78,6 +91,20 @@ export default async () => {
       role: roles.USER,
       status: status.VERIFIED,
       verifiedBy: verifiedSuperUser._id,
+    },
+
+    // unverified
+    {
+      name: 'Adam Michaels',
+      email: 'micahels@gmail.com',
+      role: roles.USER,
+      status: status.UNVERIFIED,
+    },
+    {
+      name: 'Susan Hitchie',
+      email: 'susan@gmail.com',
+      role: roles.USER,
+      status: status.UNVERIFIED,
     },
   ];
 

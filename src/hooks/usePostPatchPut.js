@@ -1,11 +1,6 @@
 // custom hook to be used for post, patch or put requests
 // needs url, method (post, patch or put) and data to be passed on
-// usage like so:
-// 1) const [{ data }, apiCall] = useAPI({
-//   url: '/.netlify/functions/manageSuperUserStatus',
-//   method: 'patch',
-// });
-// 2) () => apiCall(data) (e.g to be used as onCLick, onSubmit...)
+// for example usage check Admin/Users/Table -> usePostPatchPut and manageUserStatusOnClick
 
 import { useState, useCallback } from 'react';
 import axios from 'axios';
@@ -17,7 +12,7 @@ const usePostPatchPut = ({ url, method }) => {
     payload => {
       setRes(prevState => ({ ...prevState, isLoading: true }));
 
-      axios[method](url, payload)
+      return axios[method](url, payload)
         .then(({ data }) => {
           setRes({ data, error: null, isLoading: false });
         })

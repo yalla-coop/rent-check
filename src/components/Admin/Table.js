@@ -1,12 +1,16 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Table, Input, Icon, Button, message } from 'antd';
 import axios from 'axios';
+import Loading from '../../Loading';
 import usePostPatchPut from '../../hooks/usePostPatchPut';
-
+import useFetch from '../../useFetch';
+import UsersColumns from './Users/UsersColumns';
+// admin user -> please change id for testing
 const admin = '5d8b623e8bdf5519b8627ca9';
 
+// updates user object
 const updateUsers = async () => {
   const request = await axios.get('/.netlify/functions/getUsers');
   return request;
@@ -18,6 +22,7 @@ export default function TableComponent({
   setUsers,
   createUserTable,
 }) {
+  // custom hook for patch request to manage user status
   const [{ data: updateUserStatus }, updateUserStatusCall] = usePostPatchPut({
     url: '/.netlify/functions/manageUserStatus',
     method: 'patch',
@@ -27,18 +32,21 @@ export default function TableComponent({
 
   const searchInputRef = useRef(null);
 
-  const handleSearch = (selectedKeys, confirm) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-  };
+  // listens for response coming from patch request to update user
+  // renders message to user and updates user table
+  useEffect(() => {
+    if (updateUserStatus && updateUserStatus.msg) {
+      updateUsers()
+        .then(({ data: users }) => {
+          const newUsers = createUserTable(users.msg);
+          setUsers(newUsers);
+        })
+        .catch(err => message.error(err));
+      return message.success(updateUserStatus && updateUserStatus.msg);
+    }
+  }, [updateUserStatus, setUsers, createUserTable]);
 
-  const handleReset = clearFilters => {
-    clearFilters();
-    setSearchText('');
-  };
-
-  // validate/reject super user status
-  // patch function to manage super user status
+  // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
   const manageUserStatusOnClick = (user, action, userStatus) => {
@@ -48,16 +56,16 @@ export default function TableComponent({
       action,
       userStatus,
     });
-    if (updateUserStatus && Object.keys({ updateUserStatus }).length > 0) {
-      message.success(updateUserStatus.msg);
+  };
 
-      updateUsers()
-        .then(({ data: users }) => {
-          const newUsers = createUserTable(users.msg);
-          setUsers(newUsers);
-        })
-        .catch(err => message.error(err));
-    }
+  const handleSearch = (selectedKeys, confirm) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+  };
+
+  const handleReset = clearFilters => {
+    clearFilters();
+    setSearchText('');
   };
 
   const getColumnSearchProps = dataIndex => ({

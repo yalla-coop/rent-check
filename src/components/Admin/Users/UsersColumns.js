@@ -9,6 +9,7 @@ export default ({
   searchText,
   manageUserStatusOnClick,
 }) => {
+  // renders btn to approve or reject user/ super user
   const renderActionBtn = (
     userId,
     userStatus,
@@ -19,7 +20,7 @@ export default ({
       style={{ color, borderColor }}
       className="mr1"
       ghost
-      onClick={() => manageUserStatusOnClick(userId, 'approve', userStatus)}
+      onClick={() => manageUserStatusOnClick(userId, action, userStatus)}
     >
       {action}
     </Button>
@@ -85,41 +86,20 @@ export default ({
       dataIndex: 'actions',
       key: 'actions',
       render: (text, record) => {
-        switch (record.status) {
-          case status.UNVERIFIED || status.AWAITING_SUPER:
-            return (
-              <div className="flex items-center justify-between">
-                {renderActionBtn(record.key, record.status, 'approve', {
-                  color: '#219653',
-                  borderColor: '#219653',
-                })}
-                {renderActionBtn(record.key, record.status, 'reject', {
-                  color: '#EB5757',
-                  borderColor: '#EB5757',
-                })}
-              </div>
-            );
-          case status.VERIFIED:
-            return (
-              <div className="flex items-center justify-between">
-                {renderActionBtn(record.key, record.status, 'reject', {
-                  color: '#EB5757',
-                  borderColor: '#EB5757',
-                })}
-              </div>
-            );
-          case status.REJECTED:
-            return (
-              <div className="flex items-center justify-between">
-                {renderActionBtn(record.key, record.status, 'approve', {
-                  color: '#219653',
-                  borderColor: '#219653',
-                })}
-              </div>
-            );
-          default:
-            return null;
-        }
+        return [status.UNVERIFIED, status.AWAITING_SUPER].includes(
+          record.status
+        ) ? (
+          <div className="flex items-center justify-between">
+            {renderActionBtn(record.key, record.status, 'approve', {
+              color: '#219653',
+              borderColor: '#219653',
+            })}
+            {renderActionBtn(record.key, record.status, 'reject', {
+              color: '#EB5757',
+              borderColor: '#EB5757',
+            })}
+          </div>
+        ) : null;
       },
     },
   ];

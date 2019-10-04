@@ -1,5 +1,4 @@
 // handles request to approve/ reject user awaiting verification or super user status
-// receives request { adminId, userId, action }
 
 import connectToDatabase from './database/dbConnection';
 import {
@@ -20,31 +19,33 @@ export async function handler(event, context) {
 
     let update;
     let msg;
-
+    console.log(event.body);
     switch (action) {
       case 'approve':
         if (userStatus === status.AWAITING_SUPER) {
           update = await approveSuperUser(user, admin);
-          msg = 'approved user to be super user';
+          msg = 'approved super user status!';
         } else {
           update = await approveUser(user, admin);
-          msg = 'user verified';
+          msg = 'verified user!';
         }
         break;
 
       case 'reject':
         if (userStatus === status.AWAITING_SUPER) {
+          console.log('super reject');
           update = await rejectSuperUser(user);
-          msg = 'rejected user to become super user';
+          msg = 'rejected super user status!';
         } else {
+          console.log('normal reject');
           update = await rejectUser(user);
-          msg = 'rejected user';
+          msg = 'rejected user!';
         }
         break;
 
       default:
         update = null;
-        msg = 'no success updating super user status';
+        msg = 'no success updating user status!';
         break;
     }
 
