@@ -33,7 +33,7 @@ export const menuElements = [
         route: '/verify',
       },
       {
-        title: 'Requested super user privileges',
+        title: 'Requested super user',
         route: '/super-req',
       },
       {
