@@ -19,7 +19,7 @@ import { routes } from '../../../constants/adminRoutes';
 import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
 
 // custom hooks
-import useFetch from '../../../useFetch';
+import useFetch from '../../../hooks/useFetch';
 
 const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
