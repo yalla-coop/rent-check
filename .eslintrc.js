@@ -14,6 +14,8 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn', // <--- THIS IS THE NEW RULE
     'jsx-a11y/label-has-associated-control': 0,
     'jsx-a11y/label-has-for':0,
     'consistent-return': 0,
@@ -49,5 +51,5 @@ module.exports = {
       },
     ],
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'react-hooks']
 };

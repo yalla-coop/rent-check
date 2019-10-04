@@ -8,6 +8,7 @@ export const routes = {
   USERS_SUPER: '/control-panel/users/super',
   RENTAL_DATA: '/control-panel/rental-data',
   RENTAL_DATA_ALL: '/control-panel/rental-data/',
+  RENTAL_DATA_SINGLE: '/control-panel/rental-data/single-view',
   RENTAL_DATA_VERIFY: '/control-panel/rental-data/verify',
   RENTAL_DATA_VERIFIED: '/control-panel/rental-data/verified',
 };

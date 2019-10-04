@@ -5,7 +5,7 @@ import { Table, Input, Icon, Button, message } from 'antd';
 import axios from 'axios';
 import Loading from '../../Loading';
 import usePostPatchPut from '../../../hooks/usePostPatchPut';
-import useFetch from '../../../useFetch';
+import useFetch from '../../../hooks/useFetch';
 import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';

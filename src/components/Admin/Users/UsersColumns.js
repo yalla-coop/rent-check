@@ -1,7 +1,7 @@
 // sets columns for user table
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Tag } from 'antd';
 import { renderUserDetails, status } from '../../../constants/users';
 
 export default ({
@@ -17,7 +17,7 @@ export default ({
     { color, borderColor }
   ) => (
     <Button
-      style={{ color, borderColor }}
+      style={{ color, borderColor, fontSize: '0.8rem' }}
       className="mr1"
       ghost
       onClick={() => manageUserStatusOnClick(userId, action, userStatus)}
@@ -79,7 +79,9 @@ export default ({
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (text, record) => <span>{renderUserDetails[text]}</span>,
+      render: (text, record) => (
+        <Tag color={`var(--${text})`}>{renderUserDetails[text]}</Tag>
+      ),
     },
     {
       title: 'Actions',

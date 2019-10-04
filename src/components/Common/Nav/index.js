@@ -5,7 +5,6 @@ import logo from '../../../assets/logo.png';
 
 // NAV URLS
 import {
-  LANDING_URL,
   MAP_URL,
   ADD_RENTAL_URL,
   ACCOUNT_URL,
@@ -24,7 +23,7 @@ const Nav = ({ role }) => {
 
   return (
     <S.Header>
-      <NavLink to={LANDING_URL}>
+      <NavLink to={MAP_URL}>
         <S.Img src={logo} alt="East End Trades Guild logo" />
       </NavLink>
       <S.HeaderTitle>
@@ -90,7 +89,7 @@ const Nav = ({ role }) => {
           </S.MenuLink>
           {/* THIS WILL NEED TO CLEAR COOKIE */}
           <S.MenuLink
-            to={LANDING_URL}
+            to={MAP_URL}
             onClick={() => {
               toggleMenu();
             }}

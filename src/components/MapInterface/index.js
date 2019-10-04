@@ -8,7 +8,7 @@ import {
   ModalOverlay,
 } from './MapInterface.style';
 
-import useFetch from '../../useFetch';
+import useFetch from '../../hooks/useFetch';
 
 function MapInterface({ location }) {
   const [searchInput, setSearchInput] = useState('');
