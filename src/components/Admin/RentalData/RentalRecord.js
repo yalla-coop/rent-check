@@ -11,7 +11,7 @@ import * as S from './RentalData.style';
 import { status as constStatus } from '../../../constants/rentalRecords';
 
 // custom hooks
-import useWindowWidth from '../../../useWindowWidth';
+import useWindowWidth from '../../../hooks/useWindowWidth';
 
 function RentalRecord({ location, history }) {
   const [isTablet, setTablet] = useState(false);
