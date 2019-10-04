@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 
 // constants
-import { sizeNum } from './constants/breakpoints';
+import { sizeNum } from '../constants/breakpoints';
 
 const useWindowWidth = () => {
   const isClient = typeof window === 'object';
@@ -23,8 +23,27 @@ const useWindowWidth = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [isClient]);
 
-  const { tablet } = sizeNum;
-  return { isTablet: windowWidth < tablet };
+  const {
+    mobileS,
+    mobileM,
+    mobileL,
+    mobileXL,
+    tablet,
+    laptop,
+    laptopL,
+    desktop,
+  } = sizeNum;
+
+  return {
+    isMobileS: windowWidth < mobileS,
+    isMobileM: windowWidth < mobileM,
+    isMobileL: windowWidth < mobileL,
+    isMobileXL: windowWidth < mobileXL,
+    isTablet: windowWidth < tablet,
+    isLaptop: windowWidth < laptop,
+    isLaptopL: windowWidth < laptopL,
+    isDesktop: windowWidth < desktop,
+  };
 };
 
 export default useWindowWidth;
