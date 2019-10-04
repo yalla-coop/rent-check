@@ -74,6 +74,7 @@ export default function SideMenu() {
       }}
       theme="light"
       style={{ paddingTop: '2rem' }}
+      width={250}
     >
       <InnerMenu />
     </Sider>
