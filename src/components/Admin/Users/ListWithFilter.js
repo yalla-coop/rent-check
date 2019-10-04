@@ -23,7 +23,7 @@ export default function ListWithFilter({ dataSource, renderItem, ...props }) {
         allowClear
         value={searchText}
         onChange={e => setSearchText(e.target.value)}
-        style={{ marginTop: '1rem' }}
+        style={{ marginBottom: '1rem' }}
       />
       <List dataSource={filteredSource} renderItem={renderItem} {...props} />
     </div>
