@@ -1,5 +1,5 @@
 // import constants
-import { statusEnum } from '../../../constants/rentalRecords';
+import * as rentEnum from '../../../constants/rentalRecords';
 
 const mongoose = require('mongoose');
 
@@ -17,7 +17,7 @@ const schema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: statusEnum,
+    enum: rentEnum.statusEnum,
     required: true,
   },
   geoLocation: {
@@ -32,26 +32,28 @@ const schema = new mongoose.Schema({
   leaseLength: String,
   landlordTenantsAct: {
     type: String,
-    enum: ['Yes', 'No', 'Not sure'],
+    enum: rentEnum.landlordTenantsActEnum,
   },
   lastRentReview: Date,
   nextRentReview: Date,
   landlord: String,
   specification: {
     type: String,
-    enum: ['Refurbished', 'Shell', 'Other / Not sure'],
+    enum: rentEnum.specificationEnum,
   },
   annualRent: Number,
   squareFeet: Number,
   priceSqFt: Number,
+  yardSquareFeet: Number,
+  yardPriceSqFt: Number,
   serviceCharge: Number,
   useClass: {
     type: String,
-    enum: ['A1', 'A3', 'B1', 'B2', 'B8', 'D1', 'D2', 'Other'],
+    enum: rentEnum.useClassEnum,
   },
   restricted: {
     type: String,
-    enum: ['Restricted', 'Unrestricted', 'Not sure'],
+    enum: rentEnum.restrictedEnum,
   },
   breakClauses: String,
   additionalComments: String,
