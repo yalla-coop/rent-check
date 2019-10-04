@@ -9,7 +9,7 @@ import MapInterface from './MapInterface';
 import Admin from './Admin';
 import RentalForm from './RentalForm';
 
-export default function Router() {
+export default function Router(props) {
   return (
     <Switch>
       <Route exact path="/" component={MapInterface} />
