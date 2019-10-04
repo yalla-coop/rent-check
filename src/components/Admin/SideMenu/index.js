@@ -51,12 +51,6 @@ const InnerMenu = () => (
         </Menu.Item>
       )
     )}
-    <Menu.Item style={{ textAlign: 'left' }}>
-      <Link to="/">
-        <Icon type="home" />
-        <span>Vist Website</span>
-      </Link>
-    </Menu.Item>
   </Menu>
 );
 
