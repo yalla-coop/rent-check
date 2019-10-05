@@ -10,7 +10,10 @@ import validaitonMiddelware from './utils/validation';
 import rentalValidationSchema from '../components/RentalForm/rentalForm.validation';
 
 // Stub - function to be replaced with one that gets ID of logged in user
-const getCurrentUser = () => User.findOne({ name: 'Michael Watts' });
+// const getCurrentUser = () => User.findOne({ name: 'Michael Watts' });
+
+// get the admin
+const getCurrentUser = () => User.findOne({ name: 'Krissie Nicholson' });
 
 async function addLocation(event, context) {
   // eslint-disable-next-line no-param-reassign

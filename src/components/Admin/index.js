@@ -5,14 +5,9 @@ import { Layout } from 'antd';
 
 // Components
 import SideMenu from './SideMenu';
-import Dashboard from './Dashboard';
-import Users from './Users';
-import RentalData from './RentalData';
 
-// Routes
-import { routes } from '../../constants/adminRoutes';
+import adminRoutes from './adminRoutes';
 
-const { DASHBOARD, USERS, RENTAL_DATA } = routes;
 const { Content, Footer } = Layout;
 
 export default function Admin() {
@@ -22,16 +17,17 @@ export default function Admin() {
       <Layout style={{ paddingTop: '2rem' }}>
         <Content style={{ margin: '0 16px' }}>
           <Switch>
-            <Route
-              path={DASHBOARD}
-              exact
-              render={props => <Dashboard {...props} />}
-            />
-            <Route path={USERS} render={props => <Users {...props} />} />
-            <Route
-              path={RENTAL_DATA}
-              render={props => <RentalData {...props} />}
-            />
+            {adminRoutes.map((route, idx) => {
+              return route.component ? (
+                <Route
+                  key={idx}
+                  path={route.path}
+                  exact={route.exact}
+                  name={route.name}
+                  render={props => <route.component {...props} />}
+                />
+              ) : null;
+            })}
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}>©2019 Created by Yalla</Footer>

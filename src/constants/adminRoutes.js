@@ -63,6 +63,10 @@ export const menuElements = [
         title: 'My verified data',
         route: '/rental-verified',
       },
+      {
+        title: 'My added data',
+        route: '/rental-added',
+      },
     ],
   },
 ];
