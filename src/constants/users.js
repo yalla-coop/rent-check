@@ -15,14 +15,13 @@ export const status = {
 
 export const statusEnum = Object.values(status);
 
-export const renderUserDetails = {
-  // role
-  user: 'User',
-  superUser: 'Super User',
-  admin: 'Admin',
-  // status
-  unverified: 'Unverified',
-  verified: 'Verified',
-  rejected: 'Rejected',
-  awaitingSuperUser: 'Awaiting Super User',
+export const renderUserDetails = (userRole, userStatus) => {
+  switch (userRole) {
+    case roles.ADMIN:
+      return 'Admin';
+    case roles.SUPERUSER:
+      return 'Super User';
+    default:
+      return userStatus !== 'unverified' ? 'Verified' : '';
+  }
 };
