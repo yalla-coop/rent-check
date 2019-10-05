@@ -3,31 +3,76 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Components
+import { Icon } from 'antd';
+import Loading from '../../Loading';
 import Table from '../Table';
+import RentalRecord from './RentalRecord';
+
+// Styling
+import * as S from './RentalData.style';
 
 // Table props
 import rentalDataColumns from './rentalDataColumns';
-import { dataSource } from './dummyData';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
+import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
 
-const { RENTAL_DATA_ALL } = routes;
+// custom hooks
+import useFetch from '../../../hooks/useFetch';
 
-export default function RentalData() {
+const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
+
+function RentalData() {
+  // fetch data
+  const [{ data: msg, isLoading }] = useFetch(
+    '/.netlify/functions/getRentalData'
+  );
+
+  // create table friendly data sets and also pass on all rental details
+  const rentalRecords =
+    msg &&
+    msg.map(record => ({
+      key: record._id,
+      status: record.status,
+      submitted: record.submittedBy.email,
+      date: record.createdAt,
+      rentalData: record,
+    }));
+
   return (
     <Switch>
+      {isLoading && <Loading />}
       <Route
         exact
         path={RENTAL_DATA_ALL}
         render={props => (
-          <Table
-            columns={rentalDataColumns}
-            dataSource={dataSource}
-            {...props}
-          />
+          <>
+            <S.TopSection>
+              <S.StyledLink to={ADD_RENTAL_URL}>
+                Add new rental data{' '}
+                <Icon
+                  type="arrow-right"
+                  fontSize={32}
+                  style={{ paddingLeft: '0.25rem' }}
+                />
+              </S.StyledLink>
+            </S.TopSection>
+            <Table
+              columns={rentalDataColumns}
+              dataSource={rentalRecords}
+              {...props}
+            />
+          </>
         )}
+      />
+      <Route
+        exact
+        path={RENTAL_DATA_SINGLE}
+        render={props => <RentalRecord {...props} />}
       />
     </Switch>
   );
 }
+
+export default RentalData;

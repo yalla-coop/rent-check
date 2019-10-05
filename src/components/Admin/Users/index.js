@@ -10,7 +10,7 @@ import usersCol from './UsersColumns';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
-import useFetch from '../../../useFetch';
+import useFetch from '../../../hooks/useFetch';
 
 const { USERS_ALL } = routes;
 

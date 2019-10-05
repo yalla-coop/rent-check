@@ -6,6 +6,7 @@ export const SideMenuWrapper = styled.div`
   left: 0;
   top: 1.5rem;
   bottom: 0;
+  padding-top: 2rem;
 `;
 
 export const StyledButton = styled(Button)`

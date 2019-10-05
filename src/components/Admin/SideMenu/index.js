@@ -1,16 +1,25 @@
 // creates Drawer Menu
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Icon, Layout } from 'antd';
 import { Link } from 'react-router-dom';
 
 // menu structure
 import { menuElements } from '../../../constants/adminRoutes';
 
+// custom hooks
+import useWindowWidth from '../../../useWindowWidth';
+
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 export default function SideMenu() {
   const [collapsed, setCollapsed] = useState(false);
+  const device = useWindowWidth();
+
+  useEffect(() => {
+    setCollapsed(device.isTablet);
+  }, [device]);
+
   return (
     <Sider
       collapsible
@@ -19,6 +28,7 @@ export default function SideMenu() {
         setCollapsed(value);
       }}
       theme="light"
+      style={{ paddingTop: '2rem' }}
     >
       <div className="logo" />
       <Menu

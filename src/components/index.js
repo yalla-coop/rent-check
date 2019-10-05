@@ -7,9 +7,9 @@ import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
 // import components here
 import MapInterface from './MapInterface';
 import Admin from './Admin';
-import { useAuth0, Auth0Provider } from './Auth0Login/Auth0Wrapper';
+import { Auth0Provider } from './Auth0Login/Auth0Wrapper';
 import PrivateRoute from './Auth0Login/PrivateRoute';
-// import { routes } from '../constants/adminRoutes';
+import RentalForm from './RentalForm';
 
 const onRedirectCallback = appState => {
   window.history.replaceState(
@@ -21,16 +21,17 @@ const onRedirectCallback = appState => {
   );
 };
 
-function Index() {
-  const { loading } = useAuth0();
-  if (loading) return <h2>Loading...</h2>;
+const Router = () => {
   return (
     <Switch>
+      <PrivateRoute exact path="/" component={MapInterface} />
+      <PrivateRoute path="/admin" component={Admin} />
+      <PrivateRoute path="/add-rental-data" component={RentalForm} />
       <PrivateRoute exact path={MAP_URL} component={MapInterface} />
       <PrivateRoute path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>
   );
-}
+};
 
 // Authentication Wrapper
 const Routes = () => {
@@ -41,7 +42,7 @@ const Routes = () => {
       redirect_uri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
     >
-      <Index />
+      <Router />
     </Auth0Provider>
   );
 };

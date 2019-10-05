@@ -62,7 +62,7 @@ export const Menu = styled.nav`
 `;
 
 export const MenuLink = styled(NavLink)`
-  color: #386a9b;
+  color: var(--blue);
   font-weight: 500;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
