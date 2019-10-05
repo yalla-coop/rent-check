@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { NavLink } from 'react-router-dom';
 import L from 'leaflet';
 import { Marker, Popup, Tooltip } from 'react-leaflet';
 import Icon from '../MarkerIcon';
@@ -188,13 +189,11 @@ const MarkerWithPopup = ({
             <PopupInfo>
               Help strengthen your community by adding your data
             </PopupInfo>
-
-            <Button
-              href="https://airtable.com/shrE0QRpUy9UH8Bor"
-              target="_blank"
-            >
-              Add my data
-            </Button>
+            <NavLink to="/add-rental-data">
+              <Button>
+                Add my data
+              </Button>
+            </NavLink>
           </CenteredSection>
         </div>
       </Popup>
