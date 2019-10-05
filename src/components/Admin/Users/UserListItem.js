@@ -1,13 +1,14 @@
 import React from 'react';
 import { List, Icon } from 'antd';
 import { RoleTile, UserTitle } from './Users.style';
+import { renderUserDetails } from '../../../constants/users';
 
 const Title = ({ name, status, role }) => {
   return (
     <UserTitle>
       <div style={{ marginRight: '0.4rem' }}>{name}</div>
       <div>
-        <RoleTile>{role}</RoleTile>
+        <RoleTile>{renderUserDetails[role]}</RoleTile>
         {status !== 'unverified' ? (
           <Icon type="check" style={{ marginLeft: '0.5rem', color: 'green' }} />
         ) : (
