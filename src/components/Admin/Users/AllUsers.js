@@ -10,7 +10,7 @@ import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';
 // admin user -> please change id for testing
-const admin = '5d8b623e8bdf5519b8627ca9';
+const admin = '5d98462431532f74cc6879c5';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, users) => {
@@ -55,7 +55,10 @@ export default function AllUsers({ statusProp }) {
   );
 
   // patch request to manage user status
-  const [{ data: updateUserStatus }, updateUserStatusCall] = usePostPatchPut({
+  const [
+    { data: updateUserStatus, error: updateUserStatusErr },
+    updateUserStatusCall,
+  ] = usePostPatchPut({
     url: '/.netlify/functions/manageUserStatus',
     method: 'patch',
   });
@@ -76,6 +79,11 @@ export default function AllUsers({ statusProp }) {
   // listens for response coming from patch request to update user
   // renders message to user and updates user table
   useEffect(() => {
+    // check for error
+    if (updateUserStatusErr && updateUserStatusErr.response.data.error) {
+      message.error(updateUserStatusErr.response.data.error);
+    }
+    // if no error update users and show success message
     if (updateUserStatus && updateUserStatus.msg) {
       updateUsers()
         .then(({ data: updatedUsers }) => {
@@ -85,7 +93,7 @@ export default function AllUsers({ statusProp }) {
         .catch(err => message.error(err));
       return message.success(updateUserStatus && updateUserStatus.msg);
     }
-  }, [updateUserStatus, setUsers, allUsers]);
+  }, [updateUserStatus, setUsers, allUsers, updateUserStatusErr]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)

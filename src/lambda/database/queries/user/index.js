@@ -7,6 +7,11 @@ export const getAllUsers = async () => {
   return users;
 };
 
+// gets one user
+export const getUser = id => {
+  return User.findById(id);
+};
+
 // upates awaitingSuperUser status if rejected
 export const rejectSuperUser = id =>
   User.findOneAndUpdate(
