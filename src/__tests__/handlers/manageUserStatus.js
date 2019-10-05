@@ -88,4 +88,26 @@ describe('Test manageSuperUserStatus handler', () => {
     expect(JSON.parse(manageSuperUserStatus.body).error).toBeDefined();
     done();
   });
+
+  test('update should not work if invalid request', async done => {
+    const superUserRequest = await User.findOne({
+      status: status.AWAITING_SUPER,
+    });
+
+    const request = {
+      body: JSON.stringify({
+        admin: 'not valid',
+        user: superUserRequest._id,
+        action: 'reject',
+        userStatus: superUserRequest.status,
+      }),
+    };
+
+    const manageSuperUserStatus = await handler(request, {});
+
+    expect(manageSuperUserStatus.statusCode).toBe(403);
+
+    expect(JSON.parse(manageSuperUserStatus.body).error).toBeDefined();
+    done();
+  });
 });
