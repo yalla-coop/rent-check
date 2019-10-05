@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { List, Input } from 'antd';
 
+import useWindowWidth from '../../../hooks/useWindowWidth';
+
 export default function ListWithFilter({ dataSource, renderItem, ...props }) {
   const [searchText, setSearchText] = useState('');
   const [filteredSource, setFilteredSource] = useState(dataSource);
@@ -16,6 +18,12 @@ export default function ListWithFilter({ dataSource, renderItem, ...props }) {
       ),
     [dataSource, searchText]
   );
+  const [isSmallScreen, setSmallScreen] = useState(false);
+  const device = useWindowWidth();
+
+  useEffect(() => {
+    setSmallScreen(device.isTablet);
+  }, [device]);
   return (
     <div>
       <Input
@@ -25,7 +33,12 @@ export default function ListWithFilter({ dataSource, renderItem, ...props }) {
         onChange={e => setSearchText(e.target.value)}
         style={{ marginBottom: '1rem' }}
       />
-      <List dataSource={filteredSource} renderItem={renderItem} {...props} />
+      <List
+        dataSource={filteredSource}
+        renderItem={renderItem}
+        itemLayout={isSmallScreen ? 'vertical' : 'horizontal'}
+        {...props}
+      />
     </div>
   );
 }
