@@ -20,7 +20,7 @@ export const renderUserDetails = (userRole, userStatus) => {
     case roles.ADMIN:
       return 'Admin';
     case roles.SUPERUSER:
-      return 'Super User';
+      return 'Street Rep';
     default:
       return userStatus !== 'unverified' ? 'Verified' : '';
   }
