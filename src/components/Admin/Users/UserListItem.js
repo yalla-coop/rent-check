@@ -1,6 +1,5 @@
 import React from 'react';
-import { List, Tag, Button } from 'antd';
-import { UserTitle } from './Users.style';
+import { List, Tag, Button, Icon } from 'antd';
 import { renderUserDetails } from '../../../constants/users';
 import { userRoleColor } from '../../../constants/colors';
 
@@ -22,21 +21,6 @@ const Title = ({ name, status, role }) => {
   );
 };
 
-const UserActions = () => (
-  <div className="flex items-center justify-start">
-    <Button
-      style={{ color: '#219653', borderColor: '#219653' }}
-      className="mr1"
-      ghost
-    >
-      Approve
-    </Button>
-    <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
-      Reject
-    </Button>
-  </div>
-);
-
 const UserListItem = ({ _id, name, email, role, status }) => {
   return (
     <List.Item key={_id}>
@@ -44,7 +28,11 @@ const UserListItem = ({ _id, name, email, role, status }) => {
         title={<Title name={name} status={status} role={role} />}
         description={email}
       />
-      <UserActions />
+      {role !== 'admin' && (
+        <Button>
+          <Icon type="form" />
+        </Button>
+      )}
     </List.Item>
   );
 };

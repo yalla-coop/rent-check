@@ -1,17 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Button } from 'antd';
 
-export const RoleTile = styled.span`
-  background: #333333;
-  color: #ffffff;
-  padding: 0.2rem 0.4rem;
-  font-size: 0.7rem;
-  border-radius: 10%;
+const verify = css`
+  color: green !important;
+  border-color: green !important;
 `;
 
-export const UserTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-  @media all and (min-width: 600px) {
-    flex-direction: row;
-  }
+const reject = css`
+  color: red !important;
+  border-color: red !important;
+`;
+
+export const UserButton = styled(Button).attrs({
+  className: 'mr-1',
+  size: 'small',
+  ghost: true,
+})`
+  ${props => props.verify && verify}
+  ${props => props.reject && reject}
 `;

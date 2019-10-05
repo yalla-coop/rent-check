@@ -37,6 +37,7 @@ export default function ListWithFilter({ dataSource, renderItem, ...props }) {
         dataSource={filteredSource}
         renderItem={renderItem}
         itemLayout={isSmallScreen ? 'vertical' : 'horizontal'}
+        bordered
         {...props}
       />
     </div>
