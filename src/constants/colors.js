@@ -37,3 +37,9 @@ export const useClassColor = {
   D2: appColors.ORANGE,
   Other: appColors.WHITE,
 };
+
+export const userRoleColor = {
+  user: appColors.GREEN,
+  superUser: appColors.PINK,
+  admin: appColors.GOLD,
+};
