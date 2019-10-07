@@ -5,7 +5,7 @@
 import buildData from '../../../lambda/database/data/index';
 
 // import the query to test
-import { getAllData } from '../../../lambda/database/queries/rentalData';
+import { getAllData } from '../../../lambda/database/queries/rentalRecord';
 
 describe('Test getAllData query for rental records', () => {
   beforeAll(async done => {

@@ -1,7 +1,7 @@
 import connectToDatabase from './database/dbConnection';
 
 // import db query
-import { getAllData } from './database/queries/rentalData';
+import { getAllData } from './database/queries/rentalRecord';
 
 export async function handler(event, context) {
   // eslint-disable-next-line no-param-reassign
