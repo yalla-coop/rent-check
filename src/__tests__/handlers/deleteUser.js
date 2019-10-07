@@ -16,8 +16,12 @@ describe('Test deleteUser handler', () => {
 
   test('user and rental records successfully deleted', async done => {
     const usersInDB = await User.find();
+    const event = {
+      body: JSON.stringify({ userId: usersInDB[0]._id }),
+      httpMethod: 'DELETE',
+    };
 
-    const deleteUser = await handler(null, {});
+    const deleteUser = await handler(event, {});
     expect(deleteUser.statusCode).toBe(200);
 
     const newUsersInDB = await User.find();

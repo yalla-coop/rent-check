@@ -1,8 +1,8 @@
 // sets columns for user table
 
-import React, { useState } from 'react';
+import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon, Tag, Divider, Modal } from 'antd';
+import { Button, Icon, Tag, Divider } from 'antd';
 
 // constants
 import {

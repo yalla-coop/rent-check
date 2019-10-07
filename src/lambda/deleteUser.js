@@ -13,7 +13,6 @@ async function handler(event, context) {
 
   try {
     const user = JSON.parse(event.body);
-    console.log("user", user)
     await connectToDatabase();
 
     await deleteUserRecords(user.userId);
