@@ -1,9 +1,14 @@
 // sets columns for user table
 
-import React from 'react';
+import React, { useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon, Tag } from 'antd';
-import { renderUserDetails } from '../../../constants/users';
+import { Button, Icon, Tag, Divider, Modal } from 'antd';
+
+// constants
+import {
+  renderUserDetails,
+  status as constStatus,
+} from '../../../constants/users';
 
 export default ({ getColumnSearchProps, searchText }) => {
   const tableColumns = [
@@ -67,18 +72,41 @@ export default ({ getColumnSearchProps, searchText }) => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (text, record) => (
+      render: (actions, record) => (
         <div className="flex items-center justify-between">
-          <Button
-            style={{ color: '#219653', borderColor: '#219653' }}
-            className="mr1"
-            ghost
-          >
-            Approve
-          </Button>
-          <Button ghost style={{ color: '#EB5757', borderColor: '#EB5757' }}>
-            Reject
-          </Button>
+          <span className="flex items-center">
+            {actions && actions.status !== constStatus.VERIFIED && (
+              <Button
+                style={{ color: '#219653', borderColor: '#219653' }}
+                className="mr1"
+                ghost
+              >
+                Approve
+              </Button>
+            )}
+            {actions && actions.status !== constStatus.REJECTED && (
+              <Button
+                ghost
+                style={{ color: '#EB5757', borderColor: '#EB5757' }}
+              >
+                Reject
+              </Button>
+            )}
+          </span>
+          <span className="flex items-center">
+            <Divider type="vertical" />
+            <Button
+              style={{
+                color: 'var(--red)',
+                borderColor: 'var(--red)',
+              }}
+              className="mr1 self-end"
+              ghost
+              onClick={() => actions.deleteUser(actions.id)}
+            >
+              <Icon type="delete" />
+            </Button>
+          </span>
         </div>
       ),
     },

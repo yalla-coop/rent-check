@@ -2,17 +2,22 @@ import connectToDatabase from './database/dbConnection';
 import { deleteUser } from './database/queries/user';
 import { deleteUserRecords } from './database/queries/rentalRecord';
 
-// won't be needed once auth is set up
-import User from './database/models/User';
+async function handler(event, context) {
+  // eslint-disable-next-line no-param-reassign
+  context.callbackWaitsForEmptyEventLoop = false;
+  if (event.httpMethod !== 'DELETE') {
+    return {
+      statusCode: 405,
+    };
+  }
 
-export async function handler(event, context) {
   try {
-    // until auth is setup get a random user from database
-    const foundUser = await User.findOne();
-
+    const user = JSON.parse(event.body);
+    console.log("user", user)
     await connectToDatabase();
-    await deleteUserRecords(foundUser._id);
-    await deleteUser(foundUser._id);
+
+    await deleteUserRecords(user.userId);
+    await deleteUser(user.userId);
     return {
       statusCode: 200,
       body: JSON.stringify({
@@ -26,3 +31,5 @@ export async function handler(event, context) {
     };
   }
 }
+
+export { handler };
