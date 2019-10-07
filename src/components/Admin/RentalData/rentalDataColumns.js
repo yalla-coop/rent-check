@@ -70,6 +70,10 @@ const rentalDataColumns = props => {
           text: 'rejected',
           value: 'rejected',
         },
+        {
+          text: 'invalid',
+          value: 'invalid',
+        },
       ],
       onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
