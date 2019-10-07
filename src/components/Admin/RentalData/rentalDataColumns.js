@@ -84,7 +84,12 @@ const rentalDataColumns = props => {
       render: (data, record) => (
         <div className="flex items-center">
           <Link
-            to={{ pathname: RENTAL_DATA_SINGLE, state: { rentalData: data } }}
+            to={{
+              pathname: RENTAL_DATA_SINGLE,
+              state: {
+                rentalData: data,
+              },
+            }}
           >
             <Button
               style={{
