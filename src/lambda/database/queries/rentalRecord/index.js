@@ -6,6 +6,8 @@ export const getAllValidRecords = () => RentalRecord.find();
 export const deleteUserRecords = userId =>
   RentalRecord.deleteMany({ submittedBy: userId });
 
+export const deleteRecord = id => RentalRecord.deleteOne({ _id: id });
+
 export const getLocations = () => RentalRecord.find();
 
 export const getAllData = () =>
