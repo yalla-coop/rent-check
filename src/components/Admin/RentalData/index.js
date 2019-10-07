@@ -15,16 +15,19 @@ import * as S from './RentalData.style';
 // Table props
 import rentalDataColumns from './rentalDataColumns';
 
+// custom hooks
+import useFetch from '../../../hooks/useFetch';
+
+// constants
+import { status } from '../../../constants/rentalRecords';
+
 // routes
 import { routes } from '../../../constants/adminRoutes';
 import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
 
-// custom hooks
-import useFetch from '../../../hooks/useFetch';
-
 const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
-function RentalData() {
+function RentalData({ history }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [updatingRecord, setUpdatingRecord] = useState(false);
   const [recordToUpdate, setRecordToUpdate] = useState(null);
@@ -39,17 +42,22 @@ function RentalData() {
   };
 
   const confirmUpdate = async () => {
+    const { rentalId, updateType } = recordToUpdate;
     try {
       setUpdatingRecord(true);
-      switch (recordToUpdate.updateType) {
+      switch (updateType) {
         case 'delete': {
           await axios.delete('/.netlify/functions/deleteRecord', {
-            data: { rentalId: recordToUpdate.rentalId },
+            data: { rentalId },
           });
           break;
         }
-        case 'updateStatus': {
-          await axios.patch('/.netlify/functions/setRentalStatus');
+        case status.VERIFIED: {
+          console.log('reached');
+          await axios.patch('/.netlify/functions/setRentalStatus', {
+            rentalId,
+            newStatus: updateType,
+          });
           break;
         }
         default:
@@ -62,7 +70,9 @@ function RentalData() {
       setUpdatingRecord(false);
       setRecordToUpdate(null);
       toggleModal();
-      return message.success('Data updated');
+      message.success('Data updated');
+      // if on rental record page, send back to rental records to see update
+      history.push(RENTAL_DATA_ALL);
     } catch (err) {
       setUpdatingRecord(false);
       setRecordToUpdate(null);
@@ -145,7 +155,25 @@ function RentalData() {
       <Route
         exact
         path={RENTAL_DATA_SINGLE}
-        render={props => <RentalRecord {...props} />}
+        render={props => (
+          <>
+            <RentalRecord updateRecord={updateRecord} {...props} />
+            {recordToUpdate && (
+              <Modal
+                title="Are you sure?"
+                visible={modalVisible}
+                onOk={() => confirmUpdate()}
+                onCancel={() => toggleModal()}
+                confirmLoading={updatingRecord}
+              >
+                <p>
+                  Clicking confirm will change the status of this rental record
+                  to {recordToUpdate.updateType}.
+                </p>
+              </Modal>
+            )}
+          </>
+        )}
       />
     </Switch>
   );

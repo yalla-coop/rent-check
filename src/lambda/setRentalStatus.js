@@ -16,6 +16,8 @@ async function handler(event, context) {
 
     await setRecordStatus(request.rentalId, { status: request.newStatus });
 
+    console.log('req', request);
+
     return {
       statusCode: 200,
       body: JSON.stringify({
