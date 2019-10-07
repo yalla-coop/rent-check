@@ -107,6 +107,7 @@ const rentalDataColumns = props => {
             style={{ color: 'var(--red)', borderColor: 'var(--red)' }}
             className="mr1"
             ghost
+            onClick={() => record.updateRecord(record.key, 'delete')}
           >
             <Icon type="delete" />
           </Button>

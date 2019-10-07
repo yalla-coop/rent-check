@@ -14,10 +14,6 @@ async function handler(event, context) {
     const record = JSON.parse(event.body);
     await connectToDatabase();
 
-    console.log('REC', record);
-
-    // return record;
-
     await deleteRecord(record.rentalId);
 
     return {

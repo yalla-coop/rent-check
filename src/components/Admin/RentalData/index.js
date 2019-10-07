@@ -118,15 +118,27 @@ function RentalData() {
               dataSource={rentalRecords}
               {...props}
             />
-            <Modal
-              title="Are you sure?"
-              visible={modalVisible}
-              onOk={() => confirmUpdate()}
-              onCancel={() => toggleModal()}
-              confirmLoading={updatingRecord}
-            >
-              <p>Clicking confirm will do stuff.</p>
-            </Modal>
+            {recordToUpdate && (
+              <Modal
+                title="Are you sure?"
+                visible={modalVisible}
+                onOk={() => confirmUpdate()}
+                onCancel={() => toggleModal()}
+                confirmLoading={updatingRecord}
+              >
+                {recordToUpdate.updateType === 'delete' ? (
+                  <p>
+                    Clicking confirm will permantly delete this rental record.
+                    This cannot be undone.
+                  </p>
+                ) : (
+                  <p>
+                    Clicking confirm will change the status of this rental
+                    record to {recordToUpdate.updateType}.
+                  </p>
+                )}
+              </Modal>
+            )}
           </>
         )}
       />
