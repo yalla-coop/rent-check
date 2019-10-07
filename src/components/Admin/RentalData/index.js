@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Components
-import { Modal, Icon, message } from 'antd';
+import { Modal, Icon, message, Select } from 'antd';
 import axios from 'axios';
 import Loading from '../../Loading';
 import Table from '../Table';
@@ -27,14 +27,26 @@ import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
 
 const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
+const { Option } = Select;
+
 function RentalData({ history }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [editingStatus, setEditingStatus] = useState(null);
   const [updatingRecord, setUpdatingRecord] = useState(false);
   const [recordToUpdate, setRecordToUpdate] = useState(null);
   const [rentalData, setRentalData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const toggleModal = () => setModalVisible(!modalVisible);
+
+  const editStatus = bool => {
+    setEditingStatus(bool);
+  };
+
+  const changeStatus = status => {
+    const { rentalId } = recordToUpdate;
+    setRecordToUpdate({ rentalId, updateType: status });
+  };
 
   const updateRecord = (rentalId, updateType) => {
     setRecordToUpdate({ rentalId, updateType });
@@ -62,6 +74,7 @@ function RentalData({ history }) {
       setRentalData(newRentalData);
       setUpdatingRecord(false);
       setRecordToUpdate(null);
+      editStatus(false);
       toggleModal();
       message.success(response.data.msg);
       history.push(RENTAL_DATA_ALL);
@@ -95,6 +108,7 @@ function RentalData({ history }) {
       date: record.createdAt,
       rentalData: record,
       updateRecord,
+      editStatus,
     }));
 
   return (
@@ -122,10 +136,13 @@ function RentalData({ history }) {
             />
             {recordToUpdate && (
               <Modal
-                title="Are you sure?"
+                title={editingStatus ? 'Edit Status' : 'Are you sure?'}
                 visible={modalVisible}
                 onOk={() => confirmUpdate()}
-                onCancel={() => toggleModal()}
+                onCancel={() => {
+                  editStatus(false);
+                  return toggleModal();
+                }}
                 confirmLoading={updatingRecord}
               >
                 {recordToUpdate.updateType === 'delete' ? (
@@ -134,10 +151,36 @@ function RentalData({ history }) {
                     This cannot be undone.
                   </p>
                 ) : (
-                  <p>
-                    Clicking confirm will change the status of this rental
-                    record to {recordToUpdate.updateType}.
-                  </p>
+                  <>
+                    {editingStatus && (
+                      <Select
+                        defaultValue={recordToUpdate.updateType}
+                        onChange={changeStatus}
+                        width="100%"
+                        style={{
+                          marginBottom: '1rem',
+                          minWidth: '150px',
+                          textTransform: 'capitalize',
+                        }}
+                      >
+                        {statusEnum.map(status => (
+                          <Option
+                            value={status}
+                            key={status}
+                            style={{
+                              textTransform: 'capitalize',
+                            }}
+                          >
+                            {status}
+                          </Option>
+                        ))}
+                      </Select>
+                    )}
+                    <p>
+                      Clicking confirm will change the status of this rental
+                      record to {recordToUpdate.updateType}.
+                    </p>
+                  </>
                 )}
               </Modal>
             )}

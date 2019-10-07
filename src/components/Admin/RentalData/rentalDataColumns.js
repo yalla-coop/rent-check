@@ -35,15 +35,26 @@ const rentalDataColumns = props => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: text => (
-        <Tag color={`var(--${text})`} style={{ textTransform: 'capitalize' }}>
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[searchText]}
-            autoEscape
-            textToHighlight={text.toString()}
-          />
-        </Tag>
+      render: (text, record) => (
+        <div className="flex items-center justify-between">
+          <Tag color={`var(--${text})`} style={{ textTransform: 'capitalize' }}>
+            <Highlighter
+              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+              searchWords={[searchText]}
+              autoEscape
+              textToHighlight={text.toString()}
+            />
+          </Tag>
+          <Button
+            size="small"
+            onClick={() => {
+              record.editStatus(true);
+              return record.updateRecord(record.key, record.status);
+            }}
+          >
+            <Icon type="form" fontSize={10} />
+          </Button>
+        </div>
       ),
       sorter: (a, b) => a.status.localeCompare(b.status),
       filters: [
