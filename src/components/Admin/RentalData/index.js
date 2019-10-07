@@ -19,7 +19,7 @@ import rentalDataColumns from './rentalDataColumns';
 import useFetch from '../../../hooks/useFetch';
 
 // constants
-import { status } from '../../../constants/rentalRecords';
+import { statusEnum } from '../../../constants/rentalRecords';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
@@ -43,25 +43,18 @@ function RentalData({ history }) {
 
   const confirmUpdate = async () => {
     const { rentalId, updateType } = recordToUpdate;
+    let response;
     try {
       setUpdatingRecord(true);
-      switch (updateType) {
-        case 'delete': {
-          await axios.delete('/.netlify/functions/deleteRecord', {
-            data: { rentalId },
-          });
-          break;
-        }
-        case status.VERIFIED: {
-          console.log('reached');
-          await axios.patch('/.netlify/functions/setRentalStatus', {
-            rentalId,
-            newStatus: updateType,
-          });
-          break;
-        }
-        default:
-          throw new Error();
+      if (updateType === 'delete') {
+        response = await axios.delete('/.netlify/functions/deleteRecord', {
+          data: { rentalId },
+        });
+      } else if (statusEnum.includes(updateType)) {
+        response = await axios.patch('/.netlify/functions/setRentalStatus', {
+          rentalId,
+          newStatus: updateType,
+        });
       }
       const { data: newRentalData } = await axios.get(
         '/.netlify/functions/getRentalData'
@@ -70,8 +63,7 @@ function RentalData({ history }) {
       setUpdatingRecord(false);
       setRecordToUpdate(null);
       toggleModal();
-      message.success('Data updated');
-      // if on rental record page, send back to rental records to see update
+      message.success(response.data.msg);
       history.push(RENTAL_DATA_ALL);
     } catch (err) {
       setUpdatingRecord(false);
