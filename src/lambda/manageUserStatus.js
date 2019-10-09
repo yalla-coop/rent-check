@@ -1,4 +1,6 @@
 // handles request to approve/ reject user awaiting verification or super user status
+import middy from 'middy';
+import User from './database/models/User';
 
 import connectToDatabase from './database/dbConnection';
 import {
@@ -6,43 +8,55 @@ import {
   rejectSuperUser,
   approveUser,
   rejectUser,
-  getUser,
 } from './database/queries/user';
 import { status } from '../constants/users';
 
-export async function handler(event, context) {
+// validation scheam
+import manageUserStatusSchema from './utils/manageUserStatusSchema';
+import validaitonMiddelware from './middlewares/validation';
+
+// Stub - function to be replaced with one that gets ID of logged in user
+// const getCurrentUserId = () => User.findOne({ name: 'Michael Watts' });
+const getCurrentUserId = () => User.findOne({ name: 'Krissie Nicholson' });
+
+async function manageUserStatus(event, context) {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false;
 
   try {
     await connectToDatabase();
-    const { user, admin, action, userStatus } = JSON.parse(event.body);
+    // This will need some refactor when the roles are ready
+    const { user: userId, action, userStatus } = JSON.parse(event.body);
+
+    const admin = await getCurrentUserId();
 
     let update;
     let msg;
-    const adminExists = await getUser(admin);
-    // check if admin ID Error
-    if (!adminExists) {
-      throw new Error();
-    }
+
+    // // TODO: the authorizaion based on role logic
+    // if (admin.role !== admin) {
+    //   const err = new Error('Not authrized to do this');
+    //   err.statusCode = 401;
+    //   throw err;
+    // }
 
     switch (action) {
       case 'approve':
         if (userStatus === status.AWAITING_SUPER) {
-          update = await approveSuperUser(user, admin);
+          update = await approveSuperUser(userId, admin);
           msg = 'approved super user status!';
         } else {
-          update = await approveUser(user, admin);
+          update = await approveUser(userId, admin);
           msg = 'verified user!';
         }
         break;
 
       case 'reject':
         if (userStatus === status.AWAITING_SUPER) {
-          update = await rejectSuperUser(user);
+          update = await rejectSuperUser(userId);
           msg = 'rejected super user status!';
         } else {
-          update = await rejectUser(user);
+          update = await rejectUser(userId);
           msg = 'rejected user!';
         }
         break;
@@ -70,3 +84,8 @@ export async function handler(event, context) {
     };
   }
 }
+
+const handler = middy(manageUserStatus).use(
+  validaitonMiddelware(manageUserStatusSchema)
+);
+export { handler };

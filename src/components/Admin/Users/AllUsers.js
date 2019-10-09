@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { Table, Input, Icon, Button, message } from 'antd';
 import axios from 'axios';
-import Loading from '../../Loading';
 import usePostPatchPut from '../../../hooks/usePostPatchPut';
 import useFetch from '../../../hooks/useFetch';
 import UsersColumns from './UsersColumns';
@@ -174,7 +173,6 @@ export default function AllUsers({ statusProp }) {
 
   return (
     <Fragment>
-      {isLoading && <Loading />}
       <Table
         columns={UsersColumns({
           getColumnSearchProps,
@@ -184,6 +182,7 @@ export default function AllUsers({ statusProp }) {
         dataSource={users && decideUserData(statusProp, users)}
         style={{ backgroundColor: '#ffffff' }}
         bordered
+        loading={isLoading}
       />
     </Fragment>
   );
