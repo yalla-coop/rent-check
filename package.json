@@ -35,11 +35,11 @@
     "build": "run-p build:**",
     "build:app": "react-scripts build",
     "build:lambda": "netlify-lambda build src/lambda",
-    "test": "NODE_ENV=test react-scripts test --runInBand --detectOpenHandles --forceExit",
+    "test": "react-scripts test --runInBand --detectOpenHandles --forceExit",
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
     "test:coverage": "npm test --coverage",
     "coverage": "codecov",
-    "database:build:dev": "NODE_ENV=build babel-node ./src/lambda/database/data/build"
+    "database:build:dev": "babel-node ./src/lambda/database/data"
   },
   "eslintConfig": {
     "extends": "react-app"
