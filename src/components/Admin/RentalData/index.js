@@ -58,19 +58,26 @@ function RentalData({ history }) {
     let response;
     try {
       setUpdatingRecord(true);
+      let newRentalData = null;
       if (updateType === 'delete') {
         response = await axios.delete('/.netlify/functions/deleteRecord', {
           data: { rentalId },
         });
+
+        newRentalData = rentalData.filter(record => record._id !== rentalId);
       } else if (statusEnum.includes(updateType)) {
         response = await axios.patch('/.netlify/functions/setRentalStatus', {
           rentalId,
           newStatus: updateType,
         });
+        newRentalData = rentalData.map(record => {
+          if (record._id === rentalId) {
+            return { ...record, status: updateType };
+          }
+          return record;
+        });
       }
-      const { data: newRentalData } = await axios.get(
-        '/.netlify/functions/getRentalData'
-      );
+
       setRentalData(newRentalData);
       setUpdatingRecord(false);
       setRecordToUpdate(null);
@@ -87,16 +94,16 @@ function RentalData({ history }) {
   };
 
   // fetch data
-  const [{ data: msg, isLoading }] = useFetch(
+  const [{ data: fetchedRentalData, isLoading }] = useFetch(
     '/.netlify/functions/getRentalData'
   );
 
   useEffect(() => {
-    if (msg) {
+    if (fetchedRentalData) {
       setLoading(isLoading);
-      setRentalData(msg);
+      setRentalData(fetchedRentalData);
     }
-  }, [isLoading, msg]);
+  }, [isLoading, fetchedRentalData]);
 
   // create table friendly data sets and also pass on all rental details
   const rentalRecords =
@@ -133,6 +140,7 @@ function RentalData({ history }) {
               columns={rentalDataColumns}
               dataSource={rentalRecords}
               {...props}
+              loading={isLoading}
             />
             {recordToUpdate && (
               <Modal

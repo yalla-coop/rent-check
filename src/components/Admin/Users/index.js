@@ -39,10 +39,10 @@ export default function Users() {
           userId: userToDelete,
         },
       });
-      const { data: newUsers } = await axios.get(
-        '/.netlify/functions/getUsers'
-      );
-      setUserData(newUsers);
+
+      const newUsers = userData.msg.filter(item => item._id !== userToDelete);
+
+      setUserData({ msg: newUsers });
       setDeletingUser(false);
       setUserToDelete(null);
       toggleModal();
@@ -98,7 +98,12 @@ export default function Users() {
         path={USERS_ALL}
         render={props => (
           <>
-            <Table columns={usersCol} dataSource={users} {...props} />
+            <Table
+              columns={usersCol}
+              dataSource={users}
+              {...props}
+              loading={isLoading}
+            />
             <Modal
               title="Are you sure?"
               visible={modalVisible}

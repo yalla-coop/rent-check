@@ -8,6 +8,7 @@ async function handler(event, context) {
   if (event.httpMethod !== 'DELETE') {
     return {
       statusCode: 405,
+      body: JSON.stringify({ msg: 'Method not allowed' }),
     };
   }
 
@@ -16,17 +17,26 @@ async function handler(event, context) {
     await connectToDatabase();
 
     await deleteUserRecords(user.userId);
-    await deleteUser(user.userId);
+    const { deletedCount } = await deleteUser(user.userId);
+
+    if (deletedCount !== 1) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ msg: 'User not found' }),
+      };
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({
         msg: 'User and all their rental data successfully deleted',
+        userId: user.userId,
       }),
     };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ msg: err.message }),
+      body: JSON.stringify({ msg: 'Internal server error' }),
     };
   }
 }

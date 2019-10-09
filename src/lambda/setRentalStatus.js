@@ -14,12 +14,15 @@ async function handler(event, context) {
     const request = JSON.parse(event.body);
     await connectToDatabase();
 
-    await setRecordStatus(request.rentalId, { status: request.newStatus });
+    const res = await setRecordStatus(request.rentalId, {
+      status: request.newStatus,
+    });
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         msg: `Rental record status successfully updated to ${request.newStatus}`,
+        updatedRecord: res,
       }),
     };
   } catch (err) {

@@ -9,7 +9,7 @@ export const deleteUserRecords = userId =>
 export const deleteRecord = id => RentalRecord.deleteOne({ _id: id });
 
 export const setRecordStatus = (id, newStatus) =>
-  RentalRecord.findByIdAndUpdate(id, newStatus);
+  RentalRecord.findByIdAndUpdate(id, newStatus, { new: true });
 
 export const getLocations = () => RentalRecord.find();
 

@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { Table, Input, Icon, Button } from 'antd';
 
-export default function TableComponent({ columns, dataSource }) {
+export default function TableComponent({ columns, dataSource, loading }) {
   const [searchText, setSearchText] = useState('');
 
   const searchInputRef = useRef(null);
@@ -75,6 +75,7 @@ export default function TableComponent({ columns, dataSource }) {
 
   return (
     <Table
+      loading={loading}
       columns={columns({
         getColumnSearchProps,
         searchText,
