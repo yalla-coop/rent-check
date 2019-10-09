@@ -1,10 +1,10 @@
 /**
  * @jest-environment node
  */
-import buildData from '../../lambda/database/data/index';
+import buildData from '../../lambda/database/data';
 import User from '../../lambda/database/models/User';
 import { roles, status } from '../../constants/users';
-import { handler } from '../../lambda/manageUserStatus';
+import { manageUserStatus as handler } from '../../lambda/manageUserStatus';
 
 describe('Test manageSuperUserStatus handler', () => {
   beforeEach(async done => {
@@ -18,13 +18,8 @@ describe('Test manageSuperUserStatus handler', () => {
       status: status.AWAITING_SUPER,
     });
 
-    const adminUser = await User.findOne({
-      role: roles.ADMIN,
-    });
-
     const request = {
       body: JSON.stringify({
-        admin: adminUser._id,
         user: superUserRequest._id,
         action: 'approve',
         userStatus: superUserRequest.status,
@@ -32,7 +27,6 @@ describe('Test manageSuperUserStatus handler', () => {
     };
 
     const manageSuperUserStatus = await handler(request, {});
-
     expect(manageSuperUserStatus.statusCode).toBe(200);
     expect(JSON.parse(manageSuperUserStatus.body).data.status).toBe(
       status.VERIFIED
@@ -40,9 +34,6 @@ describe('Test manageSuperUserStatus handler', () => {
     expect(JSON.parse(manageSuperUserStatus.body).data.role).toBe(
       roles.SUPERUSER
     );
-    expect(
-      JSON.parse(manageSuperUserStatus.body).data.grantedSuperBy.toString()
-    ).toBe(adminUser._id.toString());
     done();
   });
 
@@ -96,17 +87,13 @@ describe('Test manageSuperUserStatus handler', () => {
 
     const request = {
       body: JSON.stringify({
-        admin: 'not valid',
-        user: superUserRequest._id,
+        user: 'not valid',
         action: 'reject',
         userStatus: superUserRequest.status,
       }),
     };
 
     const manageSuperUserStatus = await handler(request, {});
-
-    expect(manageSuperUserStatus.statusCode).toBe(403);
-
     expect(JSON.parse(manageSuperUserStatus.body).error).toBeDefined();
     done();
   });

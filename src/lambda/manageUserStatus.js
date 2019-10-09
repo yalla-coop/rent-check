@@ -88,4 +88,4 @@ async function manageUserStatus(event, context) {
 const handler = middy(manageUserStatus).use(
   validaitonMiddelware(manageUserStatusSchema)
 );
-export { handler };
+export { handler, manageUserStatus };
