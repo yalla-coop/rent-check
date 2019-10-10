@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 const types = {
@@ -45,6 +45,7 @@ const useFetch = (initialUrl, initialData) => {
           dispatch({ type: types.FETCH_SUCCESS, payload: res });
         }
       } catch (error) {
+        console.log(error);
         if (!didCancel) {
           dispatch({ type: types.FETCH_FAILURE });
         }

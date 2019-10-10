@@ -6,7 +6,7 @@ import { getSingleGeo } from './utils/postcodes';
 import { addRentalRecord } from './database/queries/rentalRecord';
 import { status } from '../constants/rentalRecords';
 import { roles } from '../constants/users';
-import validaitonMiddelware from './utils/validation';
+import validaitonMiddelware from './middlewares/validation';
 import rentalValidationSchema from '../components/RentalForm/rentalForm.validation';
 
 // Stub - function to be replaced with one that gets ID of logged in user
