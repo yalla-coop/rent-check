@@ -44,7 +44,6 @@ const useApiCallback = (method, url, initialData) => {
             dispatch({ type: types.FETCH_SUCCESS, payload: data });
           }
         } catch (error) {
-          console.error(error);
           if (!didCancel) {
             dispatch({ type: types.FETCH_FAILURE });
           }
