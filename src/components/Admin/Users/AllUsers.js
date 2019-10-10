@@ -2,40 +2,40 @@
 // gets fed data source and column files as props
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { Table, Input, Icon, Button, message } from 'antd';
-import axios from 'axios';
-import usePostPatchPut from '../../../hooks/usePostPatchPut';
-import useFetch from '../../../hooks/useFetch';
+import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
 
-import { status as statusConst, roles } from '../../../constants/users';
+import { status as statusConst, roles } from '../../../constants/allUsersData';
 // admin user -> please change id for testing
 const admin = '5d98462431532f74cc6879c5';
 
 // chooses data base for user table depending on section
-const decideUserData = (userStatus, users) => {
+const decideUserData = (userStatus, allUsersData) => {
   switch (userStatus) {
     case statusConst.UNVERIFIED:
-      return users.filter(el => el.status === statusConst.UNVERIFIED);
+      return allUsersData.filter(el => el.status === statusConst.UNVERIFIED);
 
     case statusConst.AWAITING_SUPER:
-      return users.filter(el => el.status === statusConst.AWAITING_SUPER);
+      return allUsersData.filter(
+        el => el.status === statusConst.AWAITING_SUPER
+      );
 
     case statusConst.VERIFIED:
-      return users.filter(el => el.status === statusConst.VERIFIED);
+      return allUsersData.filter(el => el.status === statusConst.VERIFIED);
 
     case roles.SUPERUSER:
-      return users.filter(el => el.level === roles.SUPERUSER);
+      return allUsersData.filter(el => el.level === roles.SUPERUSER);
 
     default:
-      return users;
+      return allUsersData;
   }
 };
 
 // updates user object
-const updateUsers = async () => {
-  const request = await axios.get('/.netlify/functions/getUsers');
-  return request;
-};
+// const updateUsers = async () => {
+//   const request = await axios.get('/.netlify/functions/getUsers');
+//   return request;
+// };
 
 // create table friendly data sets
 const createUserTable = arr =>
@@ -48,61 +48,42 @@ const createUserTable = arr =>
   }));
 
 export default function AllUsers({ statusProp }) {
-  // fetch users
-  const [{ data: allUsers, isLoading }] = useFetch(
-    '/.netlify/functions/getUsers'
-  );
-
-  // patch request to manage user status
   const [
-    { data: updateUserStatus, error: updateUserStatusErr },
-    updateUserStatusCall,
-  ] = usePostPatchPut({
-    url: '/.netlify/functions/manageUserStatus',
-    method: 'patch',
-  });
+    { data: allUsersData, isLoading: allUsersDataIsLoading },
+    getAllUsersData,
+  ] = useApiCallback('get', '/.netlify/functions/getUsers');
+
+  const [
+    { data: userStatusData, error: userStatusUpdateHasErrored },
+    updateUserStatus,
+  ] = useApiCallback('patch', '/.netlify/functions/manageUserStatus');
 
   const [searchText, setSearchText] = useState('');
-  const [users, setUsers] = useState(null);
-
   const searchInputRef = useRef(null);
 
-  // sets users
+  // get all user data on page load
   useEffect(() => {
-    if (allUsers && allUsers.msg) {
-      const newUsers = createUserTable(allUsers.msg);
-      setUsers(newUsers);
-    }
-  }, [allUsers]);
-
-  // listens for response coming from patch request to update user
-  // renders message to user and updates user table
-  useEffect(() => {
-    // check for error
-    if (updateUserStatusErr && updateUserStatusErr.response.data.error) {
-      message.error(updateUserStatusErr.response.data.error);
-    }
-    // if no error update users and show success message
-    if (updateUserStatus && updateUserStatus.msg) {
-      updateUsers()
-        .then(({ data: updatedUsers }) => {
-          const updateAllUsers = createUserTable(updatedUsers.msg);
-          setUsers(updateAllUsers);
-        })
-        .catch(err => message.error(err));
-      return message.success(updateUserStatus && updateUserStatus.msg);
-    }
-  }, [updateUserStatus, setUsers, allUsers, updateUserStatusErr]);
+    getAllUsersData();
+  }, [getAllUsersData]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
   const manageUserStatusOnClick = (user, action, userStatus) => {
-    updateUserStatusCall({
+    updateUserStatus({
       admin,
       user,
       action,
       userStatus,
+    }).then(() => {
+      if (
+        userStatusUpdateHasErrored &&
+        userStatusUpdateHasErrored.response.data.error
+      ) {
+        return message.error(userStatusUpdateHasErrored.response.data.error);
+      }
+      getAllUsersData();
+      return message.success(userStatusData && userStatusData.msg);
     });
   };
 
@@ -179,10 +160,10 @@ export default function AllUsers({ statusProp }) {
           searchText,
           manageUserStatusOnClick,
         })}
-        dataSource={users && decideUserData(statusProp, users)}
+        dataSource={allUsersData && decideUserData(statusProp, allUsersData)}
         style={{ backgroundColor: '#ffffff' }}
         bordered
-        loading={isLoading}
+        loading={allUsersDataIsLoading}
       />
     </Fragment>
   );
