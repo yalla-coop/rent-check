@@ -55,10 +55,22 @@ export default function AllUsers({ statusProp }) {
   const [searchText, setSearchText] = useState('');
   const searchInputRef = useRef(null);
 
-  // get all user data on page load
+  // get all user data on page load or when user status is updated
   useEffect(() => {
-    getAllUsersData();
-  }, [getAllUsersData]);
+    if (userStatusUpdateHasErrored) {
+      try {
+        return message.error(userStatusUpdateHasErrored.response.data.error);
+      } catch (e) {
+        return message.error(
+          'An error occurred in processing your request. Please try again later.'
+        );
+      }
+    }
+    if (userStatusData) {
+      message.success(userStatusData && userStatusData.msg);
+    }
+    return getAllUsersData();
+  }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
@@ -69,15 +81,6 @@ export default function AllUsers({ statusProp }) {
       user,
       action,
       userStatus,
-    }).then(() => {
-      if (
-        userStatusUpdateHasErrored &&
-        userStatusUpdateHasErrored.response.data.error
-      ) {
-        return message.error(userStatusUpdateHasErrored.response.data.error);
-      }
-      getAllUsersData();
-      return message.success(userStatusData && userStatusData.msg);
     });
   };
 
