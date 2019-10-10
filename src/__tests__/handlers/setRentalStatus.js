@@ -34,7 +34,7 @@ describe('Test setRentalStatus handler', () => {
 
     const updatedRecord = await handler(event, {});
     expect(updatedRecord.statusCode).toBe(200);
-    expect(JSON.parse(updatedRecord.body)).toStrictEqual({
+    expect(JSON.parse(updatedRecord.body)).toMatchObject({
       msg: `Rental record status successfully updated to ${status.VERIFIED}`,
     });
 
