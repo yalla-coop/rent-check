@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 // import routes here
 import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
@@ -24,7 +24,7 @@ const onRedirectCallback = appState => {
 const Router = () => {
   return (
     <Switch>
-      <PrivateRoute exact path="/" component={MapInterface} />
+      <Route exact path="/" component={MapInterface} />
       <PrivateRoute path="/admin" component={Admin} />
       <PrivateRoute path="/add-rental-data" component={RentalForm} />
       <PrivateRoute exact path={MAP_URL} component={MapInterface} />
