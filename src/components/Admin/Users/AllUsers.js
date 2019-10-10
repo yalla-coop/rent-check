@@ -5,7 +5,7 @@ import { Table, Input, Icon, Button, message } from 'antd';
 import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
 
-import { status as statusConst, roles } from '../../../constants/allUsersData';
+import { status as statusConst, roles } from '../../../constants/users';
 // admin user -> please change id for testing
 const admin = '5d98462431532f74cc6879c5';
 
