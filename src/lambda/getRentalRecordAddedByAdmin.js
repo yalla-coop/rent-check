@@ -19,6 +19,8 @@ export async function handler(event, context) {
       body: JSON.stringify(rentalRecordsByAdmin),
     };
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log('err', err);
     return {
       statusCode: 500,
       body: JSON.stringify({ msg: 'Internal server error' }),

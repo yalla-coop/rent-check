@@ -17,10 +17,10 @@ export default function Admin() {
       <Layout style={{ paddingTop: '2rem' }}>
         <Content style={{ margin: '0 16px' }}>
           <Switch>
-            {adminRoutes.map((route, idx) => {
+            {adminRoutes.map(route => {
               return route.component ? (
                 <Route
-                  key={idx}
+                  key={route.id}
                   path={route.path}
                   exact={route.exact}
                   name={route.name}
