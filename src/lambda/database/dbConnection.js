@@ -15,6 +15,7 @@ export const dbConnection = () =>
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   });
 
 let cachedDb = null;
