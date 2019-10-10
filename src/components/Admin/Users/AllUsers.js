@@ -31,12 +31,6 @@ const decideUserData = (userStatus, allUsersData) => {
   }
 };
 
-// updates user object
-// const updateUsers = async () => {
-//   const request = await axios.get('/.netlify/functions/getUsers');
-//   return request;
-// };
-
 // create table friendly data sets
 const createUserTable = arr =>
   arr.map(({ _id, name, email, role, status }) => ({
@@ -160,7 +154,10 @@ export default function AllUsers({ statusProp }) {
           searchText,
           manageUserStatusOnClick,
         })}
-        dataSource={allUsersData && decideUserData(statusProp, allUsersData)}
+        dataSource={
+          allUsersData &&
+          createUserTable(decideUserData(statusProp, allUsersData.msg))
+        }
         style={{ backgroundColor: '#ffffff' }}
         bordered
         loading={allUsersDataIsLoading}
