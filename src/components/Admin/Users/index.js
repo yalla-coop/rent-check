@@ -1,44 +1,49 @@
 // Router for User routes
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Loading from '../../Loading';
-// components
-import Table from '../Table';
 
-// Table props
-import usersCol from './UsersColumns';
+// components
+import AllUsers from './AllUsers';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
-import useFetch from '../../../hooks/useFetch';
 
-const { USERS_ALL } = routes;
+// status as filter base of users
+import { status, roles } from '../../../constants/users';
+
+const {
+  USERS_ALL,
+  USERS_VERIFY,
+  USERS_SUPER_REQ,
+  USERS_VERIFIED,
+  USERS_SUPER,
+} = routes;
 
 export default function Users() {
-  // fetch users
-  const [{ data: msg, isLoading }] = useFetch('/.netlify/functions/getUsers');
-
-  // create table friendly data sets
-  const users =
-    msg &&
-    msg.msg.map(({ _id, name, email, role, status }) => ({
-      key: _id,
-      name,
-      email,
-      level: role,
-      status,
-    }));
-
-  console.log(users);
   return (
     <Switch>
-      {isLoading && <Loading />}
+      <Route exact path={USERS_ALL} render={props => <AllUsers {...props} />} />
       <Route
         exact
-        path={USERS_ALL}
+        path={USERS_VERIFY}
+        render={props => <AllUsers {...props} statusProp={status.UNVERIFIED} />}
+      />
+      <Route
+        exact
+        path={USERS_SUPER_REQ}
         render={props => (
-          <Table columns={usersCol} dataSource={users} {...props} />
+          <AllUsers {...props} statusProp={status.AWAITING_SUPER} />
         )}
+      />
+      <Route
+        exact
+        path={USERS_VERIFIED}
+        render={props => <AllUsers {...props} statusProp={status.VERIFIED} />}
+      />
+      <Route
+        exact
+        path={USERS_SUPER}
+        render={props => <AllUsers {...props} statusProp={roles.SUPERUSER} />}
       />
     </Switch>
   );
