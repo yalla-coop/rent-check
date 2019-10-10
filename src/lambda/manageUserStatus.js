@@ -13,7 +13,7 @@ import { status } from '../constants/users';
 
 // validation scheam
 import manageUserStatusSchema from './utils/manageUserStatusSchema';
-import validaitonMiddelware from './middlewares/validation';
+import validationMiddleware from './middlewares/validation';
 
 // Stub - function to be replaced with one that gets ID of logged in user
 // const getCurrentUserId = () => User.findOne({ name: 'Michael Watts' });
@@ -86,6 +86,6 @@ async function manageUserStatus(event, context) {
 }
 
 const handler = middy(manageUserStatus).use(
-  validaitonMiddelware(manageUserStatusSchema)
+  validationMiddleware(manageUserStatusSchema)
 );
 export { handler, manageUserStatus };
