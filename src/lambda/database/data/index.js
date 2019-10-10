@@ -35,4 +35,4 @@ if (process.env.NODE_ENV !== 'test') {
     });
 }
 
-module.exports = buildData;
+export default buildData;
