@@ -1,5 +1,5 @@
 const User = require("../../models/User");
-const { roles, status } = require("../../../../constants/users");
+const { roles, status } = require("../../../constants/users");
 
 // gets all users
 const getAllUsers = async () => {

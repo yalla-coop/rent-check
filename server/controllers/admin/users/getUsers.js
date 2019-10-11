@@ -1,5 +1,5 @@
-const connectToDatabase = require("../../database/dbConnection");
-const { getAllUsers } = require("../../database/queries/user");
+const connectToDatabase = require("../../../database/dbConnection");
+const { getAllUsers } = require("../../../database/queries/user");
 
 module.exports = async function getLocations(req, res) {
   try {
