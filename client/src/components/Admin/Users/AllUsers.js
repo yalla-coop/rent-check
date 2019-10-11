@@ -32,25 +32,26 @@ const decideUserData = (userStatus, allUsersData) => {
 };
 
 // create table friendly data sets
-const createUserTable = arr =>
-  arr.map(({ _id, name, email, role, status }) => ({
+const createUserTable = arr => {
+  return arr.map(({ _id, name, email, role, status }) => ({
     key: _id,
     name,
     email,
     level: role,
     status,
   }));
+};
 
 export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
     getAllUsersData,
-  ] = useApiCallback('get', '/.netlify/functions/getUsers');
+  ] = useApiCallback('get', '/api/admin/users');
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
     updateUserStatus,
-  ] = useApiCallback('patch', '/.netlify/functions/manageUserStatus');
+  ] = useApiCallback('patch', '/api/admin/users');
 
   const [searchText, setSearchText] = useState('');
   const searchInputRef = useRef(null);
@@ -159,7 +160,7 @@ export default function AllUsers({ statusProp }) {
         })}
         dataSource={
           allUsersData &&
-          createUserTable(decideUserData(statusProp, allUsersData.msg))
+          createUserTable(decideUserData(statusProp, allUsersData))
         }
         style={{ backgroundColor: '#ffffff' }}
         bordered

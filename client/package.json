@@ -34,8 +34,7 @@
     "test": "react-scripts test --runInBand --detectOpenHandles --forceExit",
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
     "test:coverage": "npm test --coverage",
-    "coverage": "codecov",
-    "database:build:dev": "babel-node ./src/lambda/database/data"
+    "coverage": "codecov"
   },
   "eslintConfig": {
     "extends": "react-app"
