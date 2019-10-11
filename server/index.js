@@ -58,7 +58,7 @@ module.exports = function main(options, cb) {
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
   const router = require("./controllers/index");
-  app.use(router);
+  app.use("/api", router);
 
   // Common error handlers
   app.use(function fourOhFourHandler(req, res, next) {

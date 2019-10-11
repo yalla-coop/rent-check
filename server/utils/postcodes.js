@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require("axios");
 
 // Postcodes :: Contents
 // getSingleGeo - takes a postcode and returns an array of [latitude, longitude], or rejects if not found
@@ -10,7 +10,7 @@ import axios from 'axios';
 //                   lat and lng for each entry in the response. Where the input was not resolved
 //                   to valid geolocation data, the string 'invalid' will be used instead.
 
-export const getSingleGeo = async postcode => {
+module.exports = async function getSingleGeo(postcode) {
   try {
     const {
       data: {

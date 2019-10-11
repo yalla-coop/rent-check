@@ -2,6 +2,7 @@
   "name": "eastendtradesguild",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@testing-library/react": "^9.1.4",
     "airtable": "^0.7.1",
@@ -28,14 +29,8 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "wait:lambda": "wait-on http://localhost:9000/.netlify/functions/getLocations",
-    "dev-server": "react-scripts start",
-    "start:client": "run-s wait:lambda dev-server",
-    "start": "run-p start:**",
-    "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "run-p build:**",
-    "build:app": "react-scripts build",
-    "build:lambda": "netlify-lambda build src/lambda",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test --runInBand --detectOpenHandles --forceExit",
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
     "test:coverage": "npm test --coverage",

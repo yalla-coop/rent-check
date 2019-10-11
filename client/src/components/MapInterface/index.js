@@ -18,9 +18,7 @@ function MapInterface({ location }) {
   const [showSearch, setShowSearch] = useState(false);
 
   // fetch locations
-  const [{ data: markers, isLoading }] = useFetch(
-    '/.netlify/functions/getLocations'
-  );
+  const [{ data: markers, isLoading }] = useFetch('/api/locations');
 
   // fetch postCode data
   const [

@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { getLocations } = require("./locations");
+const { getLocations, addLocations } = require("./locations");
 
 const router = express();
 
@@ -9,5 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/locations", getLocations);
+router.post("/locations", addLocations);
 
 module.exports = router;
