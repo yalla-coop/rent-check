@@ -25,9 +25,7 @@ const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
 function RentalData() {
   // fetch data
-  const [{ data: msg, isLoading }] = useFetch(
-    '/.netlify/functions/getRentalData'
-  );
+  const [{ data: msg, isLoading }] = useFetch('/api/admin/locations');
 
   // create table friendly data sets and also pass on all rental details
   const rentalRecords =
