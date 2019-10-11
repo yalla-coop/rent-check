@@ -1,0 +1,21 @@
+{
+  "name": "Rent Check",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Michael Watts <hello@michaelwatts.co>",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "start": "./bin/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-errors": "^1.7.3",
+    "pino": "^5.13.4",
+    "pino-http": "^4.3.0",
+    "pino-pretty": "^3.2.2",
+    "pug": "^2.0.4"
+  }
+}
