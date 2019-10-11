@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose");
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-require('dotenv').config();
+require("dotenv").config();
 
 let mongoURI = process.env.MONGO_URI;
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === "test") {
   // change mongoURI to testing database URI
   mongoURI = process.env.MONGOURI_TEST;
 }
@@ -33,9 +33,9 @@ function connectToDatabase() {
     })
     .catch(err => {
       // eslint-disable-next-line no-console
-      console.log('connection err', err);
+      console.log("connection err", err);
       throw err;
     });
 }
 
-export default connectToDatabase;
+module.exports = connectToDatabase;
