@@ -1,6 +1,11 @@
-import RentalRecord from '../../models/RentalRecord';
+const RentalRecord = require("../../models/RentalRecord");
 
-export const addRentalRecord = record => RentalRecord.create(record);
-export const getAllValidRecords = () => RentalRecord.find();
-export const getRentalRecordsByUserId = id =>
-  RentalRecord.find({ submittedBy: id });
+const addRentalRecord = record => RentalRecord.create(record);
+const getAllValidRecords = () => RentalRecord.find();
+const getRentalRecordsByUserId = id => RentalRecord.find({ submittedBy: id });
+
+module.exports = {
+  addRentalRecord,
+  getAllValidRecords,
+  getRentalRecordsByUserId,
+};

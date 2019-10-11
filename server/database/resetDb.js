@@ -1,5 +1,5 @@
-import User from './models/User';
-import RentalRecord from './models/RentalRecord';
+const User = require("./models/User");
+const RentalRecord = require("./models/RentalRecord");
 
 const resetDB = async () => {
   try {
@@ -7,8 +7,8 @@ const resetDB = async () => {
     return RentalRecord.deleteMany();
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log('Error during resting the db, try again', err);
+    console.log("Error during resting the db, try again", err);
   }
 };
 
-export default resetDB;
+module.exports = resetDB;

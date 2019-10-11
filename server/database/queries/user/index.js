@@ -1,19 +1,19 @@
-import User from '../../models/User';
-import { roles, status } from '../../../../constants/users';
+const User = require("../../models/User");
+const { roles, status } = require("../../../../constants/users");
 
 // gets all users
-export const getAllUsers = async () => {
+const getAllUsers = async () => {
   const users = await User.find();
   return users;
 };
 
 // gets one user
-export const getUser = id => {
+const getUser = id => {
   return User.findById(id);
 };
 
 // upates awaitingSuperUser status if rejected
-export const rejectSuperUser = id =>
+const rejectSuperUser = id =>
   User.findOneAndUpdate(
     { _id: id },
     { status: status.VERIFIED },
@@ -21,7 +21,7 @@ export const rejectSuperUser = id =>
   );
 
 // updates awaitingSuperUser status if approved
-export const approveSuperUser = (userId, adminId) =>
+const approveSuperUser = (userId, adminId) =>
   User.findOneAndUpdate(
     { _id: userId },
     { role: roles.SUPERUSER, status: status.VERIFIED, grantedSuperBy: adminId },
@@ -29,7 +29,7 @@ export const approveSuperUser = (userId, adminId) =>
   );
 
 // upates unverified status if rejected
-export const rejectUser = id =>
+const rejectUser = id =>
   User.findOneAndUpdate(
     { _id: id },
     { status: status.REJECTED },
@@ -37,9 +37,18 @@ export const rejectUser = id =>
   );
 
 // updates unverified status if approved
-export const approveUser = (userId, adminId) =>
+const approveUser = (userId, adminId) =>
   User.findOneAndUpdate(
     { _id: userId },
     { status: status.VERIFIED, verifiedBy: adminId },
     { new: true }
   );
+
+module.exports = {
+  getAllUsers,
+  getUser,
+  rejectSuperUser,
+  approveSuperUser,
+  rejectUser,
+  approveUser,
+};

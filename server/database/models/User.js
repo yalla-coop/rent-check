@@ -1,18 +1,16 @@
-import { roleEnum, statusEnum } from '../../../constants/users';
-
-const mongoose = require('mongoose');
-
+const { roleEnum, statusEnum } = require("../../constants/users");
+const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const schema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Name field is required'],
+    required: [true, "Name field is required"],
     max: 100,
   },
   email: {
     type: String,
-    required: [true, 'Email field is required'],
+    required: [true, "Email field is required"],
     unique: true,
   },
   role: {
@@ -42,14 +40,14 @@ const schema = new mongoose.Schema({
   },
   verifiedBy: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: "users",
   },
   grantedSuperBy: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: "users",
   },
 });
 
-const User = model('users', schema);
+const User = model("users", schema);
 
-export default User;
+module.exports = User;

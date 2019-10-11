@@ -1,20 +1,18 @@
 // import constants
-import * as rentEnum from '../../../constants/rentalRecords';
-
-const mongoose = require('mongoose');
-
+const rentEnum = require("../../constants/rentalRecords");
+const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const schema = new mongoose.Schema(
   {
     submittedBy: {
       type: Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
       required: true,
     },
     reviewedBy: {
       type: Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
     },
     status: {
       type: String,
@@ -60,6 +58,6 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const RentalRecord = model('rentalRecords', schema);
+const RentalRecord = model("rentalRecords", schema);
 
-export default RentalRecord;
+module.exports = RentalRecord;
