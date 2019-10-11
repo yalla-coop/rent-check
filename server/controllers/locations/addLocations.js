@@ -28,11 +28,11 @@ module.exports = async function addLocations(req, res) {
     record.status = status.UNVERIFIED;
     record.geoLocation = await getSingleGeo(record.postcode);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.message);
   }
   const validationError = validateRentalRecord(record);
   if (validationError) {
-    return res.status(400).send(error);
+    return res.status(400).send(validationError);
   }
   try {
     const result = await addRentalRecord(record);

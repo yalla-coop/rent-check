@@ -1,4 +1,4 @@
-export default function validateByModel(Model, record) {
+module.exports = function validateByModel(Model, record) {
   const newRecord = new Model(record);
   const error = newRecord.validateSync();
   if (error && error.errors) {
@@ -6,4 +6,4 @@ export default function validateByModel(Model, record) {
     return errorFields.map(field => error.errors[field].message).join(" ");
   }
   return error;
-}
+};

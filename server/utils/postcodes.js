@@ -19,7 +19,7 @@ module.exports = async function getSingleGeo(postcode) {
     } = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
     return JSON.stringify([latitude, longitude]);
   } catch (err) {
-    throw err;
+    throw new Error("Error retrieving geolocation data");
   }
 };
 
