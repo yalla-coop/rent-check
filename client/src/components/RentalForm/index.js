@@ -25,7 +25,7 @@ formData().forEach(item => {
 
 const RentalForm = () => {
   const onSubmitForm = state => {
-    return axios.post('/.netlify/functions/addLocation', state);
+    return axios.post('/api/locations', state);
   };
 
   const {

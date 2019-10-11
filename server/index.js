@@ -4,6 +4,7 @@ const httpErrors = require("http-errors");
 const path = require("path");
 const pino = require("pino");
 const pinoHttp = require("pino-http");
+const bodyParser = require("body-parser");
 const connectToDatabase = require("./database/dbConnection");
 
 module.exports = function main(options, cb) {
@@ -50,7 +51,7 @@ module.exports = function main(options, cb) {
   // Common middleware
   // app.use(/* ... */)
   app.use(pinoHttp({ logger }));
-
+  app.use(bodyParser.json());
   // Register routes
   // @NOTE: require here because this ensures that even syntax errors
   // or other startup related errors are caught logged and debuggable.
