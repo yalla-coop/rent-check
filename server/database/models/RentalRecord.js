@@ -32,25 +32,44 @@ const schema = new mongoose.Schema(
     landlordTenantsAct: {
       type: String,
       enum: rentEnum.landlordTenantsActEnum,
+      required: true,
     },
-    lastRentReview: Date,
-    nextRentReview: Date,
+    lastRentReview: {
+      type: Date,
+      required: true,
+    },
+    nextRentReview: {
+      type: Date,
+      required: true,
+    },
     landlord: String,
     specification: {
       type: String,
       enum: rentEnum.specificationEnum,
+      required: true,
     },
-    annualRent: Number,
-    squareFeet: Number,
-    priceSqFt: Number,
+    annualRent: {
+      type: Number,
+      required: true,
+    },
+    squareFeet: {
+      type: Number,
+      required: true,
+    },
+    priceSqFt: {
+      type: Number,
+      required: true,
+    },
     serviceCharge: Number,
     useClass: {
       type: String,
       enum: rentEnum.useClassEnum,
+      required: true,
     },
     restricted: {
       type: String,
       enum: rentEnum.restrictedEnum,
+      required: true,
     },
     breakClauses: String,
     additionalComments: String,
