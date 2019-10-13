@@ -7,19 +7,8 @@ import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
 // import components here
 import MapInterface from './MapInterface';
 import Admin from './Admin';
-import { Auth0Provider } from './Auth0Login/Auth0Wrapper';
 import PrivateRoute from './Auth0Login/PrivateRoute';
 import RentalForm from './RentalForm';
-
-const onRedirectCallback = appState => {
-  window.history.replaceState(
-    {},
-    document.title,
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  );
-};
 
 const Router = () => {
   return (
@@ -33,18 +22,4 @@ const Router = () => {
   );
 };
 
-// Authentication Wrapper
-const Routes = () => {
-  return (
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      client_id={process.env.REACT_APP_AUTH0_CLIENT_ID}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <Router />
-    </Auth0Provider>
-  );
-};
-
-export default Routes;
+export default Router;
