@@ -21,6 +21,7 @@ const authClient = jwksClient({
 function checkAuth(event) {
   const alg = 'RS256'; // algorithm is RSA http://bit.ly/2xAYygk
   return new Promise((resolve, reject) => {
+    console.log(event.headers.authorization);
     // Handler auth headers AND aws custom authorizers
     const authHeader = event.headers.authorization || event.authorizationToken;
     if (!authHeader) {
