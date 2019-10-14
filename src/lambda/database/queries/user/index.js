@@ -2,15 +2,18 @@ import User from '../../models/User';
 import { roles, status } from '../../../../constants/users';
 
 // gets all users
-export const getAllUsers = async () => {
-  const users = await User.find();
-  return users;
-};
+export const getAllUsers = () => User.find();
 
 // gets one user
 export const getUser = id => {
   return User.findById(id);
 };
+
+// get user by email
+export const getUserByEmail = email => User.findOne({ email });
+
+// add a new user
+export const addNewUser = user => User.create(user);
 
 // upates awaitingSuperUser status if rejected
 export const rejectSuperUser = id =>

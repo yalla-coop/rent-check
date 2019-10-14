@@ -1,4 +1,4 @@
-import { roleEnum, statusEnum } from '../../../constants/users';
+import { roleEnum, roles, status, statusEnum } from '../../../constants/users';
 
 const mongoose = require('mongoose');
 
@@ -18,12 +18,12 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     enum: roleEnum,
-    required: true,
+    default: roles.USER,
   },
   status: {
     type: String,
     enum: statusEnum,
-    required: true,
+    default: status.UNVERIFIED,
   },
   companyName: String,
   companyAddress: {

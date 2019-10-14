@@ -41,11 +41,9 @@ const useFetch = (initialUrl, initialData, requestHeaders) => {
     const fetchData = async () => {
       dispatch({ type: types.FETCH_INIT });
       try {
-        if (url) {
-          const { data: res } = await axios.get(url);
-          if (!didCancel) {
-            dispatch({ type: types.FETCH_SUCCESS, payload: res });
-          }
+        const { data: res } = await axios.get(url);
+        if (!didCancel) {
+          dispatch({ type: types.FETCH_SUCCESS, payload: res });
         }
       } catch (error) {
         if (!didCancel) {
