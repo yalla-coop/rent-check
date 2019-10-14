@@ -74,7 +74,7 @@ function MapInterface({ location }) {
 
   useEffect(() => {
     if (location && location.state && location.state.search) {
-      setShowSearch(location.state.search);
+      setShowSearch(!!location.state.search);
     }
   }, [location]);
 

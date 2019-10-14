@@ -74,3 +74,17 @@ export const MenuLink = styled(NavLink)`
     text-decoration: underline;
   }
 `;
+
+export const Logout = styled.div`
+  color: #386a9b;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all ease 0.2s;
+  cursor: pointer;
+  :hover,
+  :active {
+    color: #d7448f;
+    text-decoration: underline;
+  }
+`;

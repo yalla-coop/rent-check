@@ -1,5 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+
+import PrivateRoute from './Auth0Login/PrivateRoute';
 
 // import routes here
 import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
@@ -7,44 +9,19 @@ import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
 // import components here
 import MapInterface from './MapInterface';
 import Admin from './Admin';
-import { Auth0Provider } from './Auth0Login/Auth0Wrapper';
-import PrivateRoute from './Auth0Login/PrivateRoute';
 import RentalForm from './RentalForm';
+import Login from './Auth0Login/Login';
 
-const onRedirectCallback = appState => {
-  window.history.replaceState(
-    {},
-    document.title,
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  );
-};
-
-const Router = () => {
+export default function Router() {
   return (
     <Switch>
+      {/* <PrivateRoute exact path="/" component={MapInterface} /> */}
       <Route exact path="/" component={MapInterface} />
-      <PrivateRoute path="/admin" component={Admin} />
+      <Route exact path="/login" component={Login} />
+      <PrivateRoute exact path="/admin" component={Admin} />
       <PrivateRoute path="/add-rental-data" component={RentalForm} />
       <PrivateRoute exact path={MAP_URL} component={MapInterface} />
       <PrivateRoute path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>
   );
-};
-
-// Authentication Wrapper
-const Routes = () => {
-  return (
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      client_id={process.env.REACT_APP_AUTH0_CLIENT_ID}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <Router />
-    </Auth0Provider>
-  );
-};
-
-export default Routes;
+}
