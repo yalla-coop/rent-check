@@ -15,7 +15,7 @@ import Login from './Auth0Login/Login';
 
 import { useAuth0 } from '../Auth0Login';
 
-export default function Router() {
+function Router() {
   const { user } = useAuth0();
   useEffect(() => {
     // on didmount check if the user in db
@@ -35,9 +35,10 @@ export default function Router() {
         render={props => <MapInterface {...props} />}
       />
       <Route exact path="/login" component={Login} />
-      {/* <PrivateRoute exact path="/admin" component={Admin} /> */}
       <PrivateRoute path="/add-rental-data" component={RentalForm} />
       <PrivateRoute path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>
   );
 }
+
+export default Router;

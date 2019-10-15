@@ -4,20 +4,21 @@ import { Route } from 'react-router-dom';
 import { useAuth0 } from '../../Auth0Login';
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, loading } = useAuth0();
 
   useEffect(() => {
+    if (loading || isAuthenticated) {
+      return;
+    }
     const fn = async () => {
-      if (!isAuthenticated) {
-        await loginWithRedirect({
-          appState: { targetUrl: path },
-        });
-      }
+      await loginWithRedirect({
+        appState: { targetUrl: path },
+      });
     };
     fn();
-  }, [isAuthenticated, loginWithRedirect, path]);
+  }, [isAuthenticated, loading, loginWithRedirect, path]);
 
-  if (!isAuthenticated) return null; // kjhkjh
+  if (!isAuthenticated) return null;
 
   const render = props =>
     isAuthenticated === true ? <Component {...props} /> : null;
