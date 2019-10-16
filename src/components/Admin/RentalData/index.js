@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 // Router for Rental Data
 import React, { useState, useEffect } from 'react';
-||||||| merged common ancestors
-// Router for Rental Data
-import React from 'react';
-=======
-// // Router for Rental Data
-import React from 'react';
->>>>>>> master
 import { Route, Switch } from 'react-router-dom';
 
 // Components

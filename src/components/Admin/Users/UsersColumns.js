@@ -1,7 +1,7 @@
 // sets columns for user table
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon, Tag } from 'antd';
+import { Button, Icon, Tag, Divider } from 'antd';
 import { renderUserDetails, status } from '../../../constants/users';
 
 export default ({
@@ -100,8 +100,37 @@ export default ({
               color: '#EB5757',
               borderColor: '#EB5757',
             })}
+            <span className="flex items-center">
+              <Divider type="vertical" />
+              <Button
+                style={{
+                  color: 'var(--red)',
+                  borderColor: 'var(--red)',
+                }}
+                className="mr1 self-end"
+                ghost
+                // onClick={() => actions.deleteUser(actions.id)}
+              >
+                <Icon type="delete" />
+              </Button>
+            </span>
           </div>
-        ) : null;
+        ) : (
+          <span className="flex items-center">
+            <Divider type="vertical" />
+            <Button
+              style={{
+                color: 'var(--red)',
+                borderColor: 'var(--red)',
+              }}
+              className="mr1 self-end"
+              ghost
+              // onClick={() => actions.deleteUser(actions.id)}
+            >
+              <Icon type="delete" />
+            </Button>
+          </span>
+        );
       },
     },
   ];
