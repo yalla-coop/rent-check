@@ -17,7 +17,7 @@ install:
   - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
   - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
   - mongo --version
-  - npm install
+  - npm run init
 
 before_script:
   - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
@@ -25,11 +25,11 @@ before_script:
     ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath
     ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
   - npm run build
-  - npm run database:build:dev
+  - npm run database:build:dev --prefix server
   - mongo --version
 
 script:
-  - "npm run test:coverage"
+  - "npm run test-coverage"
 
 after_success:
   - "npm run coverage"
