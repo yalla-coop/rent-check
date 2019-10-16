@@ -1,5 +1,5 @@
 import middy from 'middy';
-import authMiddleware from './utils/middleware';
+import authMiddleware from './middlewares/authentication';
 
 // this is a protected demo route
 // http://localhost:9000/.netlify/functions/protected

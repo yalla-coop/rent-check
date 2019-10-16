@@ -10,11 +10,12 @@ if (process.env.NODE_ENV === 'test') {
   mongoURI = process.env.MONGOURI_TEST;
 }
 
-const dbConnection = () =>
+export const dbConnection = () =>
   mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   });
 
 let cachedDb = null;

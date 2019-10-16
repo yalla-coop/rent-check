@@ -1,20 +1,27 @@
 // Router for User routes
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+<<<<<<< HEAD
 import { Modal, message } from 'antd';
 import axios from 'axios';
 import Loading from '../../Loading';
 
 // components
 import Table from '../Table';
+||||||| merged common ancestors
+import Loading from '../../Loading';
+// components
+import Table from '../Table';
+=======
+>>>>>>> master
 
-// Table props
-import usersCol from './UsersColumns';
+// components
+import AllUsers from './AllUsers';
 
 // routes
 import { routes } from '../../../constants/adminRoutes';
-import useFetch from '../../../hooks/useFetch';
 
+<<<<<<< HEAD
 const { USERS_ALL } = routes;
 
 export default function Users() {
@@ -77,7 +84,18 @@ export default function Users() {
       setUserData(msg);
     }
   }, [isLoading, msg]);
+||||||| merged common ancestors
+const { USERS_ALL } = routes;
 
+export default function Users() {
+  // fetch users
+  const [{ data: msg, isLoading }] = useFetch('/.netlify/functions/getUsers');
+=======
+// status as filter base of users
+import { status, roles } from '../../../constants/users';
+>>>>>>> master
+
+<<<<<<< HEAD
   // create table friendly data sets
   const users =
     userData &&
@@ -89,14 +107,52 @@ export default function Users() {
       status,
       actions: { id: _id, status, deleteUser },
     }));
+||||||| merged common ancestors
+  // create table friendly data sets
+  const users =
+    msg &&
+    msg.msg.map(({ _id, name, email, role, status }) => ({
+      key: _id,
+      name,
+      email,
+      level: role,
+      status,
+    }));
+=======
+const {
+  USERS_ALL,
+  USERS_VERIFY,
+  USERS_SUPER_REQ,
+  USERS_VERIFIED,
+  USERS_SUPER,
+} = routes;
+>>>>>>> master
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+  console.log(users);
+=======
+export default function Users() {
+>>>>>>> master
   return (
     <Switch>
+<<<<<<< HEAD
       {loading && <Loading />}
+||||||| merged common ancestors
+      {isLoading && <Loading />}
+=======
+      <Route exact path={USERS_ALL} render={props => <AllUsers {...props} />} />
       <Route
         exact
-        path={USERS_ALL}
+        path={USERS_VERIFY}
+        render={props => <AllUsers {...props} statusProp={status.UNVERIFIED} />}
+      />
+>>>>>>> master
+      <Route
+        exact
+        path={USERS_SUPER_REQ}
         render={props => (
+<<<<<<< HEAD
           <>
             <Table
               columns={usersCol}
@@ -117,7 +173,22 @@ export default function Users() {
               </p>
             </Modal>
           </>
+||||||| merged common ancestors
+          <Table columns={usersCol} dataSource={users} {...props} />
+=======
+          <AllUsers {...props} statusProp={status.AWAITING_SUPER} />
+>>>>>>> master
         )}
+      />
+      <Route
+        exact
+        path={USERS_VERIFIED}
+        render={props => <AllUsers {...props} statusProp={status.VERIFIED} />}
+      />
+      <Route
+        exact
+        path={USERS_SUPER}
+        render={props => <AllUsers {...props} statusProp={roles.SUPERUSER} />}
       />
     </Switch>
   );

@@ -83,6 +83,7 @@ export default function TableComponent({ columns, dataSource, loading }) {
       dataSource={dataSource}
       style={{ backgroundColor: '#ffffff' }}
       bordered
+      loading={loading}
     />
   );
 }

@@ -1,16 +1,31 @@
 // sets columns for user table
-
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon, Tag, Divider } from 'antd';
+import { Button, Icon, Tag } from 'antd';
+import { renderUserDetails, status } from '../../../constants/users';
 
-// constants
-import {
-  renderUserDetails,
-  status as constStatus,
-} from '../../../constants/users';
+export default ({
+  getColumnSearchProps,
+  searchText,
+  manageUserStatusOnClick,
+}) => {
+  // renders btn to approve or reject user/ super user
+  const renderActionBtn = (
+    userId,
+    userStatus,
+    action,
+    { color, borderColor }
+  ) => (
+    <Button
+      style={{ color, borderColor, fontSize: '0.8rem' }}
+      className="mr1"
+      ghost
+      onClick={() => manageUserStatusOnClick(userId, action, userStatus)}
+    >
+      {action}
+    </Button>
+  );
 
-export default ({ getColumnSearchProps, searchText }) => {
   const tableColumns = [
     {
       title: 'Name',
@@ -72,43 +87,22 @@ export default ({ getColumnSearchProps, searchText }) => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (actions, record) => (
-        <div className="flex items-center justify-between">
-          <span className="flex items-center">
-            {actions && actions.status !== constStatus.VERIFIED && (
-              <Button
-                style={{ color: '#219653', borderColor: '#219653' }}
-                className="mr1"
-                ghost
-              >
-                Approve
-              </Button>
-            )}
-            {actions && actions.status !== constStatus.REJECTED && (
-              <Button
-                ghost
-                style={{ color: '#EB5757', borderColor: '#EB5757' }}
-              >
-                Reject
-              </Button>
-            )}
-          </span>
-          <span className="flex items-center">
-            <Divider type="vertical" />
-            <Button
-              style={{
-                color: 'var(--red)',
-                borderColor: 'var(--red)',
-              }}
-              className="mr1 self-end"
-              ghost
-              onClick={() => actions.deleteUser(actions.id)}
-            >
-              <Icon type="delete" />
-            </Button>
-          </span>
-        </div>
-      ),
+      render: (text, record) => {
+        return [status.UNVERIFIED, status.AWAITING_SUPER].includes(
+          record.status
+        ) ? (
+          <div className="flex items-center justify-between">
+            {renderActionBtn(record.key, record.status, 'approve', {
+              color: '#219653',
+              borderColor: '#219653',
+            })}
+            {renderActionBtn(record.key, record.status, 'reject', {
+              color: '#EB5757',
+              borderColor: '#EB5757',
+            })}
+          </div>
+        ) : null;
+      },
     },
   ];
 

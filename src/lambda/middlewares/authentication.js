@@ -1,4 +1,4 @@
-import checkAuth from './auth';
+import checkAuth from '../utils/auth';
 
 function authMiddleware() {
   return {

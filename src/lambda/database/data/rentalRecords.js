@@ -19,7 +19,9 @@ export default async () => {
     {
       submittedBy: user._id,
       reviewedBy: superUser._id,
-      geoLocation: '[51.532572,-0.059245]',
+      geoLocation: {
+        coordinates: [-0.059245, 51.532572],
+      },
       status: status.VERIFIED,
       address: 'The Oval',
       postcode: 'E2 9DT',
@@ -38,7 +40,9 @@ export default async () => {
     {
       submittedBy: superUser._id,
       reviewedBy: admin._id,
-      geoLocation: '[51.529335,-0.069213]',
+      geoLocation: {
+        coordinates: [-0.069213, 51.529335],
+      },
       status: status.VERIFIED,
       address: '95 Columbia Road',
       postcode: 'E2 7RG',
@@ -61,7 +65,9 @@ export default async () => {
     // not yet reviewed
     {
       submittedBy: user._id,
-      geoLocation: '[51.527098,-0.026635]',
+      geoLocation: {
+        coordinates: [-0.026635, 51.527098],
+      },
       status: status.UNVERIFIED,
       address: '57 Bow Road, London',
       postcode: 'E3 2AD',
@@ -86,7 +92,9 @@ export default async () => {
     {
       submittedBy: user._id,
       reviewedBy: superUser._id,
-      geoLocation: '[51.5097,-0.024634]',
+      geoLocation: {
+        coordinates: [-0.024634, 51.5097],
+      },
       status: status.REJECTED,
       address: '1 Pennyfields, London',
       postcode: 'E14 8HP',
