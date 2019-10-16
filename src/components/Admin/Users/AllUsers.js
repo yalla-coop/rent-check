@@ -207,7 +207,10 @@ export default function AllUsers({ statusProp }) {
         onCancel={() => toggleModal()}
         confirmLoading={deletingUser}
       >
-        <p>Hello</p>
+        <p>
+          Clicking confirm will delete this user and any rental data they have
+          submitted. This action cannot be undone.
+        </p>
       </Modal>
     </Fragment>
   );

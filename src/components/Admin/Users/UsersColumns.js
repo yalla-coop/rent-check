@@ -27,6 +27,22 @@ export default ({
     </Button>
   );
 
+  const renderDeleteBtn = userId => (
+    <span className="flex items-center">
+      <Divider type="vertical" />
+      <Button
+        style={{
+          color: 'var(--red)',
+          borderColor: 'var(--red)',
+        }}
+        className="mr1 self-end"
+        ghost
+        onClick={() => deleteUser(userId)}
+      >
+        <Icon type="delete" />
+      </Button>
+    </span>
+  );
   const tableColumns = [
     {
       title: 'Name',
@@ -101,36 +117,10 @@ export default ({
               color: '#EB5757',
               borderColor: '#EB5757',
             })}
-            <span className="flex items-center">
-              <Divider type="vertical" />
-              <Button
-                style={{
-                  color: 'var(--red)',
-                  borderColor: 'var(--red)',
-                }}
-                className="mr1 self-end"
-                ghost
-                onClick={() => deleteUser(record.key)}
-              >
-                <Icon type="delete" />
-              </Button>
-            </span>
+            {renderDeleteBtn(record.key)}
           </div>
         ) : (
-          <span className="flex items-center">
-            <Divider type="vertical" />
-            <Button
-              style={{
-                color: 'var(--red)',
-                borderColor: 'var(--red)',
-              }}
-              className="mr1 self-end"
-              ghost
-              onClick={() => deleteUser(record.key)}
-            >
-              <Icon type="delete" />
-            </Button>
-          </span>
+          <div>{renderDeleteBtn(record.key)}</div>
         );
       },
     },
