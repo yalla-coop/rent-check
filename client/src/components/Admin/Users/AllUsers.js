@@ -6,8 +6,6 @@ import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';
-// admin user -> please change id for testing
-const admin = '5d98462431532f74cc6879c5';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
@@ -76,13 +74,8 @@ export default function AllUsers({ statusProp }) {
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
-  const manageUserStatusOnClick = (user, action, userStatus) => {
-    updateUserStatus({
-      admin,
-      user,
-      action,
-      userStatus,
-    });
+  const manageUserStatusOnClick = (updatedUser) => {
+    updateUserStatus(updatedUser);
   };
 
   const handleSearch = (selectedKeys, confirm) => {

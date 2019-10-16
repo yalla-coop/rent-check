@@ -12,6 +12,8 @@ const getUser = id => {
   return User.findById(id);
 };
 
+const getAdminUserId = () => User.findOne({ role: roles.ADMIN }).select("_id");
+
 // upates awaitingSuperUser status if rejected
 const rejectSuperUser = id =>
   User.findOneAndUpdate(
@@ -47,6 +49,7 @@ const approveUser = (userId, adminId) =>
 module.exports = {
   getAllUsers,
   getUser,
+  getAdminUserId,
   rejectSuperUser,
   approveSuperUser,
   rejectUser,
