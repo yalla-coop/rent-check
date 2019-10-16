@@ -40,7 +40,9 @@
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
     "test:coverage": "npm test --coverage",
     "coverage": "codecov",
-    "database:build:dev": "babel-node ./src/lambda/database/data"
+    "database:build:dev": "babel-node ./src/lambda/database/data",
+    "database:build:fake": "babel-node ./src/lambda/database/data && npm run fake",
+    "fake": "babel-node ./src/lambda/database/data/fakedata"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -73,7 +75,9 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "request": "^2.88.0",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "csv": "^5.1.3",
+    "faker": "^4.1.0"
   },
   "jest": {
     "collectCoverageFrom": [
