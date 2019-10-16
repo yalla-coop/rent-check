@@ -11,7 +11,8 @@
     "database:build:dev": "babel-node ./database/data",
     "database:build:fake": "babel-node ./database/data && npm run fake",
     "fake": "babel-node ./database/data/fakedata",
-    "test": "echo \"No test specified\""
+    "test": "echo \"No test specified\"",
+    "test:coverage": "echo \"No test specified\""
   },
   "dependencies": {
     "axios": "^0.19.0",
