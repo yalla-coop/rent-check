@@ -8,6 +8,7 @@ import {
   rejectSuperUser,
   approveUser,
   rejectUser,
+  unverifyUser,
 } from './database/queries/user';
 import { status } from '../constants/users';
 
@@ -59,6 +60,10 @@ async function manageUserStatus(event, context) {
           update = await rejectUser(userId);
           msg = 'rejected user!';
         }
+        break;
+      case 'unverify':
+        update = await unverifyUser(userId, admin);
+        msg = 'unverified user!';
         break;
 
       default:

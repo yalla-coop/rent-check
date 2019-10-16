@@ -43,3 +43,10 @@ export const approveUser = (userId, adminId) =>
     { status: status.VERIFIED, verifiedBy: adminId },
     { new: true }
   );
+
+export const unverifyUser = (userId, adminId) =>
+  userId.findOneAndUpdate(
+    { _id: userId },
+    { status: status.UNVERIFIED, verificationRemovedBy: adminId },
+    { new: true }
+  );

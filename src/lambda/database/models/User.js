@@ -48,6 +48,10 @@ const schema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
+  verificationRemovedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+  },
 });
 
 const User = model('users', schema);
