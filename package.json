@@ -13,7 +13,8 @@
     "test:client": "npm test --prefix client",
     "start": "run-p start:**",
     "start:server": "npm start --prefix server",
-    "start:client": "npm start --prefix client"
+    "start:client": "npm start --prefix client",
+    "build": "npm run build --prefix client"
   },
   "repository": {
     "type": "git",
