@@ -28,7 +28,9 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-const readStearm = fs.createReadStream(path.join(__dirname, 'postcodes.csv'));
+const readStearm = fs.createReadStream(
+  path.join(__dirname, 'postcodes3000dup.csv')
+);
 
 const parser = parse({
   delimiter: ',',
@@ -39,6 +41,8 @@ const parser = parse({
   const admin = await User.findOne({ role: 'admin' });
   const transformer = transform(
     record => {
+      const annualRent = parseInt(faker.finance.amount(3000, 120000), 10);
+      const priceSqFt = parseInt(faker.finance.amount(5, 60), 10);
       const rec = {
         submittedBy: admin._id,
         postcode: record[0],
@@ -57,9 +61,9 @@ const parser = parse({
         nextRentReview: moment(faker.date.future(2))
           .format('YYYY-MM-DD')
           .toString(),
-        annualRent: parseInt(faker.finance.amount(10000, 1000000), 10),
-        squareFeet: 550,
-        priceSqFt: parseInt(faker.finance.amount(320, 9000), 10),
+        annualRent,
+        squareFeet: annualRent / priceSqFt,
+        priceSqFt,
         serviceCharge: parseInt(faker.finance.amount(10, 500), 10),
         useClass: useClassEnum[getRandomInt(useClassEnum.length)],
         specification:
