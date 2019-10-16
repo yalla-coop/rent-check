@@ -1,6 +1,6 @@
 const addUsers = require("./addUsers");
 const deleteUsers = require("./deleteUsers");
 const getUsers = require("./getUsers");
-const updateUsers = require("./updateUsers");
+const updateUser = require("./updateUser");
 
-module.exports = { addUsers, deleteUsers, getUsers, updateUsers };
+module.exports = { addUsers, deleteUsers, getUsers, updateUser };

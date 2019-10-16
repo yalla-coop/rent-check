@@ -1,11 +1,7 @@
-const addLocations = require("./addLocations");
-const deleteLocations = require("./deleteLocations");
-const updateLocations = require("./updateLocations");
+const addLocation = require("./addLocation");
 const getLocations = require("./getLocations");
 
 module.exports = {
-  addLocations,
+  addLocation,
   getLocations,
-  updateLocations,
-  deleteLocations,
 };

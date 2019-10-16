@@ -1,5 +1,5 @@
 const express = require("express");
-const { addUsers, deleteUsers, getUsers, updateUsers } = require("./users");
+const { getUsers, updateUser } = require("./users");
 const {
   addLocations,
   deleteLocations,
@@ -9,6 +9,7 @@ const {
 const admin = express();
 
 admin.get("/users", getUsers);
+admin.patch("/users", updateUser);
 
 admin.get("/locations", getLocations);
 

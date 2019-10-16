@@ -1,10 +1,10 @@
 const express = require("express");
-const { getLocations, addLocations } = require("./locations");
+const { getLocations, addLocation } = require("./locations");
 const admin = require("./admin");
 const router = express();
 
 router.get("/locations", getLocations);
-router.post("/locations", addLocations);
+router.post("/locations", addLocation);
 
 router.use("/admin", admin);
 

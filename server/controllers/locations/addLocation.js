@@ -13,7 +13,7 @@ const getCurrentUser = () => User.findOne({ name: "Krissie Nicholson" });
 const validateRentalRecord = record => validateByRecord(RentalRecord, record);
 
 // add single location as non-admin user
-module.exports = async function addLocations(req, res) {
+module.exports = async function addLocation(req, res) {
   const record = req.body;
   if (!record) {
     return res.status(400).send();
