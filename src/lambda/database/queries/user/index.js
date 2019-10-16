@@ -1,18 +1,9 @@
 import User from '../../models/User';
 import { roles, status } from '../../../../constants/users';
 
-<<<<<<< HEAD
-export const getAllUsers = async () => User.find();
+export const getAllUsers = () => User.find();
 
 export const deleteUser = id => User.deleteOne({ _id: id });
-||||||| merged common ancestors
-export const getAllUsers = async () => User.find();
-=======
-// gets all users
-export const getAllUsers = async () => {
-  const users = await User.find();
-  return users;
-};
 
 // gets one user
 export const getUser = id => {
@@ -50,4 +41,3 @@ export const approveUser = (userId, adminId) =>
     { status: status.VERIFIED, verifiedBy: adminId },
     { new: true }
   );
->>>>>>> master
