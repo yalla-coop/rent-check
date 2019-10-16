@@ -8,6 +8,7 @@ export default ({
   getColumnSearchProps,
   searchText,
   manageUserStatusOnClick,
+  deleteUser,
 }) => {
   // renders btn to approve or reject user/ super user
   const renderActionBtn = (
@@ -109,7 +110,7 @@ export default ({
                 }}
                 className="mr1 self-end"
                 ghost
-                // onClick={() => actions.deleteUser(actions.id)}
+                onClick={() => deleteUser(record.key)}
               >
                 <Icon type="delete" />
               </Button>
@@ -125,7 +126,7 @@ export default ({
               }}
               className="mr1 self-end"
               ghost
-              // onClick={() => actions.deleteUser(actions.id)}
+              onClick={() => deleteUser(record.key)}
             >
               <Icon type="delete" />
             </Button>

@@ -1,7 +1,7 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { Table, Input, Icon, Button, message } from 'antd';
+import { Table, Input, Icon, Button, message, Modal } from 'antd';
 import axios from 'axios';
 import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
@@ -91,6 +91,7 @@ export default function AllUsers({ statusProp }) {
   const toggleModal = () => setModalVisible(!modalVisible);
 
   const deleteUser = userId => {
+    console.log('REACHED');
     setUserToDelete(userId);
     toggleModal();
   };
@@ -189,6 +190,7 @@ export default function AllUsers({ statusProp }) {
           getColumnSearchProps,
           searchText,
           manageUserStatusOnClick,
+          deleteUser,
         })}
         dataSource={
           allUsersData &&
@@ -198,6 +200,15 @@ export default function AllUsers({ statusProp }) {
         bordered
         loading={allUsersDataIsLoading}
       />
+      <Modal
+        title="Are you sure?"
+        visible={modalVisible}
+        onOk={() => confirmDelete()}
+        onCancel={() => toggleModal()}
+        confirmLoading={deletingUser}
+      >
+        <p>Hello</p>
+      </Modal>
     </Fragment>
   );
 }
