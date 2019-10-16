@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "init": "run-p init:**",
+    "init:root": "npm install",
+    "init:client": "npm install --prefix client",
+    "init:server": "npm install --prefix server",
     "test": "run-s test:**",
     "test:server": "npm test --prefix server",
     "test:client": "npm test --prefix client",

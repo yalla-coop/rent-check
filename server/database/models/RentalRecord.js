@@ -3,6 +3,18 @@ const rentEnum = require("../../constants/rentalRecords");
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    default: 'Point',
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+});
+
 const schema = new mongoose.Schema(
   {
     submittedBy: {
@@ -20,7 +32,7 @@ const schema = new mongoose.Schema(
       required: true,
     },
     geoLocation: {
-      type: String,
+      type: pointSchema,
       required: true,
     },
     address: String,

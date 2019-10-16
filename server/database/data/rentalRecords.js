@@ -2,7 +2,7 @@ const RentalRecord = require("../models/RentalRecord");
 const User = require("../models/User");
 
 // import constants
-const { status } = require("../../constants/rentalRecords");
+const rentalRecordsConst = require("../../constants/rentalRecords");
 const usersConst = require("../../constants/users");
 const roles = usersConst.roles;
 const userStatus = usersConst.status;
@@ -21,43 +21,46 @@ module.exports = async function populateRentalRecords() {
     {
       submittedBy: user._id,
       reviewedBy: superUser._id,
-      geoLocation: "[51.532572,-0.059245]",
-      status: status.VERIFIED,
+      geoLocation: {
+        coordinates: [-0.059245, 51.532572],
+      },
+      status: rentalRecordsConst.status.VERIFIED,
       address: "The Oval",
       postcode: "E2 9DT",
       leaseLength: "10 years",
-      landlordTenantsAct: "No",
+      landlordTenantsAct: rentalRecordsConst.landlordTenantsAct.NO,
       lastRentReview: "1/1/2017",
       nextRentReview: "1/1/2022",
       annualRent: 61000,
       squareFeet: 4500.0,
       priceSqFt: 13.55,
-      useClass: "B2",
-      specification: "Shell",
-      restricted: "Not sure",
+      useClass: rentalRecordsConst.useClass.B2,
+      restricted: rentalRecordsConst.restricted.NOT_SURE,
+      specification: rentalRecordsConst.specification.REFURBISHED,
       breakClauses: "Half way through the lease in 2017",
     },
     // reviewed data by admin
     {
       submittedBy: superUser._id,
       reviewedBy: admin._id,
-      geoLocation: "[51.529335,-0.069213]",
-      status: status.VERIFIED,
+      geoLocation: {
+        coordinates: [-0.069213, 51.529335],
+      },
+      status: rentalRecordsConst.status.VERIFIED,
       address: "95 Columbia Road",
       postcode: "E2 7RG",
       leaseLength: "60 Months",
-      landlordTenantsAct: "Yes",
+      landlordTenantsAct: rentalRecordsConst.landlordTenantsAct.YES,
       lastRentReview: "2/1/2017",
       nextRentReview: "2/1/2019",
       annualRent: 27000,
       squareFeet: 550,
       priceSqFt: 49,
       serviceCharge: 50,
-      useClass: "A1",
-      specification: "Refurbished",
-      restricted: "Not sure",
+      useClass: rentalRecordsConst.useClass.A1,
+      specification: rentalRecordsConst.specification.NOT_SURE,
+      restricted: rentalRecordsConst.restricted.NOT_SURE,
       breakClauses: "3 years",
-      specification: "Shell",
       landlord: "Carol Smith",
       additionalComments:
         "Property used as Ladies Hairdressers or the swale of such other goods as the landlord may approve such approval not to be unreasonably withheld",
@@ -65,23 +68,24 @@ module.exports = async function populateRentalRecords() {
     // not yet reviewed
     {
       submittedBy: user._id,
-      geoLocation: "[51.527098,-0.026635]",
-      status: status.UNVERIFIED,
+      geoLocation: {
+        coordinates: [-0.026635, 51.527098],
+      },
+      status: rentalRecordsConst.status.UNVERIFIED,
       address: "57 Bow Road, London",
       postcode: "E3 2AD",
       leaseLength: "20 years",
-      landlordTenantsAct: "Yes",
+      landlordTenantsAct: rentalRecordsConst.landlordTenantsAct.YES,
       lastRentReview: "11/19/2014",
       nextRentReview: "11/19/2019",
       annualRent: 8000,
       squareFeet: 815.9,
       priceSqFt: 9.81,
       serviceCharge: 50,
-      useClass: "A1",
-      specification: "Other / Not sure",
-      restricted: "Restricted",
+      useClass: rentalRecordsConst.useClass.A1,
+      specification: rentalRecordsConst.specification.NOT_SURE,
+      restricted: rentalRecordsConst.restricted.RESTRICTED,
       breakClauses: "None",
-      specification: "Shell",
       landlord:
         "The Mayor and Burgesses of the London Borough of Tower Hamlets",
       additionalComments:
@@ -91,21 +95,23 @@ module.exports = async function populateRentalRecords() {
     {
       submittedBy: user._id,
       reviewedBy: superUser._id,
-      geoLocation: "[51.5097,-0.024634]",
-      status: status.REJECTED,
+      geoLocation: {
+        coordinates: [-0.024634, 51.5097],
+      },
+      status: rentalRecordsConst.status.REJECTED,
       address: "1 Pennyfields, London",
       postcode: "E14 8HP",
       leaseLength: "10 years",
-      landlordTenantsAct: "Yes",
+      landlordTenantsAct: rentalRecordsConst.landlordTenantsAct.YES,
       lastRentReview: "8/23/2012",
       nextRentReview: "8/23/2017",
       annualRent: 9500,
       squareFeet: 461,
       priceSqFt: 20.6,
       serviceCharge: 50,
-      useClass: "A1",
-      specification: "Other / Not sure",
-      restricted: "Restricted",
+      useClass: rentalRecordsConst.useClass.A1,
+      specification: rentalRecordsConst.specification.NOT_SURE,
+      restricted: rentalRecordsConst.restricted.RESTRICTED,
       breakClauses: "None",
       landlord:
         "The Mayor and Burgesses of the London Borough of Tower Hamlets",
