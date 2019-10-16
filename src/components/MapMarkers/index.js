@@ -73,8 +73,10 @@ const MarkerWithPopup = ({
     return `${day}/${month}/${year}`;
   };
   const price = priceSqFt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  // leaflet use latlong but mongodb use longlat coordinates
+  const { coordinates } = geoLocation;
   return (
-    <Marker position={JSON.parse(geoLocation)} icon={iconSelect(useClass)}>
+    <Marker position={[coordinates[1], coordinates[0]]} icon={iconSelect(useClass)}>
       <Popup offset={[33, 15]} keepInView maxHeight={300} className="popup">
         <div className="pa0 avenir f5 tl mw5">
           {(address || postcode) && (

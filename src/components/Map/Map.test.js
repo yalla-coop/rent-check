@@ -11,7 +11,9 @@ const markers = [
     useClass: 'A1',
     lastRentReview: '2018-05-23',
     name: 'Wish Fashion',
-    geoLocation: '[51.564261,-0.108292]',
+    geoLocation: {
+      coordinates: [51.564261, -0.108292],
+    },
   },
   {
     key: 3,
@@ -21,7 +23,9 @@ const markers = [
     useClass: 'A3',
     lastRentReview: '2018-04-01',
     name: 'Pure Cyprus',
-    geoLocation: '[51.564162,-0.107777]',
+    geoLocation: {
+      coordinates: [51.564162, -0.107777],
+    },
   },
 ];
 
