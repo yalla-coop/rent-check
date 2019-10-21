@@ -18,8 +18,8 @@ const getAllRentalRecordsAdmin = () =>
         from: "users",
         localField: "submittedBy",
         foreignField: "_id",
-        as: "submittedBy",
-      },
+        as: "submittedBy"
+      }
     },
     // get details of the user who verified it
     {
@@ -27,14 +27,14 @@ const getAllRentalRecordsAdmin = () =>
         from: "users",
         localField: "reviewedBy",
         foreignField: "_id",
-        as: "reviewedBy",
-      },
+        as: "reviewedBy"
+      }
     },
     {
-      $unwind: { path: "$submittedBy", preserveNullAndEmptyArrays: true },
+      $unwind: { path: "$submittedBy", preserveNullAndEmptyArrays: true }
     },
     {
-      $unwind: { path: "$reviewedBy", preserveNullAndEmptyArrays: true },
+      $unwind: { path: "$reviewedBy", preserveNullAndEmptyArrays: true }
     },
     // remove unnecessary fields from the returned object
     {
@@ -52,13 +52,18 @@ const getAllRentalRecordsAdmin = () =>
         "reviewedBy.companyName": 0,
         "reviewedBy.companyAddress": 0,
         "reviewedBy.verifiedBy": 0,
-        "reviewedBy.grantedSuperBy": 0,
-      },
-    },
+        "reviewedBy.grantedSuperBy": 0
+      }
+    }
   ]);
+
+const deleteUserRecords = userId =>
+  RentalRecord.deleteMany({ submittedBy: userId });
+
 module.exports = {
   addRentalRecord,
   getAllValidRecords,
   getRentalRecordsByUserId,
   getAllRentalRecordsAdmin,
+  deleteUserRecords
 };

@@ -46,6 +46,9 @@ const approveUser = (userId, adminId) =>
     { new: true }
   );
 
+// delete user
+const deleteUser = id => User.deleteOne({ _id: id });
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -53,5 +56,5 @@ module.exports = {
   rejectSuperUser,
   approveSuperUser,
   rejectUser,
-  approveUser,
+  approveUser
 };

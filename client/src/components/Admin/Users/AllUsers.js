@@ -1,11 +1,14 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { Table, Input, Icon, Button, message } from 'antd';
+import { Table, Input, Icon, Button, message, Modal } from 'antd';
+import axios from 'axios';
 import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';
+// admin user -> please change id for testing
+const admin = '5d98462431532f74cc6879c5';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
@@ -30,29 +33,31 @@ const decideUserData = (userStatus, allUsersData) => {
 };
 
 // create table friendly data sets
-const createUserTable = arr => {
-  return arr.map(({ _id, name, email, role, status }) => ({
+const createUserTable = arr =>
+  arr.map(({ _id, name, email, role, status }) => ({
     key: _id,
     name,
     email,
     level: role,
     status,
   }));
-};
 
 export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
     getAllUsersData,
-  ] = useApiCallback('get', '/api/admin/users');
+  ] = useApiCallback('get', '/.netlify/functions/getUsers');
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
     updateUserStatus,
-  ] = useApiCallback('patch', '/api/admin/users');
+  ] = useApiCallback('patch', '/.netlify/functions/manageUserStatus');
 
   const [searchText, setSearchText] = useState('');
   const searchInputRef = useRef(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deletingUser, setDeletingUser] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   // get all user data on page load or when user status is updated
   useEffect(() => {
@@ -74,8 +79,43 @@ export default function AllUsers({ statusProp }) {
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
-  const manageUserStatusOnClick = (updatedUser) => {
-    updateUserStatus(updatedUser);
+  const manageUserStatusOnClick = (user, action, userStatus) => {
+    updateUserStatus({
+      admin,
+      user,
+      action,
+      userStatus,
+    });
+  };
+
+  const toggleModal = () => setModalVisible(!modalVisible);
+
+  const deleteUser = userId => {
+    console.log('REACHED');
+    setUserToDelete(userId);
+    toggleModal();
+  };
+
+  const confirmDelete = async () => {
+    try {
+      setDeletingUser(true);
+      await axios.delete('/.netlify/functions/deleteUser', {
+        data: {
+          userId: userToDelete,
+        },
+      });
+
+      setDeletingUser(false);
+      setUserToDelete(null);
+      toggleModal();
+      getAllUsersData();
+      return message.success('User and all related data successfully deleted');
+    } catch (err) {
+      setDeletingUser(false);
+      setUserToDelete(null);
+      toggleModal();
+      return message.error(`Sorry, there was an error: ${err}`);
+    }
   };
 
   const handleSearch = (selectedKeys, confirm) => {
@@ -150,15 +190,28 @@ export default function AllUsers({ statusProp }) {
           getColumnSearchProps,
           searchText,
           manageUserStatusOnClick,
+          deleteUser,
         })}
         dataSource={
           allUsersData &&
-          createUserTable(decideUserData(statusProp, allUsersData))
+          createUserTable(decideUserData(statusProp, allUsersData.msg))
         }
         style={{ backgroundColor: '#ffffff' }}
         bordered
         loading={allUsersDataIsLoading}
       />
+      <Modal
+        title="Are you sure?"
+        visible={modalVisible}
+        onOk={() => confirmDelete()}
+        onCancel={() => toggleModal()}
+        confirmLoading={deletingUser}
+      >
+        <p>
+          Clicking confirm will delete this user and any rental data they have
+          submitted. This action cannot be undone.
+        </p>
+      </Modal>
     </Fragment>
   );
 }
