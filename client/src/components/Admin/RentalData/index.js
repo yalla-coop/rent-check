@@ -1,5 +1,5 @@
 // // Router for Rental Data
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Components
@@ -14,6 +14,7 @@ import * as S from './RentalData.style';
 
 // Table props
 import rentalDataColumns from './rentalDataColumns';
+
 
 // custom hooks
 import useFetch from '../../../hooks/useFetch';
@@ -94,14 +95,14 @@ function RentalData({ history }) {
   };
 
   // fetch data
-  const [{ data: msg, isLoading }] = useFetch('/api/admin/locations');
+  const [{ data: fetchedRentalData, isLoading }] = useFetch('/api/admin/locations');
 
   useEffect(() => {
     if (fetchedRentalData) {
       setLoading(isLoading);
       setRentalData(fetchedRentalData);
     }
-  }, [isLoading]);
+  }, [isLoading, fetchedRentalData]);
 
   // create table friendly data sets and also pass on all rental details
   const rentalRecords =
