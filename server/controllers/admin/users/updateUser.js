@@ -5,7 +5,7 @@ const {
   rejectSuperUser,
   approveUser,
   rejectUser,
-  getAdminUserId,
+  getAdminUserId
 } = require("../../../database/queries/user");
 const { status, roles } = require("../../../constants/users");
 
@@ -14,63 +14,70 @@ module.exports = async function updateUser(req, res) {
   const adminIdPlaceholder = await getAdminUserId();
 
   const updatedUser = req.body;
-  const previousUser = await getUser(updatedUser._id);
+  console.log("update", updatedUser);
+  const previousUser = await getUser(updatedUser.user);
+  console.log("previousUser", previousUser);
 
   const userVerified = (previous, updated) =>
     previous.role === roles.USER &&
     previous.status === status.UNVERIFIED &&
-    updated.status === status.VERIFIED;
+    updated.userStatus === status.VERIFIED;
 
   const userRejected = (previous, updated) =>
     previous.role === roles.USER &&
     previous.status === status.UNVERIFIED &&
-    updated.status === status.REJECTED;
+    updated.userStatus === status.REJECTED;
 
   const superUserGranted = (previous, updated) =>
     previous.status === status.AWAITING_SUPER &&
-    updated.status === status.VERIFIED &&
+    updated.userStatus === status.VERIFIED &&
     updated.role === roles.SUPERUSER;
 
   const superUserRejected = (previous, updated) =>
     previous.status === status.AWAITING_SUPER &&
-    updated.status === status.VERIFIED &&
+    updated.userStatus === status.VERIFIED &&
     updated.role !== roles.SUPERUSER;
 
   const updateDatabase = async (query, args, msg) => {
     try {
       await query(...args);
-      const updatedUserProfile = await getUser(updatedUser._id);
+      const updatedUserProfile = await getUser(updatedUser.user);
       res.send({ msg });
     } catch (err) {
+      console.log("ERR", err);
       res.status(500).send("Server error");
     }
   };
 
   if (userRejected(previousUser, updatedUser)) {
+    console.log("1");
     return updateDatabase(
       rejectUser,
-      [updatedUser._id],
+      [updatedUser.user],
       "User has been rejected"
     );
   }
   if (userVerified(previousUser, updatedUser)) {
+    console.log("2");
     return updateDatabase(
       approveUser,
-      [updatedUser._id, adminIdPlaceholder],
+      [updatedUser.user, adminIdPlaceholder],
       "User has been verified"
     );
   }
   if (superUserRejected(previousUser, updatedUser)) {
+    console.log("3");
     return updateDatabase(
       rejectSuperUser,
-      [updatedUser._id],
+      [updatedUser.user],
       "Request for Super User access has been rejected"
     );
   }
   if (superUserGranted(previousUser, updatedUser)) {
+    console.log("4");
     return updateDatabase(
       approveSuperUser,
-      [updatedUser._id, adminIdPlaceholder],
+      [updatedUser.user, adminIdPlaceholder],
       "Request for Super User access granted"
     );
   }

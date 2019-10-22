@@ -4,6 +4,7 @@ const { deleteUserRecords } = require("../../../database/queries/rentalRecord");
 
 module.exports = async function deleteUser(req, res) {
   const user = req.body;
+  console.log("REQ", req.body);
   try {
     await connectToDatabase();
     await deleteUserRecords(user.userId);
@@ -17,6 +18,7 @@ module.exports = async function deleteUser(req, res) {
       userId: user.userId
     });
   } catch (err) {
+    console.log("ERR", err);
     res.status(500).send(err.message);
   }
 };

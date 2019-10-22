@@ -9,6 +9,7 @@ const types = {
 };
 
 const dataFetchReducer = (state, action) => {
+  console.log("action", state, action)
   switch (action.type) {
     case types.FETCH_INIT:
       return { ...state, isLoading: true, isError: false };
@@ -35,12 +36,15 @@ const useApiCallback = (method, url, initialData) => {
 
   const apiCallback = useCallback(
     payload => {
+      
       let didCancel = false;
       const fetchData = async () => {
         dispatch({ type: types.FETCH_INIT });
         try {
+          console.log("pay", payload)
           const { data } = await axios[method](url, payload);
           if (!didCancel) {
+            console.log("reached", data)
             dispatch({ type: types.FETCH_SUCCESS, payload: data });
           }
         } catch (error) {
@@ -57,6 +61,7 @@ const useApiCallback = (method, url, initialData) => {
     },
     [method, url]
   );
+
   return [state, apiCallback];
 };
 

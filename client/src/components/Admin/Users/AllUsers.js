@@ -8,10 +8,11 @@ import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';
 // admin user -> please change id for testing
-const admin = '5d98462431532f74cc6879c5';
+const admin = '5dae24066975e81cdefc4537';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
+  console.log("FUCUK", allUsersData)
   switch (userStatus) {
     case statusConst.UNVERIFIED:
       return allUsersData.filter(el => el.status === statusConst.UNVERIFIED);
@@ -46,12 +47,19 @@ export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
     getAllUsersData,
-  ] = useApiCallback('get', '/.netlify/functions/getUsers');
+  ] = useApiCallback('get', '/api/admin/users');
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
     updateUserStatus,
-  ] = useApiCallback('patch', '/.netlify/functions/manageUserStatus');
+  ] = useApiCallback('patch', '/api/admin/users');
+
+  const [
+    { data: deletedUser, error: userDeleteError },
+    deleteUserApi,
+  ] = useApiCallback('delete', '/api/admin/users'); 
+
+  
 
   const [searchText, setSearchText] = useState('');
   const searchInputRef = useRef(null);
@@ -71,6 +79,7 @@ export default function AllUsers({ statusProp }) {
       }
     }
     if (userStatusData) {
+      console.log("user bullshit", userStatusData)
       message.success(userStatusData && userStatusData.msg);
     }
     return getAllUsersData();
@@ -99,7 +108,8 @@ export default function AllUsers({ statusProp }) {
   const confirmDelete = async () => {
     try {
       setDeletingUser(true);
-      await axios.delete('/.netlify/functions/deleteUser', {
+      // await deleteUserApi({ userId: userToDelete })
+      await axios.delete('/api/admin/users', {
         data: {
           userId: userToDelete,
         },
@@ -108,7 +118,7 @@ export default function AllUsers({ statusProp }) {
       setDeletingUser(false);
       setUserToDelete(null);
       toggleModal();
-      getAllUsersData();
+      // getAllUsersData();
       return message.success('User and all related data successfully deleted');
     } catch (err) {
       setDeletingUser(false);
@@ -185,6 +195,7 @@ export default function AllUsers({ statusProp }) {
 
   return (
     <Fragment>
+      {console.log("TEST", allUsersData)}
       <Table
         columns={UsersColumns({
           getColumnSearchProps,
@@ -194,7 +205,7 @@ export default function AllUsers({ statusProp }) {
         })}
         dataSource={
           allUsersData &&
-          createUserTable(decideUserData(statusProp, allUsersData.msg))
+          createUserTable(decideUserData(statusProp, allUsersData))
         }
         style={{ backgroundColor: '#ffffff' }}
         bordered
