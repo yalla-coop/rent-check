@@ -71,10 +71,22 @@ export default function AllUsers({ statusProp }) {
   useEffect(() => {
     if (userStatusUpdateHasErrored) {
       try {
-        return message.error(userStatusUpdateHasErrored.response.data.error);
+        return message.error(userStatusUpdateHasErrored);
       } catch (e) {
         return message.error(
           'An error occurred in processing your request. Please try again later.'
+        );
+      }
+    }
+    if (userDeleteError) {
+      setDeletingUser(false);
+      setUserToDelete(null);
+      toggleModal();
+      try {
+        return message.error(userDeleteError);
+      } catch (e) {
+        return message.error(
+          'An error occurred deleting user. Please try again later.'
         );
       }
     }
@@ -88,7 +100,7 @@ export default function AllUsers({ statusProp }) {
       message.success(deletedUser && deletedUser.msg)
     }
     return getAllUsersData();
-  }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData, deletedUser]);
+  }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData, deletedUser, userDeleteError]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
@@ -104,9 +116,9 @@ export default function AllUsers({ statusProp }) {
     toggleModal();
   };
 
-  const confirmDelete = async () => {
+  const confirmDelete = () => {
       setDeletingUser(true);
-      deleteUserApi({ data: { userId: userToDelete  }})
+      deleteUserApi({ data: { userId: "whatever"  }})
   };
 
   const handleSearch = (selectedKeys, confirm) => {

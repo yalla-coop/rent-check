@@ -20,7 +20,7 @@ const dataFetchReducer = (state, action) => {
         data: action.payload,
       };
     case types.FETCH_FAILURE:
-      return { ...state, isLoading: false, isError: true };
+      return { ...state, isLoading: false, isError: true, error: action.payload };
     default:
       throw new Error();
   }
@@ -45,9 +45,15 @@ const useApiCallback = (method, url, initialData) => {
             dispatch({ type: types.FETCH_SUCCESS, payload: data });
           }
         } catch (error) {
+          console.log("error", error.response.data.message)
           if (!didCancel) {
-            dispatch({ type: types.FETCH_FAILURE });
+            if (error.response.data.message) {
+              dispatch({ type: types.FETCH_FAILURE, payload: error.response.data.message });
+            } else {
+              dispatch({ type: types.FETCH_FAILURE, payload: error.response.data });
           }
+            }
+            
         }
       };
 

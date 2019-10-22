@@ -42,7 +42,11 @@ module.exports = async function updateUser(req, res) {
       const updatedUserProfile = await getUser(updatedUser._id);
       res.send({ msg });
     } catch (err) {
-      res.status(500).send("Server error");
+      res
+        .status(500)
+        .send(
+          "Sorry, there has been an internal server error updating the user caused by this request"
+        );
     }
   };
 

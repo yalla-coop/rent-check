@@ -1,11 +1,9 @@
-const connectToDatabase = require("../../../database/dbConnection");
 const { deleteUser } = require("../../../database/queries/user");
 const { deleteUserRecords } = require("../../../database/queries/rentalRecord");
 
 module.exports = async (req, res) => {
   const user = req.body;
   try {
-    await connectToDatabase();
     await deleteUserRecords(user.userId);
     const { deletedCount } = await deleteUser(user.userId);
 
@@ -17,6 +15,11 @@ module.exports = async (req, res) => {
       userId: user.userId
     });
   } catch (err) {
-    res.status(500).send(err.message);
+    console.log("err", err);
+    res
+      .status(500)
+      .send(
+        "Sorry, there has been an internal server error deleting the user caused by this request"
+      );
   }
 };
