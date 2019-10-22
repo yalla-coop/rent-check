@@ -1,18 +1,17 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { Table, Input, Icon, Button, message, Modal } from 'antd';
-import axios from 'axios';
-import useApiCallback from '../../../hooks/useApiCallback';
-import UsersColumns from './UsersColumns';
+import React, { useState, useRef, useEffect, Fragment } from "react";
+import { Table, Input, Icon, Button, message, Modal } from "antd";
+import axios from "axios";
+import useApiCallback from "../../../hooks/useApiCallback";
+import UsersColumns from "./UsersColumns";
 
-import { status as statusConst, roles } from '../../../constants/users';
+import { status as statusConst, roles } from "../../../constants/users";
 // admin user -> please change id for testing
-const admin = '5dae24066975e81cdefc4537';
+const admin = "5d98462431532f74cc6879c5";
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
-  console.log("FUCUK", allUsersData)
   switch (userStatus) {
     case statusConst.UNVERIFIED:
       return allUsersData.filter(el => el.status === statusConst.UNVERIFIED);
@@ -40,28 +39,21 @@ const createUserTable = arr =>
     name,
     email,
     level: role,
-    status,
+    status
   }));
 
 export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
-    getAllUsersData,
-  ] = useApiCallback('get', '/api/admin/users');
+    getAllUsersData
+  ] = useApiCallback("get", "/api/admin/getUsers");
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
-    updateUserStatus,
-  ] = useApiCallback('patch', '/api/admin/users');
+    updateUserStatus
+  ] = useApiCallback("patch", "/api/admin/getUsers");
 
-  const [
-    { data: deletedUser, error: userDeleteError },
-    deleteUserApi,
-  ] = useApiCallback('delete', '/api/admin/users'); 
-
-  
-
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const searchInputRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [deletingUser, setDeletingUser] = useState(false);
@@ -74,12 +66,11 @@ export default function AllUsers({ statusProp }) {
         return message.error(userStatusUpdateHasErrored.response.data.error);
       } catch (e) {
         return message.error(
-          'An error occurred in processing your request. Please try again later.'
+          "An error occurred in processing your request. Please try again later."
         );
       }
     }
     if (userStatusData) {
-      console.log("user bullshit", userStatusData)
       message.success(userStatusData && userStatusData.msg);
     }
     return getAllUsersData();
@@ -88,14 +79,14 @@ export default function AllUsers({ statusProp }) {
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
-  const manageUserStatusOnClick = (updatedUser) => {
+  const manageUserStatusOnClick = updatedUser => {
     updateUserStatus(updatedUser);
   };
 
   const toggleModal = () => setModalVisible(!modalVisible);
 
   const deleteUser = userId => {
-    console.log('REACHED');
+    console.log("REACHED");
     setUserToDelete(userId);
     toggleModal();
   };
@@ -103,18 +94,17 @@ export default function AllUsers({ statusProp }) {
   const confirmDelete = async () => {
     try {
       setDeletingUser(true);
-      // await deleteUserApi({ userId: userToDelete })
-      await axios.delete('/api/admin/users', {
+      await axios.delete("/.netlify/functions/deleteUser", {
         data: {
-          userId: userToDelete,
-        },
+          userId: userToDelete
+        }
       });
 
       setDeletingUser(false);
       setUserToDelete(null);
       toggleModal();
-      // getAllUsersData();
-      return message.success('User and all related data successfully deleted');
+      getAllUsersData();
+      return message.success("User and all related data successfully deleted");
     } catch (err) {
       setDeletingUser(false);
       setUserToDelete(null);
@@ -130,7 +120,7 @@ export default function AllUsers({ statusProp }) {
 
   const handleReset = clearFilters => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
 
   const getColumnSearchProps = dataIndex => ({
@@ -138,7 +128,7 @@ export default function AllUsers({ statusProp }) {
       setSelectedKeys,
       selectedKeys,
       confirm,
-      clearFilters,
+      clearFilters
     }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -149,7 +139,7 @@ export default function AllUsers({ statusProp }) {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Button
           type="primary"
@@ -172,7 +162,7 @@ export default function AllUsers({ statusProp }) {
     filterIcon: filtered => (
       <Icon
         type="search"
-        style={{ fontSize: '20px', color: filtered ? '#1890ff' : undefined }}
+        style={{ fontSize: "20px", color: filtered ? "#1890ff" : undefined }}
       />
     ),
     onFilter: (value, record) => {
@@ -185,24 +175,23 @@ export default function AllUsers({ statusProp }) {
       if (visible) {
         setTimeout(() => searchInputRef.current.select());
       }
-    },
+    }
   });
 
   return (
     <Fragment>
-      {console.log("TEST", allUsersData)}
       <Table
         columns={UsersColumns({
           getColumnSearchProps,
           searchText,
           manageUserStatusOnClick,
-          deleteUser,
+          deleteUser
         })}
         dataSource={
           allUsersData &&
-          createUserTable(decideUserData(statusProp, allUsersData))
+          createUserTable(decideUserData(statusProp, allUsersData.msg))
         }
-        style={{ backgroundColor: '#ffffff' }}
+        style={{ backgroundColor: "#ffffff" }}
         bordered
         loading={allUsersDataIsLoading}
       />

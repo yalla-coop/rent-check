@@ -2,7 +2,7 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Icon, Tag, Divider } from 'antd';
-import { renderUserDetails, status } from '../../../constants/users';
+import { renderUserDetails, status, roles } from '../../../constants/users';
 
 export default ({
   getColumnSearchProps,
@@ -11,21 +11,51 @@ export default ({
   deleteUser,
 }) => {
   // renders btn to approve or reject user/ super user
-  const renderActionBtn = (
-    userId,
-    userStatus,
-    action,
-    { color, borderColor }
-  ) => (
+  const ActionBtn = ({
+    userUpdate,
+    color, 
+    action
+  }) => (
     <Button
-      style={{ color, borderColor, fontSize: '0.8rem' }}
+      style={{ color, borderColor: color, fontSize: '0.8rem' }}
       className="mr1"
       ghost
-      onClick={() => manageUserStatusOnClick(userId, action, userStatus)}
+      onClick={() => manageUserStatusOnClick(userUpdate)}
     >
       {action}
     </Button>
   );
+
+  const ActionButtons = ({user}) => {
+    let upgradeUser = {_id: user.key};
+    let downgradeUser = {_id: user.key};
+    let hasActions = false;
+    let upgradeAction = "";
+    let downgradeAction = "";
+    if (user.status === status.UNVERIFIED) {
+      hasActions = true;
+      upgradeAction = "Verify User";
+      upgradeUser.status = status.VERIFIED;
+      upgradeUser.verifiedBy = "CURRENT USER ID";
+      downgradeAction = "Reject User";
+      downgradeUser.status = status.REJECTED;
+    } else if (user.status === status.AWAITING_SUPER) {
+      hasActions = true;
+      upgradeAction = "Make Super";
+      upgradeUser.status = status.VERIFIED;
+      upgradeUser.role = roles.SUPERUSER;
+      upgradeUser.madeSuperBy = "CURRENT USER ID";
+      downgradeAction = "Reject Request";
+      downgradeUser.status = status.VERIFIED;
+    }
+    return hasActions && (
+          <div className="flex items-center justify-between">
+            <ActionBtn color='#219653' userUpdate={upgradeUser} action={upgradeAction} />
+            <ActionBtn color='#EB5757' userUpdate={downgradeUser} action={downgradeAction} />
+          </div>
+    )
+
+  }
 
   const renderDeleteBtn = userId => (
     <span className="flex items-center">
@@ -43,6 +73,7 @@ export default ({
       </Button>
     </span>
   );
+
   const tableColumns = [
     {
       title: 'Name',
@@ -109,14 +140,7 @@ export default ({
           record.status
         ) ? (
           <div className="flex items-center justify-between">
-            {renderActionBtn(record.key, record.status, 'approve', {
-              color: '#219653',
-              borderColor: '#219653',
-            })}
-            {renderActionBtn(record.key, record.status, 'reject', {
-              color: '#EB5757',
-              borderColor: '#EB5757',
-            })}
+            <ActionButtons user={record} />
             {renderDeleteBtn(record.key)}
           </div>
         ) : (
