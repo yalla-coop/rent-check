@@ -2,20 +2,22 @@
  * @jest-environment node
  */
 
-import buildData from '../../../lambda/database/data/index';
+const buildData = require("../../data/index");
 
 // import the query to test
-import { getAllData } from '../../../lambda/database/queries/rentalData';
+const {
+  getAllRentalRecordsAdmin,
+} = require("../../../database/queries/rentalRecord");
 
-describe('Test getAllData query for rental records', () => {
+describe("Test getAllData query for rental records", () => {
   beforeAll(async done => {
     // connect and build dummy data
     await buildData();
     done();
   });
 
-  test('should get an array of rental records', async done => {
-    const foundRecords = await getAllData();
+  test("should get an array of rental records", async done => {
+    const foundRecords = await getAllRentalRecordsAdmin();
 
     expect(foundRecords).toBeDefined();
     expect(foundRecords.length).toBeGreaterThan(0);

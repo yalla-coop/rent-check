@@ -1,25 +1,25 @@
 /**
  * @jest-environment node
  */
-import User from '../../lambda/database/models/User';
-import buildData from '../../lambda/database/data/index';
-import { roles, status } from '../../constants/users';
+const User = require("../../models/User");
+const buildData = require("../../data/index");
+const { roles, status } = require("../../../constants/users");
 
-import {
+const {
   rejectSuperUser,
   approveSuperUser,
   rejectUser,
   approveUser,
-} from '../../lambda/database/queries/user';
+} = require("../../queries/user");
 
-describe('Test queries to update status for awaitingSuperUser', () => {
+describe("Test queries to update status for awaitingSuperUser", () => {
   beforeEach(async done => {
     // build dummy data
     await buildData();
     done();
   });
 
-  test('rejectSuperUser', async done => {
+  test("rejectSuperUser", async done => {
     const superUserRequest = await User.findOne({
       status: status.AWAITING_SUPER,
     });
@@ -31,7 +31,7 @@ describe('Test queries to update status for awaitingSuperUser', () => {
     });
   });
 
-  test('rejectUser', async done => {
+  test("rejectUser", async done => {
     const userRequest = await User.findOne({
       status: status.UNVERIFIED,
     });
@@ -43,7 +43,7 @@ describe('Test queries to update status for awaitingSuperUser', () => {
     });
   });
 
-  test('approveSuperUser', async done => {
+  test("approveSuperUser", async done => {
     const superUserRequest = await User.findOne({
       status: status.AWAITING_SUPER,
     });
@@ -63,7 +63,7 @@ describe('Test queries to update status for awaitingSuperUser', () => {
     });
   });
 
-  test('approveUser', async done => {
+  test("approveUser", async done => {
     const userRequest = await User.findOne({
       status: status.UNVERIFIED,
     });
