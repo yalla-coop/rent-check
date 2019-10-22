@@ -56,5 +56,6 @@ module.exports = {
   rejectSuperUser,
   approveSuperUser,
   rejectUser,
-  approveUser
+  approveUser,
+  deleteUser
 };

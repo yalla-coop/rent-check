@@ -79,11 +79,16 @@ export default function AllUsers({ statusProp }) {
       }
     }
     if (userStatusData) {
-      console.log("user bullshit", userStatusData)
       message.success(userStatusData && userStatusData.msg);
     }
+    if (deletedUser) {
+      setDeletingUser(false);
+      setUserToDelete(null);
+      toggleModal();
+      message.success(deletedUser && deletedUser.msg)
+    }
     return getAllUsersData();
-  }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData]);
+  }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData, deletedUser]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
@@ -95,32 +100,13 @@ export default function AllUsers({ statusProp }) {
   const toggleModal = () => setModalVisible(!modalVisible);
 
   const deleteUser = userId => {
-    console.log('REACHED');
     setUserToDelete(userId);
     toggleModal();
   };
 
   const confirmDelete = async () => {
-    try {
       setDeletingUser(true);
-      // await deleteUserApi({ userId: userToDelete })
-      await axios.delete('/api/admin/users', {
-        data: {
-          userId: userToDelete,
-        },
-      });
-
-      setDeletingUser(false);
-      setUserToDelete(null);
-      toggleModal();
-      // getAllUsersData();
-      return message.success('User and all related data successfully deleted');
-    } catch (err) {
-      setDeletingUser(false);
-      setUserToDelete(null);
-      toggleModal();
-      return message.error(`Sorry, there was an error: ${err}`);
-    }
+      deleteUserApi({ data: { userId: userToDelete  }})
   };
 
   const handleSearch = (selectedKeys, confirm) => {
@@ -190,7 +176,6 @@ export default function AllUsers({ statusProp }) {
 
   return (
     <Fragment>
-      {console.log("TEST", allUsersData)}
       <Table
         columns={UsersColumns({
           getColumnSearchProps,
