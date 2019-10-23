@@ -1,54 +1,42 @@
-import React from 'react';
-import { Collapse, List, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Collapse, List, Button, message } from 'antd';
+import useFetch from '../../hooks/useFetch';
+import useApiCallback from '../../hooks/useApiCallback';
 
 const { Panel } = Collapse;
 
-const data = [
-  {
-    name: 'Street Rep Name 1',
-    companyName: 'Company 1',
-    companyAddress: {
-      addressLine1: 'Address Line 1',
-      addressLine2: 'Address Line 2',
-      city: 'City',
-      postcode: 'E8 3XY',
+export default function StreetReps() {
+  const [
+    {
+      isLoading: isRepsDataLoading,
+      isError: hasRepsRequestErrored,
+      data: repsData,
     },
-  },
-  {
-    name: 'Street Rep Name 2',
-    companyName: 'Company 2',
-    companyAddress: {
-      addressLine1: 'Address Line 1',
-      addressLine2: 'Address Line 2',
-      city: 'City',
-      postcode: 'E8 3XY',
+  ] = useFetch('api/reps');
+  const [
+    {
+      isLoading: isRequestStreetRepLoading,
+      isError: hasRequestStreetRepErrored,
+      data: requestStreetRepResponse,
     },
-  },
-  {
-    name: 'Street Rep Name 3',
-    companyName: 'Company 3',
-    companyAddress: {
-      addressLine1: 'Address Line 1',
-      addressLine2: 'Address Line 2',
-      city: 'City',
-      postcode: 'E8 3XY',
-    },
-  },
-  {
-    name: 'Street Rep Name 4',
-    companyName: 'Company 4',
-    companyAddress: {
-      addressLine1: 'Address Line 1',
-      addressLine2: 'Address Line 2',
-      city: 'City',
-      postcode: 'E8 3XY',
-    },
-  },
-];
-
-export default function StreetReps(props) {
+    requestStreetRep,
+  ] = useApiCallback('post', 'api/reps');
+  useEffect(() => {
+    if (hasRequestStreetRepErrored) {
+      return message.error(
+        'An error occurred in processing your request. Please try again later.'
+      );
+    }
+    if (requestStreetRepResponse) {
+      return message.success(
+        requestStreetRepResponse && requestStreetRepResponse.msg
+      );
+    }
+  }, [hasRequestStreetRepErrored, requestStreetRepResponse]);
+  const showOnlyRepsWithLocationDetails = repsData =>
+    repsData && repsData.filter(rep => rep.companyName && rep.companyAddress);
   return (
-    <article className="vh-100 dt w-100 bg-light-pink pv5" {...props}>
+    <article className="vh-100 dt w-100 bg-light-pink pv5">
       <div className="dtc v-mid tc black-80 ph3 ph4-l">
         <div className="measure-wide lh-copy db ml-auto mr-auto f6 f5-ns">
           <h1 className="f1 tc mt3">Street Reps</h1>
@@ -67,15 +55,19 @@ export default function StreetReps(props) {
           <Collapse accordion>
             <Panel header="Find a Street Rep" key="1">
               <List
+                loading={isRepsDataLoading}
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={showOnlyRepsWithLocationDetails(repsData)}
                 renderItem={rep => (
                   <List.Item>
                     <List.Item.Meta
                       title={rep.name}
-                      description={rep.companyName}
+                      description={rep.companyName || 'No Business Name Given'}
                     />
-                    {`${rep.companyAddress.addressLine1}, ${rep.companyAddress.addressLine2}, ${rep.companyAddress.city}, ${rep.companyAddress.postcode}`}
+                    {Object.keys(rep.companyAddress).map(
+                      (part, i) =>
+                        `${i > 0 ? ', ' : ''}${rep.companyAddress[part]}`
+                    )}
                   </List.Item>
                 )}
               />
@@ -94,7 +86,14 @@ export default function StreetReps(props) {
                 the role you can speak to one of our existing reps, who you can
                 find in the list above.
               </p>
-              <Button>I&apos;m ready! Make me a Street Rep</Button>
+              <Button
+                onClick={e => {
+                  e.preventDefault();
+                  requestStreetRep();
+                }}
+              >
+                I&apos;m ready! Make me a Street Rep
+              </Button>
             </Panel>
           </Collapse>
         </div>
