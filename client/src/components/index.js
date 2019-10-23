@@ -8,7 +8,7 @@ import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
 import MapInterface from './MapInterface';
 import Admin from './Admin';
 import RentalForm from './RentalForm';
-import RequestStreetRep from "./RequestStreetRep";
+import StreetReps from "./StreetReps";
 
 export default function Router(props) {
   return (
@@ -16,7 +16,7 @@ export default function Router(props) {
       <Route exact path="/" component={MapInterface} />
       <Route path="/admin" component={Admin} />
       <Route path="/add-rental-data" component={RentalForm} />
-      <Route path="/request-street-rep" component={RequestStreetRep} />
+      <Route path="/street-reps" component={StreetReps} />
       <Route exact path={MAP_URL} component={MapInterface} />
       <Route path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>
