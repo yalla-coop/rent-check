@@ -3,6 +3,7 @@ const {
   getAllRentalRecordsAdmin,
 } = require("../../../database/queries/rentalRecord");
 
+// admin can get all the records including info of the users who verified the data
 module.exports = async function getLocations(req, res) {
   try {
     await connectToDatabase();
