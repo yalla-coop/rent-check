@@ -4,6 +4,7 @@ const getAllUsers = require("./getAllUsers");
 const getAllSuperUsers = require("./getAllSuperUsers");
 const getUser = require("./getUser");
 const getAdminUserId = require("./getAdminUserId");
+const requestSuperUser = require("./requestSuperUser");
 const rejectSuperUser = require("./rejectSuperUser");
 const approveSuperUser = require("./approveSuperUser");
 const rejectUser = require("./rejectUser");
@@ -14,6 +15,7 @@ module.exports = {
   getAllSuperUsers,
   getUser,
   getAdminUserId,
+  requestSuperUser,
   rejectSuperUser,
   approveSuperUser,
   rejectUser,

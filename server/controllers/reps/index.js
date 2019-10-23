@@ -1,3 +1,4 @@
 const getReps = require("./getReps");
+const handleStreetRepRequest = require("./handleStreetRepRequest");
 
-module.exports = { getReps };
+module.exports = { getReps, handleStreetRepRequest };
