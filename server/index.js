@@ -92,7 +92,7 @@ module.exports = function main(options, cb) {
     .catch(e => console.error(e));
 
   // Start server
-  server = app.listen(process.env.PORT, function(err) {
+  server = app.listen(opts.port, function(err) {
     if (err) {
       return ready(err, app, server);
     }
@@ -104,10 +104,7 @@ module.exports = function main(options, cb) {
 
     serverStarted = true;
     const addr = server.address();
-    // logger.info(
-    //   `Started at ${opts.host || addr.host || "localhost"}:${addr.port}`
-    // );
-    logger.info(`Listening on port ${addr.port} at host ${addr.host}`);
+    logger.info(`Listening on port ${addr.port}`);
     ready(err, app, server);
   });
 };
