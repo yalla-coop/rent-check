@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import routes here
-import { MAP_URL, CONTROL_PANEL_URL } from '../constants/navRoutes';
+import { MAP_URL, CONTROL_PANEL_URL, STREET_REP_URL, ADD_RENTAL_URL } from '../constants/navRoutes';
 
 // import components here
 import MapInterface from './MapInterface';
@@ -14,9 +14,8 @@ export default function Router(props) {
   return (
     <Switch>
       <Route exact path="/" component={MapInterface} />
-      <Route path="/admin" component={Admin} />
-      <Route path="/add-rental-data" component={RentalForm} />
-      <Route path="/street-reps" component={StreetReps} />
+      <Route path={ADD_RENTAL_URL} component={RentalForm} />
+      <Route path={STREET_REP_URL} component={StreetReps} />
       <Route exact path={MAP_URL} component={MapInterface} />
       <Route path={CONTROL_PANEL_URL} component={Admin} />
     </Switch>

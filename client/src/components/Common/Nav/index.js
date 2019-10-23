@@ -9,6 +9,7 @@ import {
   ADD_RENTAL_URL,
   ACCOUNT_URL,
   CONTROL_PANEL_URL,
+  STREET_REP_URL
 } from '../../../constants/navRoutes';
 
 // STYLING
@@ -48,7 +49,7 @@ const Nav = ({ role }) => {
               toggleMenu();
             }}
           >
-            Rental Map
+            View Map
           </S.MenuLink>
           <S.MenuLink
             to={{
@@ -59,7 +60,7 @@ const Nav = ({ role }) => {
               toggleMenu();
             }}
           >
-            Search Postcode
+            Search By Postcode
           </S.MenuLink>
           <S.MenuLink
             to={ADD_RENTAL_URL}
@@ -67,7 +68,15 @@ const Nav = ({ role }) => {
               toggleMenu();
             }}
           >
-            Add Rental Data
+            Add Your Data
+          </S.MenuLink>
+          <S.MenuLink
+            to={STREET_REP_URL}
+            onClick={() => {
+              toggleMenu();
+            }}
+          >
+            Street Reps
           </S.MenuLink>
           {role !== 'standard' && (
             <S.MenuLink
