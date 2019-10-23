@@ -14,9 +14,10 @@
     "test-coverage:client": "npm run test:coverage --prefix client",
     "test-coverage:server": "npm run test:coverage --prefix server",
     "coverage": "codecov",
-    "start": "run-p start:**",
-    "start:server": "npm start --prefix server",
-    "start:client": "npm start --prefix client",
+    "dev": "run-p start:**",
+    "dev:server": "npm start --prefix server",
+    "dev:client": "npm start --prefix client",
+    "start": "node server/index.js",
     "build": "npm run build --prefix client",
     "heroku-prebuild": "npm i && npm run init"
   },
