@@ -17,7 +17,7 @@
     "dev": "run-p start:**",
     "dev:server": "npm start --prefix server",
     "dev:client": "npm start --prefix client",
-    "start": "node server/index.js",
+    "start": "node server/bin/app",
     "build": "npm run build --prefix client",
     "heroku-prebuild": "npm i && npm run init"
   },
