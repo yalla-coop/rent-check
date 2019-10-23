@@ -5,6 +5,5 @@ const getLocations = require("./getLocations");
 module.exports = {
   addLocations,
   getLocations,
-  updateLocations,
   deleteLocations,
 };
