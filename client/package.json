@@ -31,9 +31,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --runInBand --detectOpenHandles --forceExit",
+    "test": "react-scripts test",
     "css": "tachyons src/css/app.css > src/components/tachyons.css --minify",
-    "test:coverage": "npm test --coverage",
+    "test:coverage": "npm test -- --coverage",
     "coverage": "codecov"
   },
   "eslintConfig": {
@@ -68,16 +68,5 @@
     "prettier": "^1.18.2",
     "request": "^2.88.0",
     "wait-on": "^3.3.0"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "**/*.js",
-      "!**/node_modules/**",
-      "!**/build/**",
-      "!**/**/serviceWorker.js",
-      "!**/coverage/**",
-      "!**/server.js",
-      "!**/src/index.js"
-    ]
   }
 }
