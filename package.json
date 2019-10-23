@@ -14,7 +14,7 @@
     "test-coverage:client": "npm run test:coverage --prefix client",
     "test-coverage:server": "npm run test:coverage --prefix server",
     "coverage": "codecov",
-    "dev": "run-p start:**",
+    "dev": "run-p dev:**",
     "dev:server": "npm start --prefix server",
     "dev:client": "npm start --prefix client",
     "start": "node server/bin/app",
