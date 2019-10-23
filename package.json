@@ -17,7 +17,8 @@
     "start": "run-p start:**",
     "start:server": "npm start --prefix server",
     "start:client": "npm start --prefix client",
-    "build": "npm run build --prefix client"
+    "build": "npm run build --prefix client",
+    "heroku-prebuild": "npm run init"
   },
   "repository": {
     "type": "git",
