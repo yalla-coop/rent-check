@@ -19,8 +19,7 @@
     "dev:client": "npm start --prefix client",
     "start": "node server/bin/app",
     "build": "npm run build --prefix client",
-    "heroku-prebuild": "npm i && npm run init",
-    "heroku-postbuild": "npm run database:build:production --prefix server"
+    "heroku-prebuild": "npm i && npm run init && npm run database:build:production --prefix server"
   },
   "repository": {
     "type": "git",
