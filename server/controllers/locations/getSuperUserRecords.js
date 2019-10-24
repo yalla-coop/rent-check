@@ -12,11 +12,13 @@ module.exports = async function getLocations(req, res, next) {
     return next(boom.badData("unvalid user ID"));
   }
 
+  // check the user role and return 403 if not authorized
+
   try {
     await connectToDatabase();
     const users = await getSuperUserUsers(userId);
     if (!users.length) {
-      return next(boom.notFound());
+      return next(boom.notFound("Superuser has no sub users"));
     }
     const rentalRecords = await getRentalRecordsByIds(users);
 
