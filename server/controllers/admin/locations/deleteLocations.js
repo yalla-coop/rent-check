@@ -11,7 +11,7 @@ module.exports = async function deleteLocations(req, res) {
     if (deletedCount !== 1) {
       res.status(404).send("User not found");
     }
-    res.status(200).json({ msg: "Rental data successfully deleted" });
+    res.status(200).send({ msg: "Rental data successfully deleted" });
   } catch (err) {
     res
       .status(500)

@@ -5,18 +5,18 @@ module.exports = async function updateLocations(req, res) {
 
   try {
     const updatedRecord = await setRecordStatus(request.rentalId, {
-      status: request.newStatus
+      status: request.newStatus,
     });
 
-    res.status(200).json({
+    res.status(200).send({
       msg: `Rental record status successfully updated to ${request.newStatus}`,
-      updatedRecord: updatedRecord
+      updatedRecord,
     });
   } catch (err) {
     res
       .status(500)
       .send(
-        "Sorry, there has been an internal server error updating the record status caused by this request"
+        "Sorry, there has been an internal server error updating the record status caused by this request",
       );
   }
 };
