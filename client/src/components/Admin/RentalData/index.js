@@ -67,7 +67,7 @@ function RentalData({ history }) {
 
         newRentalData = rentalData.filter(record => record._id !== rentalId);
       } else if (statusEnum.includes(updateType)) {
-        response = await axios.patch('/.netlify/functions/setRentalStatus', {
+        response = await axios.patch('/api/admin/locations', {
           rentalId,
           newStatus: updateType,
         });

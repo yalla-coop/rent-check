@@ -14,5 +14,6 @@ admin.delete("/users", deleteUsers);
 
 admin.get("/locations", getLocations);
 admin.delete("/locations", deleteLocations);
+admin.patch("/locations", updateLocations);
 
 module.exports = admin;
