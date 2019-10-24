@@ -98,6 +98,7 @@ export default function AllUsers({ statusProp }) {
       message.success(deletedUser && deletedUser.msg)
     }
     return getAllUsersData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData, deletedUser, userDeleteError]);
 
   // validate/reject (super) user status
