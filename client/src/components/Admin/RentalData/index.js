@@ -1,29 +1,29 @@
 // // Router for Rental Data
-import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Route, Switch } from "react-router-dom";
 
 // Components
-import { Modal, Icon, message, Select } from 'antd';
-import axios from 'axios';
-import Loading from '../../Common/Loading';
-import Table from '../Table';
-import RentalRecord from './RentalRecord';
+import { Modal, Icon, message, Select } from "antd";
+import axios from "axios";
+import Loading from "../../Common/Loading";
+import Table from "../Table";
+import RentalRecord from "./RentalRecord";
 
 // Styling
-import * as S from './RentalData.style';
+import * as S from "./RentalData.style";
 
 // Table props
-import rentalDataColumns from './rentalDataColumns';
+import rentalDataColumns from "./rentalDataColumns";
 
 // custom hooks
-import useFetch from '../../../hooks/useFetch';
+import useFetch from "../../../hooks/useFetch";
 
 // constants
-import { statusEnum } from '../../../constants/rentalRecords';
+import { statusEnum } from "../../../constants/rentalRecords";
 
 // routes
-import { routes } from '../../../constants/adminRoutes';
-import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
+import { routes } from "../../../constants/adminRoutes";
+import { ADD_RENTAL_URL } from "../../../constants/navRoutes";
 
 const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
@@ -59,14 +59,14 @@ function RentalData({ history }) {
     try {
       setUpdatingRecord(true);
       let newRentalData = null;
-      if (updateType === 'delete') {
-        response = await axios.delete('/api/admin/locations', {
+      if (updateType === "delete") {
+        response = await axios.delete("/api/admin/locations", {
           data: { rentalId },
         });
 
         newRentalData = rentalData.filter(record => record._id !== rentalId);
       } else if (statusEnum.includes(updateType)) {
-        response = await axios.patch('/api/admin/locations', {
+        response = await axios.patch("/api/admin/locations", {
           rentalId,
           newStatus: updateType,
         });
@@ -95,7 +95,7 @@ function RentalData({ history }) {
 
   // fetch data
   const [{ data: fetchedRentalData, isLoading }] = useFetch(
-    '/api/admin/locations'
+    "/api/admin/locations"
   );
 
   useEffect(() => {
@@ -128,11 +128,11 @@ function RentalData({ history }) {
           <>
             <S.TopSection>
               <S.StyledLink to={ADD_RENTAL_URL}>
-                Add new rental data{' '}
+                Add new rental data{" "}
                 <Icon
                   type="arrow-right"
                   fontSize={32}
-                  style={{ paddingLeft: '0.25rem' }}
+                  style={{ paddingLeft: "0.25rem" }}
                 />
               </S.StyledLink>
             </S.TopSection>
@@ -144,7 +144,7 @@ function RentalData({ history }) {
             />
             {recordToUpdate && (
               <Modal
-                title={editingStatus ? 'Edit Status' : 'Are you sure?'}
+                title={editingStatus ? "Edit Status" : "Are you sure?"}
                 visible={modalVisible}
                 onOk={() => confirmUpdate()}
                 onCancel={() => {
@@ -153,7 +153,7 @@ function RentalData({ history }) {
                 }}
                 confirmLoading={updatingRecord}
               >
-                {recordToUpdate.updateType === 'delete' ? (
+                {recordToUpdate.updateType === "delete" ? (
                   <p>
                     Clicking confirm will permantly delete this rental record.
                     This cannot be undone.
@@ -166,9 +166,9 @@ function RentalData({ history }) {
                         onChange={changeStatus}
                         width="100%"
                         style={{
-                          marginBottom: '1rem',
-                          minWidth: '150px',
-                          textTransform: 'capitalize',
+                          marginBottom: "1rem",
+                          minWidth: "150px",
+                          textTransform: "capitalize",
                         }}
                       >
                         {statusEnum.map(status => (
@@ -176,7 +176,7 @@ function RentalData({ history }) {
                             value={status}
                             key={status}
                             style={{
-                              textTransform: 'capitalize',
+                              textTransform: "capitalize",
                             }}
                           >
                             {status}

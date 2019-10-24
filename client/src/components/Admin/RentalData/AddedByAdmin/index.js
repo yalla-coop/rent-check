@@ -1,16 +1,16 @@
-import React from 'react';
-import Table from '../../Table';
+import React from "react";
+import Table from "../../Table";
 
-import rentalDataColumns from './tableColumns';
+import rentalDataColumns from "./tableColumns";
 
-import useFetch from '../../../../hooks/useFetch';
+import useFetch from "../../../../hooks/useFetch";
 
-import * as S from '../RentalData.style';
+import * as S from "../RentalData.style";
 
 export default function AdminAddedRecords(props) {
   // fetch data
   const [{ data: adminRentalRecords, isLoading }] = useFetch(
-    '/.netlify/functions/getRentalRecordAddedByAdmin'
+    "/.netlify/functions/getRentalRecordAddedByAdmin"
   );
 
   // create table friendly data sets and also pass on all rental details

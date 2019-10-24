@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import { breakpointsMax } from '../../../constants/breakpoints';
+import { breakpointsMax } from "../../../constants/breakpoints";
 
 export const TopSection = styled.section`
   padding: 1rem 0 1.5rem 1rem;
@@ -58,7 +58,7 @@ export const Summary = styled.section`
   padding: 0.5rem 1rem;
 
   :before {
-    content: ' ';
+    content: " ";
     background: var(--blue);
     position: absolute;
     width: 100vw;
@@ -85,7 +85,7 @@ export const Title = styled.p`
 
 export const Data = styled.p`
   margin: 0;
-  text-transform: ${props => props.capitalize && props.data && 'capitalize'};
+  text-transform: ${props => props.capitalize && props.data && "capitalize"};
 `;
 
 export const MainSection = styled.section`
@@ -107,10 +107,10 @@ export const TitleTD = styled.td`
 export const DataTD = styled.td`
   width: 30%;
   padding-bottom: 1rem;
-  font-style: ${({ data }) => !data && 'italic'};
-  opacity: ${({ data }) => !data && '0.8'};
-  padding-left: ${({ long }) => !long && '0.5rem'};
-  text-transform: ${props => props.capitalize && props.data && 'capitalize'};
+  font-style: ${({ data }) => !data && "italic"};
+  opacity: ${({ data }) => !data && "0.8"};
+  padding-left: ${({ long }) => !long && "0.5rem"};
+  text-transform: ${props => props.capitalize && props.data && "capitalize"};
 `;
 
 export const LongTitleTD = styled.td`

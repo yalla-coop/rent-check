@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { breakpointsMax } from '../../../constants/breakpoints';
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import { breakpointsMax } from "../../../constants/breakpoints";
 
 export const Header = styled.header.attrs({
-  className: 'z-max',
+  className: "z-max",
 })`
   width: 100vw;
   border-bottom: 1px solid #386a9b;
@@ -22,11 +22,11 @@ export const Img = styled.img`
 `;
 
 export const HeaderTitle = styled.span.attrs({
-  className: 'f3 avenir',
+  className: "f3 avenir",
 })``;
 
 export const BoldPink = styled.span.attrs({
-  className: 'fw7 dark-pink',
+  className: "fw7 dark-pink",
 })``;
 
 export const MenuButton = styled.button`

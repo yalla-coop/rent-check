@@ -1,17 +1,17 @@
-import React from 'react';
-import { Map as MapLeaflet, TileLayer } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import L from 'leaflet';
-import MapLegend from '../Legend';
-import Markers from '../MapMarkers';
+import React from "react";
+import { Map as MapLeaflet, TileLayer } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import L from "leaflet";
+import MapLegend from "../Legend";
+import Markers from "../MapMarkers";
 
 // import styled from "styled-components";
-import './Map.css';
+import "./Map.css";
 
 const createClusterCustomIcon = cluster => {
   return L.divIcon({
     html: `<span>${cluster.getChildCount()}</span>`,
-    className: 'f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b',
+    className: "f6 link dim br-pill w2 h2 pt2 dib white bg-dark-pink tc b",
     iconSize: L.point(40, 40, true),
   });
 };

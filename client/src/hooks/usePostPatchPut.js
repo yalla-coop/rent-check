@@ -2,8 +2,8 @@
 // needs url, method (post, patch or put) and data to be passed on
 // for example usage check Admin/Users/Table -> usePostPatchPut and manageUserStatusOnClick
 
-import { useState, useCallback } from 'react';
-import axios from 'axios';
+import { useState, useCallback } from "react";
+import axios from "axios";
 
 const usePostPatchPut = ({ url, method }) => {
   const [res, setRes] = useState({ data: null, error: null, isLoading: false });

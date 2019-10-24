@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import { Collapse, List, Button, message } from 'antd';
-import useFetch from '../../hooks/useFetch';
-import useApiCallback from '../../hooks/useApiCallback';
+import React, { useEffect } from "react";
+import { Collapse, List, Button, message } from "antd";
+import useFetch from "../../hooks/useFetch";
+import useApiCallback from "../../hooks/useApiCallback";
 
 const { Panel } = Collapse;
 
 export default function StreetReps() {
   const [
     { isError: isRepsDataError, isLoading: isRepsDataLoading, data: repsData },
-  ] = useFetch('api/reps');
+  ] = useFetch("api/reps");
   const [
     { isError: isRequestStreetRepError, data: requestStreetRepResponse },
     requestStreetRep,
-  ] = useApiCallback('post', 'api/reps');
+  ] = useApiCallback("post", "api/reps");
   useEffect(() => {
     if (isRequestStreetRepError) {
       return message.error(
-        'There was an error processing your request. Please try again later'
+        "There was an error processing your request. Please try again later"
       );
     }
   }, [isRequestStreetRepError]);
@@ -61,11 +61,11 @@ export default function StreetReps() {
                   <List.Item>
                     <List.Item.Meta
                       title={rep.name}
-                      description={rep.companyName || 'No Business Name Given'}
+                      description={rep.companyName || "No Business Name Given"}
                     />
                     {Object.keys(rep.companyAddress).map(
                       (part, i) =>
-                        `${i > 0 ? ', ' : ''}${rep.companyAddress[part]}`
+                        `${i > 0 ? ", " : ""}${rep.companyAddress[part]}`
                     )}
                   </List.Item>
                 )}

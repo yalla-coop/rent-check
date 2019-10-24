@@ -1,5 +1,5 @@
-import React from 'react';
-import { DatePicker as DatePickerAnt } from 'antd';
+import React from "react";
+import { DatePicker as DatePickerAnt } from "antd";
 
 const DatePicker = ({
   name,
@@ -13,7 +13,7 @@ const DatePicker = ({
     <DatePickerAnt
       onChange={v => handleChange(name, v)}
       disabledDate={
-        name === 'lastRentReview' ? disabledStartDate : disabledEndDate
+        name === "lastRentReview" ? disabledStartDate : disabledEndDate
       }
       value={value}
       format="YYYY-MM-DD"

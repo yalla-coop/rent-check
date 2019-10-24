@@ -1,13 +1,13 @@
 // custom hook that lets you know if width is under tablet or not
 // can be modified to include more options once we have more than one breakpoint
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // constants
-import { sizeNum } from '../constants/breakpoints';
+import { sizeNum } from "../constants/breakpoints";
 
 const useWindowWidth = () => {
-  const isClient = typeof window === 'object';
+  const isClient = typeof window === "object";
   const [windowWidth, setWindowWidth] = useState(undefined);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const useWindowWidth = () => {
       setWindowWidth(window.innerWidth);
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isClient]);
 
   const { tablet } = sizeNum;

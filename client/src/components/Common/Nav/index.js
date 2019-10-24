@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Icon } from 'antd';
-import logo from '../../../assets/logo.png';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Icon } from "antd";
+import logo from "../../../assets/logo.png";
 
 // NAV URLS
 import {
@@ -9,11 +9,11 @@ import {
   ADD_RENTAL_URL,
   ACCOUNT_URL,
   CONTROL_PANEL_URL,
-  STREET_REP_URL
-} from '../../../constants/navRoutes';
+  STREET_REP_URL,
+} from "../../../constants/navRoutes";
 
 // STYLING
-import * as S from './Nav.style';
+import * as S from "./Nav.style";
 
 const Nav = ({ role }) => {
   const [menuView, setMenuView] = useState(false);
@@ -35,10 +35,10 @@ const Nav = ({ role }) => {
         {menuView ? (
           <Icon
             type="close-square"
-            style={{ fontSize: 24, color: '#386a9b' }}
+            style={{ fontSize: 24, color: "#386a9b" }}
           />
         ) : (
-          <Icon type="menu" style={{ fontSize: 24, color: '#386a9b' }} />
+          <Icon type="menu" style={{ fontSize: 24, color: "#386a9b" }} />
         )}
       </S.MenuButton>
       {menuView && (
@@ -78,7 +78,7 @@ const Nav = ({ role }) => {
           >
             Street Reps
           </S.MenuLink>
-          {role !== 'standard' && (
+          {role !== "standard" && (
             <S.MenuLink
               to={CONTROL_PANEL_URL}
               onClick={() => {

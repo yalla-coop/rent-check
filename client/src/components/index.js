@@ -1,13 +1,18 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
 // import routes here
-import { MAP_URL, CONTROL_PANEL_URL, STREET_REP_URL, ADD_RENTAL_URL } from '../constants/navRoutes';
+import {
+  MAP_URL,
+  CONTROL_PANEL_URL,
+  STREET_REP_URL,
+  ADD_RENTAL_URL,
+} from "../constants/navRoutes";
 
 // import components here
-import MapInterface from './MapInterface';
-import Admin from './Admin';
-import RentalForm from './RentalForm';
+import MapInterface from "./MapInterface";
+import Admin from "./Admin";
+import RentalForm from "./RentalForm";
 import StreetReps from "./StreetReps";
 
 export default function Router(props) {

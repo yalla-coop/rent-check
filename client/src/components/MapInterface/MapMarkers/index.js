@@ -1,17 +1,17 @@
 /* eslint-disable */
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { NavLink } from 'react-router-dom';
-import L from 'leaflet';
-import { Marker, Popup, Tooltip } from 'react-leaflet';
-import Icon from '../MarkerIcon';
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import { NavLink } from "react-router-dom";
+import L from "leaflet";
+import { Marker, Popup, Tooltip } from "react-leaflet";
+import Icon from "../MarkerIcon";
 import {
   PopupInfo,
   PopupLabel,
   CenteredSection,
   Pill,
   Button,
-} from './MapMarkers.styles';
+} from "./MapMarkers.styles";
 
 type MarkerData = {|
   geoLocation: string,
@@ -58,7 +58,7 @@ const MarkerWithPopup = ({
 }: MarkerData) => {
   const iconSelect = () =>
     L.divIcon({
-      className: 'custom-icon',
+      className: "custom-icon",
       html: ReactDOMServer.renderToString(<Icon useClass={useClass} />),
     });
   // Date formatter //
@@ -72,7 +72,7 @@ const MarkerWithPopup = ({
     const day = datePart[2];
     return `${day}/${month}/${year}`;
   };
-  const price = priceSqFt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  const price = priceSqFt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
   // leaflet use latlong but mongodb use longlat coordinates
   const { coordinates } = geoLocation;
   return (

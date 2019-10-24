@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import Loading from '../Common/Loading';
-import Map from './Map';
-import PostcodeForm from './PostcodeForm';
+import React, { useState, useEffect } from "react";
+import Loading from "../Common/Loading";
+import Map from "./Map";
+import PostcodeForm from "./PostcodeForm";
 import {
   FullScreenContainer,
   ModalContainer,
   ModalOverlay,
-} from './MapInterface.style';
+} from "./MapInterface.style";
 
-import useFetch from '../../hooks/useFetch';
+import useFetch from "../../hooks/useFetch";
 
 function MapInterface({ location }) {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [center, setCenter] = useState([51.527329, -0.0554895]);
   const [showFormWarning, setShowFormWarning] = useState(false);
   const [legend, setLegend] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   // fetch locations
-  const [{ data: markers, isLoading }] = useFetch('/api/locations');
+  const [{ data: markers, isLoading }] = useFetch("/api/locations");
 
   // fetch postCode data
   const [
@@ -38,7 +38,7 @@ function MapInterface({ location }) {
     e.preventDefault();
     const postcode = searchInput;
     if (postcode.length === 0) {
-      return setShowFormWarning('Please enter a postcode');
+      return setShowFormWarning("Please enter a postcode");
     }
 
     fetchPostCodes(`https://api.postcodes.io/postcodes/${postcode}`);

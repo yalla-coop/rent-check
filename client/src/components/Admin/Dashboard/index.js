@@ -1,7 +1,7 @@
-import React from 'react';
-import logo from '../../../assets/logo.png';
+import React from "react";
+import logo from "../../../assets/logo.png";
 
-import { Logo, DashboardContainer, Headline } from './Dashboard.style';
+import { Logo, DashboardContainer, Headline } from "./Dashboard.style";
 
 export default function Dashboard() {
   return (
