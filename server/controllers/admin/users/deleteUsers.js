@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
       userId: user.userId
     });
   } catch (err) {
+    console.log("ERR", err);
     res
       .status(500)
       .send(

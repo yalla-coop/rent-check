@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "init": "run-p init:**",
-    "init:root": "npm install",
     "init:client": "npm install --prefix client",
     "init:server": "npm install --prefix server",
     "test": "run-s test:**",
@@ -14,13 +13,13 @@
     "test-coverage": "run-s test-coverage:**",
     "test-coverage:client": "npm run test:coverage --prefix client",
     "test-coverage:server": "npm run test:coverage --prefix server",
-    "coverage": "run-s coverage:**",
-    "coverage:client": "npm run coverage --prefix client",
-    "coverage:server": "npm run coverage --prefix server",
-    "start": "run-p start:**",
-    "start:server": "npm start --prefix server",
-    "start:client": "npm start --prefix client",
-    "build": "npm run build --prefix client"
+    "coverage": "codecov",
+    "dev": "run-p dev:**",
+    "dev:server": "npm start --prefix server",
+    "dev:client": "npm start --prefix client",
+    "start": "node server/bin/app",
+    "build": "npm run build --prefix client",
+    "heroku-prebuild": "npm i && npm run init && npm run database:build:production --prefix server"
   },
   "repository": {
     "type": "git",
@@ -35,5 +34,8 @@
   "homepage": "https://github.com/yalla-coop/rent-check#readme",
   "dependencies": {
     "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "codecov": "^3.6.1"
   }
 }

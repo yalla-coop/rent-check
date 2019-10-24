@@ -1,10 +1,12 @@
-const { deleteRecord } = require("../../../database/queries/rentalRecord");
+const {
+  deleteSingleRecord
+} = require("../../../database/queries/rentalRecord");
 
 module.exports = async function deleteLocations(req, res) {
   const record = req.body;
 
   try {
-    const { deletedCount } = await deleteRecord(record.rentalId);
+    const { deletedCount } = await deleteSingleRecord(record.rentalId);
 
     if (deletedCount !== 1) {
       res.status(404).send("User not found");
@@ -18,3 +20,4 @@ module.exports = async function deleteLocations(req, res) {
       );
   }
 };
+// TODO - admin can delete a rental record from the database

@@ -1,78 +1,19 @@
 const RentalRecord = require("../../models/RentalRecord");
 
-// CREATE
-
-const addRentalRecord = record => RentalRecord.create(record);
-
-// READ
-
-const getAllValidRecords = () => RentalRecord.find();
-
-const getRentalRecordsByUserId = id => RentalRecord.find({ submittedBy: id });
-
-const getAllRentalRecordsAdmin = () =>
-  RentalRecord.aggregate([
-    // get details of the user who submitted it
-    {
-      $lookup: {
-        from: "users",
-        localField: "submittedBy",
-        foreignField: "_id",
-        as: "submittedBy"
-      }
-    },
-    // get details of the user who verified it
-    {
-      $lookup: {
-        from: "users",
-        localField: "reviewedBy",
-        foreignField: "_id",
-        as: "reviewedBy"
-      }
-    },
-    {
-      $unwind: { path: "$submittedBy", preserveNullAndEmptyArrays: true }
-    },
-    {
-      $unwind: { path: "$reviewedBy", preserveNullAndEmptyArrays: true }
-    },
-    // remove unnecessary fields from the returned object
-    {
-      $project: {
-        "submittedBy.name": 0,
-        "submittedBy.role": 0,
-        "submittedBy.status": 0,
-        "submittedBy.companyName": 0,
-        "submittedBy.companyAddress": 0,
-        "submittedBy.verifiedBy": 0,
-        "submittedBy.grantedSuperBy": 0,
-        "reviewedBy.name": 0,
-        "reviewedBy.role": 0,
-        "reviewedBy.status": 0,
-        "reviewedBy.companyName": 0,
-        "reviewedBy.companyAddress": 0,
-        "reviewedBy.verifiedBy": 0,
-        "reviewedBy.grantedSuperBy": 0
-      }
-    }
-  ]);
-
-// MODIFY
-
-const deleteUserRecords = userId =>
-  RentalRecord.deleteMany({ submittedBy: userId });
-
-const deleteRecord = id => RentalRecord.deleteOne({ _id: id });
-
-const setRecordStatus = (id, newStatus) =>
-  RentalRecord.findByIdAndUpdate(id, newStatus, { new: true });
+const addRentalRecord = require("./addRentalRecord");
+const getAllRentalRecords = require("./getAllRentalRecords");
+const getRentalRecordsByUserId = require("./getRentalRecordsByUserId");
+const getAllRentalRecordsAdmin = require("./getAllRentalRecordsAdmin");
+const deleteUserRecords = require("./deleteUserRecords");
+const deleteSingleRecord = require("./deleteSingleRecord");
+const setRecordStatus = require("./setRecordStatus");
 
 module.exports = {
   addRentalRecord,
-  getAllValidRecords,
+  getAllRentalRecords,
   getRentalRecordsByUserId,
   getAllRentalRecordsAdmin,
   deleteUserRecords,
-  deleteRecord,
+  deleteSingleRecord,
   setRecordStatus
 };

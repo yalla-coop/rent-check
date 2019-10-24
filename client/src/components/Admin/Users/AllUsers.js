@@ -2,13 +2,10 @@
 // gets fed data source and column files as props
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { Table, Input, Icon, Button, message, Modal } from 'antd';
-import axios from 'axios';
 import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
 
 import { status as statusConst, roles } from '../../../constants/users';
-// admin user -> please change id for testing
-const admin = '5dae24066975e81cdefc4537';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
@@ -66,6 +63,8 @@ export default function AllUsers({ statusProp }) {
   const [deletingUser, setDeletingUser] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
+  const toggleModal = () => setModalVisible(!modalVisible);
+
   // get all user data on page load or when user status is updated
   useEffect(() => {
     if (userStatusUpdateHasErrored) {
@@ -108,8 +107,6 @@ export default function AllUsers({ statusProp }) {
     updateUserStatus(updatedUser);
   };
 
-  const toggleModal = () => setModalVisible(!modalVisible);
-
   const deleteUser = userId => {
     setUserToDelete(userId);
     toggleModal();
@@ -117,7 +114,7 @@ export default function AllUsers({ statusProp }) {
 
   const confirmDelete = () => {
       setDeletingUser(true);
-      deleteUserApi({ data: { userId: "whatever"  }})
+      deleteUserApi({ data: { userId: userToDelete  }})
   };
 
   const handleSearch = (selectedKeys, confirm) => {

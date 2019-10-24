@@ -8,11 +8,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./bin/app",
-    "database:build:dev": "babel-node ./database/data",
+    "database:run:dev": "docker run -d -p 27017-27019:27017-27019 --name rentCheckMongo mongo",
+    "database:build:dev": "node ./database/data",
+    "database:build:production": "node ./database/data/index.js",
     "database:build:fake": "babel-node ./database/data && npm run fake",
     "fake": "babel-node ./database/data/fakedata",
-    "test": "echo \"No test specified\"",
-    "test:coverage": "echo \"No test specified\""
+    "test": "jest --runInBand --detectOpenHandles --forceExit --watch",
+    "test:coverage": "jest --runInBand --detectOpenHandles --forceExit --coverage"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -21,6 +23,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-errors": "^1.7.3",
+    "jest": "^24.9.0",
     "mongoose": "^5.7.4",
     "pino": "^5.13.4",
     "pino-http": "^4.3.0",
@@ -33,6 +36,7 @@
     "@babel/node": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
     "faker": "^4.1.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "nodemon": "^1.19.4"
   }
 }

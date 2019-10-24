@@ -2,18 +2,18 @@
  * @jest-environment node
  */
 
-import User from '../../lambda/database/models/User';
-import RentalRecord from '../../lambda/database/models/RentalRecord';
-import buildData from '../../lambda/database/data/index';
+const User = require("../../database/models/User");
+const RentalRecord = require("../../database/models/RentalRecord");
+const buildData = require("../../database/data/index");
 
-describe('Test dummy data for schemas', () => {
+describe("Test dummy data for schemas", () => {
   beforeAll(async done => {
     // build dummy data
     await buildData();
     done();
   });
 
-  test('users should be built successfully', async done => {
+  test("users should be built successfully", async done => {
     expect(User).toBeDefined();
     const foundUsers = await User.find();
 
@@ -26,7 +26,7 @@ describe('Test dummy data for schemas', () => {
     done();
   });
 
-  test('rentalData should be built successfully', async done => {
+  test("rentalData should be built successfully", async done => {
     expect(RentalRecord).toBeDefined();
     const foundRentalData = await RentalRecord.find();
 

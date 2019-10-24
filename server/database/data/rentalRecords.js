@@ -15,7 +15,6 @@ module.exports = async function populateRentalRecords() {
     role: roles.USER,
     status: userStatus.VERIFIED,
   });
-
   const rentalRecords = [
     // reviewed data by superUser
     {

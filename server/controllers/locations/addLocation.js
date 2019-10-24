@@ -13,7 +13,7 @@ const getCurrentUser = () => User.findOne({ name: "Krissie Nicholson" });
 const validateRentalRecord = record => validateByRecord(RentalRecord, record);
 
 // add single location as non-admin user
-module.exports = async function addLocation(req, res) {
+module.exports = async function addLocation(req, res, next) {
   const record = req.body;
   if (!record) {
     return res.status(400).send();
@@ -21,23 +21,17 @@ module.exports = async function addLocation(req, res) {
   if (!record.postcode) {
     return res.status(400).send();
   }
-  try {
-    await connectToDatabase();
-    const user = await getCurrentUser();
-    record.submittedBy = user._id;
-    record.status = status.UNVERIFIED;
-    record.geoLocation = await getSingleGeo(record.postcode);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+  await connectToDatabase().catch(err => next(err));
+  const user = await getCurrentUser().catch(err => next(err));
+  record.submittedBy = user._id;
+  record.status = status.UNVERIFIED;
+  record.geoLocation = await getSingleGeo(record.postcode).catch(err =>
+    next(err)
+  );
   const validationError = validateRentalRecord(record);
   if (validationError) {
     return res.status(400).send(validationError);
   }
-  try {
-    const result = await addRentalRecord(record);
-    return res.status(200).send(result);
-  } catch (err) {
-    return res.status(500).send(err);
-  }
+  const result = await addRentalRecord(record).catch(err => next(err));
+  return res.status(200).send(result);
 };

@@ -6,7 +6,7 @@ const {
   getLocations,
   updateLocations
 } = require("./locations");
-const admin = express();
+const admin = express.Router();
 
 admin.get("/users", getUsers);
 admin.patch("/users", updateUser);

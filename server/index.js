@@ -58,8 +58,22 @@ module.exports = function main(options, cb) {
   // Alternativly, you could setup external log handling for startup
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
+
+  if (process.env.NODE_ENV === "production") {
+    // serve client/build folder as static files
+    app.use(express.static(path.join(__dirname, "..", "client", "build")));
+  }
+
+  // use API router
   const router = require("./controllers/index");
   app.use("/api", router);
+
+  if (process.env.NODE_ENV === "production") {
+    // redirect unknown requests back to React
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+    });
+  }
 
   // Common error handlers
   app.use(function fourOhFourHandler(req, res, next) {
@@ -78,7 +92,7 @@ module.exports = function main(options, cb) {
     .catch(e => console.error(e));
 
   // Start server
-  server = app.listen(opts.port, opts.host, function(err) {
+  server = app.listen(opts.port, function(err) {
     if (err) {
       return ready(err, app, server);
     }
@@ -90,9 +104,7 @@ module.exports = function main(options, cb) {
 
     serverStarted = true;
     const addr = server.address();
-    logger.info(
-      `Started at ${opts.host || addr.host || "localhost"}:${addr.port}`
-    );
+    logger.info(`Listening on port ${addr.port}`);
     ready(err, app, server);
   });
 };
