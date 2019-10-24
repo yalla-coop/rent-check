@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const moment = require("moment");
 const faker = require("faker");
 const { parse, transform } = require("csv");
@@ -29,7 +30,7 @@ function getRandomInt(max) {
 }
 
 const readStream = fs.createReadStream(
-  path.join(__dirname, "postcodes3000dup.csv")
+  path.join(__dirname, "postcodes3000dup.csv"),
 );
 
 const parser = parse({
@@ -85,7 +86,7 @@ const parser = parse({
         console.log("err", errr);
       }
       process.exit(0);
-    }
+    },
   );
   readStream.pipe(parser).pipe(transformer);
 })();

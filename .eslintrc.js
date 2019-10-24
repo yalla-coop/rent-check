@@ -5,7 +5,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: ["airbnb-base", "prettier"],
+  extends: ["airbnb-base", "prettier", "plugin:jest/recommended"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
@@ -13,7 +13,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
-  plugins: ["prettier"],
+  plugins: ["prettier", "jest"],
   rules: {
     // configure the prettier plugin
     "prettier/prettier": [
@@ -23,6 +23,8 @@ module.exports = {
         singleQuote: false,
       },
     ],
-    "no-underscore-dangle": 0
-  }
+    "no-underscore-dangle": 0,
+    "consistent-return": 0,
+    "func-names": 0,
+  },
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require("express");
 const httpErrors = require("http-errors");
 const path = require("path");
@@ -5,6 +6,7 @@ const pino = require("pino");
 const pinoHttp = require("pino-http");
 const bodyParser = require("body-parser");
 const connectToDatabase = require("./database/dbConnection");
+const router = require("./controllers/index");
 
 module.exports = function main(options, cb) {
   // Set default options
@@ -63,7 +65,6 @@ module.exports = function main(options, cb) {
   }
 
   // use API router
-  const router = require("./controllers/index");
   app.use("/api", router);
 
   if (process.env.NODE_ENV === "production") {

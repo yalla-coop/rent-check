@@ -3,7 +3,7 @@
  */
 const User = require("../../models/User");
 const buildData = require("../../data/index");
-const { roles, status } = require("../../../constants/users");
+const { status } = require("../../../constants/users");
 
 const { rejectSuperUser } = require("../../queries/user");
 

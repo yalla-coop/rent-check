@@ -6,6 +6,6 @@ module.exports = async function approveSuperUser(userId, adminId) {
   return User.findOneAndUpdate(
     { _id: userId },
     { role: roles.SUPERUSER, status: status.VERIFIED, grantedSuperBy: adminId },
-    { new: true }
+    { new: true },
   );
 };

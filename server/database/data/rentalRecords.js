@@ -4,7 +4,8 @@ const User = require("../models/User");
 // import constants
 const rentalRecordsConst = require("../../constants/rentalRecords");
 const usersConst = require("../../constants/users");
-const roles = usersConst.roles;
+
+const { roles } = usersConst;
 const userStatus = usersConst.status;
 
 module.exports = async function populateRentalRecords() {

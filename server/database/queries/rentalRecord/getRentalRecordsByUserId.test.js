@@ -8,13 +8,13 @@ const buildData = require("../../data/index");
 const { addRentalRecord, getRentalRecordsByUserId } = require("./index");
 
 // import db models
-const RentalRecord = require("../../models/RentalRecord");
 const User = require("../../models/User");
 
 // import constants
 const rentalRecordsConst = require("../../../constants/rentalRecords");
 const usersConst = require("../../../constants/users");
-const roles = usersConst.roles;
+
+const { roles } = usersConst;
 const userStatus = usersConst.status;
 
 describe("getRentalRecordsByUserId returns records submitted by given user", () => {

@@ -1,13 +1,14 @@
 // import constants
-const rentEnum = require("../../constants/rentalRecords");
 const mongoose = require("mongoose");
+const rentEnum = require("../../constants/rentalRecords");
+
 const { Schema, model } = mongoose;
 
 const pointSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ['Point'],
-    default: 'Point',
+    enum: ["Point"],
+    default: "Point",
   },
   coordinates: {
     type: [Number],
@@ -86,7 +87,7 @@ const schema = new mongoose.Schema(
     breakClauses: String,
     additionalComments: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const RentalRecord = model("rentalRecords", schema);

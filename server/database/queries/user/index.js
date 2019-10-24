@@ -1,5 +1,3 @@
-const User = require("../../models/User");
-
 const getAllUsers = require("./getAllUsers");
 const getAllSuperUsers = require("./getAllSuperUsers");
 const getUser = require("./getUser");
@@ -21,5 +19,5 @@ module.exports = {
   approveSuperUser,
   rejectUser,
   approveUser,
-  deleteUser
+  deleteUser,
 };
