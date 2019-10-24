@@ -14,10 +14,12 @@
     "test-coverage:client": "npm run test:coverage --prefix client",
     "test-coverage:server": "npm run test:coverage --prefix server",
     "coverage": "codecov",
-    "start": "run-p start:**",
-    "start:server": "npm start --prefix server",
-    "start:client": "npm start --prefix client",
-    "build": "npm run build --prefix client"
+    "dev": "run-p dev:**",
+    "dev:server": "npm start --prefix server",
+    "dev:client": "npm start --prefix client",
+    "start": "node server/bin/app",
+    "build": "npm run build --prefix client",
+    "heroku-prebuild": "npm i && npm run init && npm run database:build:production --prefix server"
   },
   "repository": {
     "type": "git",

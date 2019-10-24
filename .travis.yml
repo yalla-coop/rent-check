@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "10.5.0"
+  - "12.13.0"
 cache:
   directories:
     - "node_modules"
@@ -8,16 +8,12 @@ cache:
 env:
   - MONGODB=4.0.0
 
-before_install:
-  - sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev
-    build-essential g++
-
 install:
   - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
   - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
   - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
   - mongo --version
-  - npm run init
+  - npm i && npm run init
 
 before_script:
   - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data

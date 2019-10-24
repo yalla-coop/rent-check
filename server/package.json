@@ -9,7 +9,8 @@
   "scripts": {
     "start": "nodemon ./bin/app",
     "database:run:dev": "docker run -d -p 27017-27019:27017-27019 --name rentCheckMongo mongo",
-    "database:build:dev": "babel-node ./database/data",
+    "database:build:dev": "node ./database/data",
+    "database:build:production": "node ./database/data/index.js",
     "database:build:fake": "babel-node ./database/data && npm run fake",
     "fake": "babel-node ./database/data/fakedata",
     "test": "jest --runInBand --detectOpenHandles --forceExit --watch",
