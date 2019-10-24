@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { ObjectId } = mongoose.Types;
 
@@ -12,4 +12,4 @@ const isValidMongoObjectId = id => {
   return false;
 };
 
-export default isValidMongoObjectId;
+module.exports = isValidMongoObjectId;

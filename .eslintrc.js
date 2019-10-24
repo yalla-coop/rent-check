@@ -23,6 +23,6 @@ module.exports = {
         singleQuote: false,
       },
     ],
-    "no-underscore-dangle": 0,
-  },
+    "no-underscore-dangle": 0
+  }
 };
