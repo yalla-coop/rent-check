@@ -18,26 +18,17 @@ export default function StreetReps() {
     requestStreetRep,
   ] = useApiCallback('post', 'api/reps');
   useEffect(() => {
-    if (hasRepsDataRequestErrored) {
-      return message.error(
-        'There was an error fetching street rep data from the server. Please try again later.'
-      );
-    }
     if (hasRequestStreetRepErrored) {
       return message.error(
-        'An error occurred in processing your request. Please try again later.'
+        'There was an error processing your request. Please try again later'
       );
     }
+  }, [hasRequestStreetRepErrored]);
+  useEffect(() => {
     if (requestStreetRepResponse) {
-      return message.success(
-        requestStreetRepResponse && requestStreetRepResponse.msg
-      );
+      return message.success(requestStreetRepResponse.msg);
     }
-  }, [
-    hasRequestStreetRepErrored,
-    requestStreetRepResponse,
-    hasRepsDataRequestErrored,
-  ]);
+  }, [requestStreetRepResponse]);
   const showOnlyRepsWithLocationDetails = repsData =>
     repsData && repsData.filter(rep => rep.companyName && rep.companyAddress);
   return (
