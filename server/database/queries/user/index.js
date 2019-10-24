@@ -7,9 +7,7 @@ const rejectSuperUser = require("./rejectSuperUser");
 const approveSuperUser = require("./approveSuperUser");
 const rejectUser = require("./rejectUser");
 const approveUser = require("./approveUser");
-
-// delete user
-const deleteUser = id => User.deleteOne({ _id: id });
+const deleteUser = require("./deleteUser");
 
 module.exports = {
   getAllUsers,
