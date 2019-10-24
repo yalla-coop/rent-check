@@ -7,30 +7,33 @@ const { Panel } = Collapse;
 
 export default function StreetReps() {
   const [
-    {
-      isError: hasRepsDataRequestErrored,
-      isLoading: isRepsDataLoading,
-      data: repsData,
-    },
+    { isError: isRepsDataError, isLoading: isRepsDataLoading, data: repsData },
   ] = useFetch('api/reps');
   const [
-    { isError: hasRequestStreetRepErrored, data: requestStreetRepResponse },
+    { isError: isRequestStreetRepError, data: requestStreetRepResponse },
     requestStreetRep,
   ] = useApiCallback('post', 'api/reps');
   useEffect(() => {
-    if (hasRequestStreetRepErrored) {
+    if (isRequestStreetRepError) {
       return message.error(
         'There was an error processing your request. Please try again later'
       );
     }
-  }, [hasRequestStreetRepErrored]);
+  }, [isRequestStreetRepError]);
+  useEffect(() => {
+    if (isRepsDataError) {
+      return message.error(
+        "Sorry, we're having trouble retrieving the list of Street Reps for you. Please try again later."
+      );
+    }
+  }, [isRepsDataError]);
   useEffect(() => {
     if (requestStreetRepResponse) {
       return message.success(requestStreetRepResponse.msg);
     }
   }, [requestStreetRepResponse]);
-  const showOnlyRepsWithLocationDetails = repsData =>
-    repsData && repsData.filter(rep => rep.companyName && rep.companyAddress);
+  const showOnlyRepsWithLocationDetails = reps =>
+    reps && reps.filter(rep => rep.companyName && rep.companyAddress);
   return (
     <article className="vh-100 dt w-100 bg-light-pink pv5">
       <div className="dtc v-mid tc black-80 ph3 ph4-l">
