@@ -8,18 +8,17 @@ module.exports = async (req, res) => {
     const { deletedCount } = await deleteUser(user.userId);
 
     if (deletedCount !== 1) {
-      res.status(404).json({ msg: "User not found" });
+      return res.status(404).send({ msg: "User not found" });
     }
-    res.status(200).json({
+    return res.status(200).send({
       msg: "User and all their rental data successfully deleted",
-      userId: user.userId
+      userId: user.userId,
     });
   } catch (err) {
-    console.log("ERR", err);
-    res
+    return res
       .status(500)
       .send(
-        "Sorry, there has been an internal server error deleting the user caused by this request"
+        "Sorry, there has been an internal server error deleting the user caused by this request",
       );
   }
 };

@@ -8,12 +8,12 @@ module.exports = async function updateLocations(req, res) {
       status: request.newStatus,
     });
 
-    res.status(200).send({
+    return res.status(200).send({
       msg: `Rental record status successfully updated to ${request.newStatus}`,
       updatedRecord,
     });
   } catch (err) {
-    res
+    return res
       .status(500)
       .send(
         "Sorry, there has been an internal server error updating the record status caused by this request",

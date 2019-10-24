@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import { useState, useCallback, useReducer } from 'react';
-import axios from 'axios';
+import { useState, useCallback, useReducer } from "react";
+import axios from "axios";
 
 const types = {
-  FETCH_INIT: 'FETCH_INIT',
-  FETCH_SUCCESS: 'FETCH_SUCCESS',
-  FETCH_FAILURE: 'FETCH_FAILURE',
+  FETCH_INIT: "FETCH_INIT",
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  FETCH_FAILURE: "FETCH_FAILURE"
 };
 
 const dataFetchReducer = (state, action) => {
@@ -17,10 +17,15 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        data: action.payload,
+        data: action.payload
       };
     case types.FETCH_FAILURE:
-      return { ...state, isLoading: false, isError: true, error: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        error: action.payload
+      };
     default:
       throw new Error();
   }
@@ -30,12 +35,11 @@ const useApiCallback = (method, url, initialData) => {
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
     isError: false,
-    data: initialData,
+    data: initialData
   });
 
   const apiCallback = useCallback(
     payload => {
-      
       let didCancel = false;
       const fetchData = async () => {
         dispatch({ type: types.FETCH_INIT });
@@ -45,15 +49,19 @@ const useApiCallback = (method, url, initialData) => {
             dispatch({ type: types.FETCH_SUCCESS, payload: data });
           }
         } catch (error) {
-          console.log("error", error.response.data.message)
           if (!didCancel) {
             if (error.response.data.message) {
-              dispatch({ type: types.FETCH_FAILURE, payload: error.response.data.message });
+              dispatch({
+                type: types.FETCH_FAILURE,
+                payload: error.response.data.message
+              });
             } else {
-              dispatch({ type: types.FETCH_FAILURE, payload: error.response.data });
-          }
+              dispatch({
+                type: types.FETCH_FAILURE,
+                payload: error.response.data
+              });
             }
-            
+          }
         }
       };
 
