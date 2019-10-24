@@ -42,7 +42,11 @@ module.exports = async function updateUser(req, res) {
       const updatedUserProfile = await getUser(updatedUser._id);
       res.send({ msg });
     } catch (err) {
-      res.status(500).send("Server error");
+      res
+        .status(500)
+        .send(
+          "Sorry, there has been an internal server error updating the user caused by this request",
+        );
     }
   };
 
@@ -50,33 +54,33 @@ module.exports = async function updateUser(req, res) {
     return updateDatabase(
       rejectUser,
       [updatedUser._id],
-      "User has been rejected"
+      "User has been rejected",
     );
   }
   if (userVerified(previousUser, updatedUser)) {
     return updateDatabase(
       approveUser,
       [updatedUser._id, adminIdPlaceholder],
-      "User has been verified"
+      "User has been verified",
     );
   }
   if (superUserRejected(previousUser, updatedUser)) {
     return updateDatabase(
       rejectSuperUser,
       [updatedUser._id],
-      "Request for Super User access has been rejected"
+      "Request for Super User access has been rejected",
     );
   }
   if (superUserGranted(previousUser, updatedUser)) {
     return updateDatabase(
       approveSuperUser,
       [updatedUser._id, adminIdPlaceholder],
-      "Request for Super User access granted"
+      "Request for Super User access granted",
     );
   }
-  res
+  return res
     .status(400)
     .send(
-      "There was a problem with the data submitted, please check and try again."
+      "There was a problem with the data submitted, please check and try again.",
     );
 };

@@ -13,12 +13,13 @@ import { status as constStatus } from '../../../constants/rentalRecords';
 // custom hooks
 import useWindowWidth from '../../../useWindowWidth';
 
-function RentalRecord({ location, history }) {
+function RentalRecord({ location, history, updateRecord }) {
   const [isTablet, setTablet] = useState(false);
 
   const { state } = location;
   const { rentalData } = state;
   const {
+    _id,
     additionalComments,
     address,
     annualRent,
@@ -59,6 +60,7 @@ function RentalRecord({ location, history }) {
               type="outline"
               color="var(--green)"
               margin="0.5rem"
+              onClick={() => updateRecord(_id, constStatus.VERIFIED)}
             />
           )}
           {status && status !== constStatus.REJECTED && (
@@ -67,6 +69,7 @@ function RentalRecord({ location, history }) {
               type="outline"
               color="var(--red)"
               margin="0.5rem"
+              onClick={() => updateRecord(_id, constStatus.REJECTED)}
             />
           )}
         </S.BtnWrapper>
