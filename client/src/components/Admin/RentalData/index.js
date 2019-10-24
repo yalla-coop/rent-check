@@ -61,7 +61,7 @@ function RentalData({ history }) {
       setUpdatingRecord(true);
       let newRentalData = null;
       if (updateType === 'delete') {
-        response = await axios.delete('/.netlify/functions/deleteRecord', {
+        response = await axios.delete('/api/admin/locations', {
           data: { rentalId },
         });
 

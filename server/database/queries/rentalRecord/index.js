@@ -57,13 +57,22 @@ const getAllRentalRecordsAdmin = () =>
     }
   ]);
 
+// MODIFY
+
 const deleteUserRecords = userId =>
   RentalRecord.deleteMany({ submittedBy: userId });
+
+const deleteRecord = id => RentalRecord.deleteOne({ _id: id });
+
+const setRecordStatus = (id, newStatus) =>
+  RentalRecord.findByIdAndUpdate(id, newStatus, { new: true });
 
 module.exports = {
   addRentalRecord,
   getAllValidRecords,
   getRentalRecordsByUserId,
   getAllRentalRecordsAdmin,
-  deleteUserRecords
+  deleteUserRecords,
+  deleteRecord,
+  setRecordStatus
 };
