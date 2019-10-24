@@ -1,35 +1,12 @@
-import React from 'react';
-import { Table } from 'antd';
+import React, { useEffect } from 'react';
+import { Table, message } from 'antd';
 
 import useFetch from '../../hooks/useFetch';
 
 import * as S from './UnverifiedUserView.style';
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Company',
-    dataIndex: 'company',
-    key: 'company',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    company: 'Cool stuff',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    company: 'Cool stuff',
-  },
-];
+import { getRepsWithLocationDetails } from './utils/getRepsWithLocationDetails';
+import { tableColumns } from './tableColumns';
 
 function UnverifiedUser() {
   const [
@@ -38,9 +15,17 @@ function UnverifiedUser() {
       isLoading: isRepsDataLoading,
       data: repsData,
     },
-  ] = useFetch('api/reps');
+  ] = useFetch('/api/reps');
 
-  console.log('repsData', repsData);
+  useEffect(() => {
+    if (hasRepsDataRequestErrored) {
+      return message.error(
+        "Sorry, we're having trouble retrieving the list of Street Reps for you. Please try again later."
+      );
+    }
+  }, [hasRepsDataRequestErrored]);
+
+  const tableData = repsData ? getRepsWithLocationDetails(repsData) : [];
   return (
     <S.Wrapper>
       <h2>Sorry your account isn’t verified</h2>
@@ -51,13 +36,13 @@ function UnverifiedUser() {
       </S.Paragraph>
       <h3>East End Trades Guild Street Reps</h3>
       <Table
-        columns={columns}
-        dataSource={data}
+        loading={isRepsDataLoading}
+        columns={tableColumns}
+        dataSource={tableData}
         style={{
           margin: '0 auto',
         }}
       />
-      ,
     </S.Wrapper>
   );
 }
