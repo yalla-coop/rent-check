@@ -25,6 +25,7 @@ import { statusEnum } from '../../../constants/rentalRecords';
 // routes
 import { routes } from '../../../constants/adminRoutes';
 import { ADD_RENTAL_URL } from '../../../constants/navRoutes';
+import useApiCallback from '../../../hooks/useApiCallback';
 
 const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 

@@ -13,7 +13,6 @@ module.exports = async function updateLocations(req, res) {
       updatedRecord: updatedRecord
     });
   } catch (err) {
-    console.log("err", err);
     res
       .status(500)
       .send(

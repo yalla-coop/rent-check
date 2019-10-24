@@ -86,7 +86,6 @@ export default function AllUsers({ statusProp }) {
   const toggleModal = () => setModalVisible(!modalVisible);
 
   const deleteUser = userId => {
-    console.log("REACHED");
     setUserToDelete(userId);
     toggleModal();
   };

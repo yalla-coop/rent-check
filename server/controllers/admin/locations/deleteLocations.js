@@ -11,7 +11,6 @@ module.exports = async function deleteLocations(req, res) {
     }
     res.status(200).json({ msg: "Rental data successfully deleted" });
   } catch (err) {
-    console.log("err", err);
     res
       .status(500)
       .send(
