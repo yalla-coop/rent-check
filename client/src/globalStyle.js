@@ -29,5 +29,6 @@ export default createGlobalStyle`
   --unverified: var(--blue);
   --rejected: var(--red);
   --awaitingSuperUser: var(--B8);
+  --invalid: var(--gray);
 }
 `;

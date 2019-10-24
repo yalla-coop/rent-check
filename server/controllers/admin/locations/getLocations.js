@@ -8,8 +8,8 @@ module.exports = async function getLocations(req, res) {
   try {
     await connectToDatabase();
     const locations = await getAllRentalRecordsAdmin();
-    res.status(200).send(locations);
+    return res.status(200).send(locations);
   } catch (err) {
-    res.status(500).send(err.message);
+    return res.status(500).send(err.message);
   }
 };

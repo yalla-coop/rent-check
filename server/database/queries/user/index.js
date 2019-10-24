@@ -9,6 +9,7 @@ const rejectSuperUser = require("./rejectSuperUser");
 const approveSuperUser = require("./approveSuperUser");
 const rejectUser = require("./rejectUser");
 const approveUser = require("./approveUser");
+const deleteUser = require("./deleteUser");
 
 module.exports = {
   getAllUsers,
@@ -20,4 +21,5 @@ module.exports = {
   approveSuperUser,
   rejectUser,
   approveUser,
+  deleteUser
 };

@@ -1,18 +1,19 @@
 // sets columns for user table
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Icon, Tag } from 'antd';
+import { Button, Icon, Tag, Divider } from 'antd';
 import { renderUserDetails, status, roles } from '../../../constants/users';
 
 export default ({
   getColumnSearchProps,
   searchText,
   manageUserStatusOnClick,
+  deleteUser,
 }) => {
   // renders btn to approve or reject user/ super user
   const ActionBtn = ({
     userUpdate,
-    color,
+    color, 
     action
   }) => (
     <Button
@@ -55,6 +56,23 @@ export default ({
     )
 
   }
+
+  const renderDeleteBtn = userId => (
+    <span className="flex items-center">
+      <Divider type="vertical" />
+      <Button
+        style={{
+          color: 'var(--red)',
+          borderColor: 'var(--red)',
+        }}
+        className="mr1 self-end"
+        ghost
+        onClick={() => deleteUser(userId)}
+      >
+        <Icon type="delete" />
+      </Button>
+    </span>
+  );
 
   const tableColumns = [
     {
@@ -117,7 +135,18 @@ export default ({
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (text, record) => <ActionButtons user={record} />,
+      render: (text, record) => {
+        return [status.UNVERIFIED, status.AWAITING_SUPER].includes(
+          record.status
+        ) ? (
+          <div className="flex items-center justify-between">
+            <ActionButtons user={record} />
+            {renderDeleteBtn(record.key)}
+          </div>
+        ) : (
+          <div>{renderDeleteBtn(record.key)}</div>
+        );
+      },
     },
   ];
 
