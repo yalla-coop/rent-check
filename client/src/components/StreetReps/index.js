@@ -8,20 +8,21 @@ const { Panel } = Collapse;
 export default function StreetReps() {
   const [
     {
+      isError: hasRepsDataRequestErrored,
       isLoading: isRepsDataLoading,
-      isError: hasRepsRequestErrored,
       data: repsData,
     },
   ] = useFetch('api/reps');
   const [
-    {
-      isLoading: isRequestStreetRepLoading,
-      isError: hasRequestStreetRepErrored,
-      data: requestStreetRepResponse,
-    },
+    { isError: hasRequestStreetRepErrored, data: requestStreetRepResponse },
     requestStreetRep,
   ] = useApiCallback('post', 'api/reps');
   useEffect(() => {
+    if (hasRepsDataRequestErrored) {
+      return message.error(
+        'There was an error fetching street rep data from the server. Please try again later.'
+      );
+    }
     if (hasRequestStreetRepErrored) {
       return message.error(
         'An error occurred in processing your request. Please try again later.'
@@ -32,7 +33,11 @@ export default function StreetReps() {
         requestStreetRepResponse && requestStreetRepResponse.msg
       );
     }
-  }, [hasRequestStreetRepErrored, requestStreetRepResponse]);
+  }, [
+    hasRequestStreetRepErrored,
+    requestStreetRepResponse,
+    hasRepsDataRequestErrored,
+  ]);
   const showOnlyRepsWithLocationDetails = repsData =>
     repsData && repsData.filter(rep => rep.companyName && rep.companyAddress);
   return (
