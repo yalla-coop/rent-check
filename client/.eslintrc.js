@@ -1,7 +1,7 @@
 module.exports = {
-  extends: ['airbnb', 'prettier', 'prettier/react'],
+  extends: ["airbnb", "prettier", "prettier/react"],
   // babel-eslint parser is used to support experimental features not supported in ESLint itself yet
-  parser: 'babel-eslint',
+  parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 8,
     ecmaFeatures: {
@@ -14,42 +14,50 @@ module.exports = {
     jest: true,
   },
   rules: {
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn', // <--- THIS IS THE NEW RULE
-    'jsx-a11y/label-has-associated-control': 0,
-    'jsx-a11y/label-has-for':0,
-    'consistent-return': 0,
-    'import/prefer-default-export': 0,
-    'react/jsx-no-undef': 1,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn", // <--- THIS IS THE NEW RULE
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-props-no-spreading": 0,
+    "jsx-a11y/label-has-for": 0,
+    "consistent-return": 0,
+    "import/prefer-default-export": 0,
+    "react/jsx-no-undef": 1,
     // disables the windows/unix linebreak checks.
-    'linebreak-style': 0,
-    'linebreak-style': [0, 'error', 'windows'],
-    'react/prop-types': [0],
-    'no-underscore-dangle': [0],
-    'react/prefer-stateless-function': [0],
+    "linebreak-style": 0,
+    "linebreak-style": [0, "error", "windows"],
+    "react/prop-types": [0],
+    "no-underscore-dangle": [0],
+    "react/prefer-stateless-function": [0],
+    "react/jsx-props-no-spreading": [
+      {
+        html: "ignore",
+        custom: "ignore",
+        explicitSpread: "ignore",
+      },
+    ],
     //  allow .js extensions for JSX.
-    'react/jsx-filename-extension': [
+    "react/jsx-filename-extension": [
       1,
       {
-        extensions: ['.js', '.jsx'],
+        extensions: [".js", ".jsx"],
       },
     ],
     quotes: [
       2,
-      'single',
+      "single",
       {
         avoidEscape: true, // allows strings to use single-quotes or double-quotes so long as the string contains a quote that would have to be escaped otherwise
         allowTemplateLiterals: true, // allows strings to use backticks
       },
     ],
     // configure the prettier plugin
-    'prettier/prettier': [
-      'error',
+    "prettier/prettier": [
+      "error",
       {
-        trailingComma: 'es5',
+        trailingComma: "es5",
         singleQuote: true,
       },
     ],
   },
-  plugins: ['prettier', 'react-hooks']
+  plugins: ["prettier", "react-hooks"],
 };

@@ -1,21 +1,21 @@
 // Router Component for admin routes
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Layout } from 'antd';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import { Layout } from "antd";
 
 // Components
-import SideMenu from './SideMenu';
+import SideMenu from "./SideMenu";
 
-import adminRoutes from './adminRoutes';
+import adminRoutes from "./adminRoutes";
 
 const { Content, Footer } = Layout;
 
 export default function Admin() {
   return (
-    <Layout style={{ minHeight: '100vh', paddingTop: '3rem' }}>
+    <Layout style={{ minHeight: "100vh", paddingTop: "3rem" }}>
       <SideMenu />
-      <Layout style={{ paddingTop: '2rem' }}>
-        <Content style={{ margin: '0 16px' }}>
+      <Layout style={{ paddingTop: "2rem" }}>
+        <Content style={{ margin: "0 16px" }}>
           <Switch>
             {adminRoutes.map(route => {
               return route.component ? (
@@ -30,7 +30,7 @@ export default function Admin() {
             })}
           </Switch>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>©2019 Created by Yalla</Footer>
+        <Footer style={{ textAlign: "center" }}>©2019 Created by Yalla</Footer>
       </Layout>
     </Layout>
   );
