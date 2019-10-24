@@ -11,8 +11,8 @@
     "database:run:dev": "docker run -d -p 27017-27019:27017-27019 --name rentCheckMongo mongo",
     "database:build:dev": "node ./database/data",
     "database:build:production": "node ./database/data/index.js",
-    "database:build:fake": "babel-node ./database/data && npm run fake",
-    "fake": "babel-node ./database/data/fakedata",
+    "database:build:fake": "node ./database/data && npm run fake",
+    "fake": "node ./database/data/fakedata",
     "test": "jest --runInBand --detectOpenHandles --forceExit --watch",
     "test:coverage": "jest --runInBand --detectOpenHandles --forceExit --coverage"
   },
@@ -31,10 +31,6 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/node": "^7.6.3",
-    "@babel/preset-env": "^7.6.3",
     "faker": "^4.1.0",
     "moment": "^2.24.0",
     "nodemon": "^1.19.4"
