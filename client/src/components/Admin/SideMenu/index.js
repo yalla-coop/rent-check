@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { menuElements } from '../../../constants/adminRoutes';
 
 // custom hooks
-import useWindowWidth from '../../../useWindowWidth';
+import useWindowWidth from '../../../hooks/useWindowWidth';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;

@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 
 // constants
-import { sizeNum } from './constants/breakpoints';
+import { sizeNum } from '../constants/breakpoints';
 
 const useWindowWidth = () => {
   const isClient = typeof window === 'object';
