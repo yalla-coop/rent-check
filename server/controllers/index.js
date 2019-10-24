@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/locations", getLocations);
 router.post("/locations", addLocation);
 
-router.get("/reps/records", getSuperUserRecords);
+router.get("/reps/locations", getSuperUserRecords);
 router.get("/reps", getReps);
 router.post("/reps", handleStreetRepRequest);
 
