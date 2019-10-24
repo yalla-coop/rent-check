@@ -1,4 +1,3 @@
-"use strict";
 const express = require("express");
 const httpErrors = require("http-errors");
 const path = require("path");
@@ -10,12 +9,11 @@ const connectToDatabase = require("./database/dbConnection");
 module.exports = function main(options, cb) {
   // Set default options
   const ready = cb || function() {};
-  const opts = Object.assign(
-    {
-      // Default options
-    },
-    options
-  );
+  const opts = {
+    // Default options
+
+    ...options,
+  };
 
   const logger = pino();
 
