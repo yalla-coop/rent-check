@@ -11,12 +11,13 @@ const types = {
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case types.FETCH_INIT:
-      return { ...state, isLoading: true, isError: false };
+      return { ...state, isLoading: true, isError: false, error: null };
     case types.FETCH_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
+        error: null,
         data: action.payload
       };
     case types.FETCH_FAILURE:
@@ -35,7 +36,8 @@ const useApiCallback = (method, url, initialData) => {
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
     isError: false,
-    data: initialData
+    data: initialData,
+    error: null
   });
 
   const apiCallback = useCallback(
