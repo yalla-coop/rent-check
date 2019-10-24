@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 // Components
 import { Modal, Icon, message, Select } from 'antd';
 import axios from 'axios';
-import Loading from '../../Loading';
+import Loading from '../../Common/Loading';
 import Table from '../Table';
 import RentalRecord from './RentalRecord';
 
@@ -14,7 +14,6 @@ import * as S from './RentalData.style';
 
 // Table props
 import rentalDataColumns from './rentalDataColumns';
-
 
 // custom hooks
 import useFetch from '../../../hooks/useFetch';
@@ -95,7 +94,9 @@ function RentalData({ history }) {
   };
 
   // fetch data
-  const [{ data: fetchedRentalData, isLoading }] = useFetch('/api/admin/locations');
+  const [{ data: fetchedRentalData, isLoading }] = useFetch(
+    '/api/admin/locations'
+  );
 
   useEffect(() => {
     if (fetchedRentalData) {

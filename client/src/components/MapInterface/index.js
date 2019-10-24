@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Loading from '../Loading';
+import Loading from '../Common/Loading';
 import Map from '../Map';
 import PostcodeForm from '../PostcodeForm';
 import {
@@ -77,7 +77,7 @@ function MapInterface({ location }) {
   }, [location]);
 
   return (
-    <React.Fragment>
+    <>
       <FullScreenContainer>
         {isLoading && <Loading />}
         {/* <Nav openSearch={openSearch} /> */}
@@ -97,7 +97,7 @@ function MapInterface({ location }) {
           <ModalContainer>{showPostcodeSearch()}</ModalContainer>
         </>
       )}
-    </React.Fragment>
+    </>
   );
 }
 
