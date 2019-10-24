@@ -1,22 +1,39 @@
 const boom = require("@hapi/boom");
 
 const connectToDatabase = require("../../database/dbConnection");
-const getSuperUserUsers = require("../../database/queries/user/getSuperUserUsers");
+const getSuperUserSubUsers = require("../../database/queries/user/getSuperUserSubUsers");
 const getRentalRecordsByIds = require("../../database/queries/rentalRecord/getRentalRecordsByIds");
-const isValidMongoID = require("../../utils/isValidMongoID");
+const { roles, status } = require("../../constants/users");
 
-module.exports = async function getLocations(req, res, next) {
-  const { id: userId } = req.params;
+// temp
+const User = require("../../database/models/User");
 
-  if (!isValidMongoID(userId)) {
-    return next(boom.badData("unvalid user ID"));
-  }
+// Stub - function to be replaced with one that gets ID of logged in user
+const getCurrentUser = () => User.findOne({ name: "Farah Zaqout" });
 
-  // check the user role and return 403 if not authorized
-
+module.exports = async function getSuperUserRecords(req, res, next) {
   try {
     await connectToDatabase();
-    const users = await getSuperUserUsers(userId);
+  } catch (err) {
+    return next(boom.badImplementation(err));
+  }
+
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return next(
+        boom.forbidden("Please make sure you are logged in and try again"),
+      );
+    }
+
+    const isSuperUser = currentUser.role === roles.SUPERUSER;
+
+    if (!isSuperUser) {
+      return next(boom.forbidden("Request not allowed"));
+    }
+
+    const users = await getSuperUserSubUsers(currentUser._id);
+
     if (!users.length) {
       return next(boom.notFound("Superuser has no sub users"));
     }
