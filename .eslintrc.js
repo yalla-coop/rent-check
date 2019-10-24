@@ -1,30 +1,28 @@
 module.exports = {
-  extends: ['airbnb-base', 'prettier'],
-  // babel-eslint parser is used to support experimental features not supported in ESLint itself yet
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaVersion: 8,
-    ecmaFeatures: {
-      impliedStrict: true, //enable global strict mode (if ecmaVersion is 5 or greater)
-    },
-  },
   env: {
     browser: true,
+    commonjs: true,
+    es6: true,
     node: true,
-    jest: true,
   },
+  extends: ["airbnb-base", "prettier"],
+  globals: {
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly",
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+  },
+  plugins: ["prettier"],
   rules: {
-    'linebreak-style': 0,
-    'linebreak-style': [0, 'error', 'windows'],
-    'no-underscore-dangle': [0],
     // configure the prettier plugin
-    'prettier/prettier': [
-      'error',
+    "prettier/prettier": [
+      "error",
       {
-        trailingComma: 'all',
+        trailingComma: "all",
         singleQuote: false,
       },
     ],
-  },
-  plugins: ['prettier']
+    "no-underscore-dangle": 0
+  }
 };
