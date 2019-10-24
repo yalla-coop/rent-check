@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Loading from '../Common/Loading';
-import Map from '../Map';
-import PostcodeForm from '../PostcodeForm';
+import Map from './Map';
+import PostcodeForm from './PostcodeForm';
 import {
   FullScreenContainer,
   ModalContainer,

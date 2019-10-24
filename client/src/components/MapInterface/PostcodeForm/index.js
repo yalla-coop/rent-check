@@ -6,7 +6,7 @@ import {
   Warning,
   Button,
 } from './PostcodeForm.styles';
-import logo from '../../assets/logo.png';
+import logo from '../../../assets/logo.png';
 
 const SearchForm = ({
   showWarning,

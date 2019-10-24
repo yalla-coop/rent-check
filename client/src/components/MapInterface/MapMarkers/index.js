@@ -76,7 +76,10 @@ const MarkerWithPopup = ({
   // leaflet use latlong but mongodb use longlat coordinates
   const { coordinates } = geoLocation;
   return (
-    <Marker position={[coordinates[1], coordinates[0]]} icon={iconSelect(useClass)}>
+    <Marker
+      position={[coordinates[1], coordinates[0]]}
+      icon={iconSelect(useClass)}
+    >
       <Popup offset={[33, 15]} keepInView maxHeight={300} className="popup">
         <div className="pa0 avenir f5 tl mw5">
           {(address || postcode) && (
@@ -192,9 +195,7 @@ const MarkerWithPopup = ({
               Help strengthen your community by adding your data
             </PopupInfo>
             <NavLink to="/add-rental-data">
-              <Button>
-                Add my data
-              </Button>
+              <Button>Add my data</Button>
             </NavLink>
           </CenteredSection>
         </div>
