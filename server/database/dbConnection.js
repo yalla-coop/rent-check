@@ -5,6 +5,8 @@ require("dotenv").config();
 
 let mongoURI = process.env.MONGO_URI;
 
+console.log("mongo", mongoURI);
+
 if (process.env.NODE_ENV === "test") {
   // change mongoURI to testing database URI
   mongoURI = process.env.MONGOURI_TEST;
@@ -15,7 +17,7 @@ const dbConnection = () =>
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
+    useFindAndModify: false
   });
 
 let cachedDb = null;

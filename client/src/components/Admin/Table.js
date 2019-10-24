@@ -75,6 +75,7 @@ export default function TableComponent({ columns, dataSource, loading }) {
 
   return (
     <Table
+      loading={loading}
       columns={columns({
         getColumnSearchProps,
         searchText,
@@ -82,7 +83,6 @@ export default function TableComponent({ columns, dataSource, loading }) {
       dataSource={dataSource}
       style={{ backgroundColor: '#ffffff' }}
       bordered
-      loading={loading}
     />
   );
 }

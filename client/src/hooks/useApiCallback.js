@@ -1,26 +1,32 @@
 // eslint-disable-next-line no-unused-vars
-import { useState, useCallback, useReducer } from 'react';
-import axios from 'axios';
+import { useState, useCallback, useReducer } from "react";
+import axios from "axios";
 
 const types = {
-  FETCH_INIT: 'FETCH_INIT',
-  FETCH_SUCCESS: 'FETCH_SUCCESS',
-  FETCH_FAILURE: 'FETCH_FAILURE',
+  FETCH_INIT: "FETCH_INIT",
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  FETCH_FAILURE: "FETCH_FAILURE"
 };
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case types.FETCH_INIT:
-      return { ...state, isLoading: true, isError: false };
+      return { ...state, isLoading: true, isError: false, error: null };
     case types.FETCH_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
-        data: action.payload,
+        error: null,
+        data: action.payload
       };
     case types.FETCH_FAILURE:
-      return { ...state, isLoading: false, isError: true };
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        error: action.payload
+      };
     default:
       throw new Error();
   }
@@ -31,6 +37,7 @@ const useApiCallback = (method, url, initialData) => {
     isLoading: false,
     isError: false,
     data: initialData,
+    error: null
   });
 
   const apiCallback = useCallback(
@@ -45,7 +52,17 @@ const useApiCallback = (method, url, initialData) => {
           }
         } catch (error) {
           if (!didCancel) {
-            dispatch({ type: types.FETCH_FAILURE });
+            if (error.response.data.message) {
+              dispatch({
+                type: types.FETCH_FAILURE,
+                payload: error.response.data.message
+              });
+            } else {
+              dispatch({
+                type: types.FETCH_FAILURE,
+                payload: error.response.data
+              });
+            }
           }
         }
       };
@@ -57,6 +74,7 @@ const useApiCallback = (method, url, initialData) => {
     },
     [method, url]
   );
+
   return [state, apiCallback];
 };
 
