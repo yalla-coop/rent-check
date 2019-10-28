@@ -1,11 +1,11 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef, useEffect, Fragment } from "react";
-import { Table, Input, Icon, Button, message, Modal } from "antd";
-import useApiCallback from "../../../hooks/useApiCallback";
-import UsersColumns from "./UsersColumns";
+import React, { useState, useRef, useEffect, Fragment } from 'react';
+import { Table, Input, Icon, Button, message, Modal } from 'antd';
+import useApiCallback from '../../../hooks/useApiCallback';
+import UsersColumns from './UsersColumns';
 
-import { status as statusConst, roles } from "../../../constants/users";
+import { status as statusConst, roles } from '../../../constants/users';
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
@@ -22,7 +22,7 @@ const decideUserData = (userStatus, allUsersData) => {
       return allUsersData.filter(el => el.status === statusConst.VERIFIED);
 
     case roles.SUPERUSER:
-      return allUsersData.filter(el => el.role === roles.SUPERUSER)
+      return allUsersData.filter(el => el.role === roles.SUPERUSER);
 
     default:
       return allUsersData;
@@ -36,30 +36,32 @@ const createUserTable = arr =>
     name,
     email,
     level: role,
-    status,
+    status
   }));
 
 export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
-    getAllUsersData,
-  ] = useApiCallback("get", "/api/admin/users");
+    getAllUsersData
+  ] = useApiCallback('get', '/api/admin/users');
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
-    updateUserStatus,
-  ] = useApiCallback("patch", "/api/admin/users");
+    updateUserStatus
+  ] = useApiCallback('patch', '/api/admin/users');
 
   const [
     { data: deletedUser, error: userDeleteError },
-    deleteUserApi,
-  ] = useApiCallback("delete", "/api/admin/users");
+    deleteUserApi
+  ] = useApiCallback('delete', '/api/admin/users');
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const searchInputRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [deletingUser, setDeletingUser] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [updatingUser, setUpdatingUser] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState(null);
 
   const toggleModal = () => setModalVisible(!modalVisible);
 
@@ -70,7 +72,7 @@ export default function AllUsers({ statusProp }) {
         return message.error(userStatusUpdateHasErrored);
       } catch (e) {
         return message.error(
-          "An error occurred in processing your request. Please try again later."
+          'An error occurred in processing your request. Please try again later.'
         );
       }
     }
@@ -82,14 +84,16 @@ export default function AllUsers({ statusProp }) {
         return message.error(userDeleteError);
       } catch (e) {
         return message.error(
-          "An error occurred deleting user. Please try again later."
+          'An error occurred deleting user. Please try again later.'
         );
       }
     }
-    if (userStatusData) {
+    if (userToUpdate) {
+      setUpdatingUser(false);
+      setUserToUpdate(null);
       message.success(userStatusData && userStatusData.msg);
     }
-    if (deletedUser) {
+    if (userToDelete) {
       setDeletingUser(false);
       setUserToDelete(null);
       toggleModal();
@@ -102,13 +106,15 @@ export default function AllUsers({ statusProp }) {
     userStatusUpdateHasErrored,
     userStatusData,
     deletedUser,
-    userDeleteError,
+    userDeleteError
   ]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
   const manageUserStatusOnClick = updatedUser => {
+    setUpdatingUser(true);
+    setUserToUpdate(updatedUser);
     updateUserStatus(updatedUser);
   };
 
@@ -129,7 +135,7 @@ export default function AllUsers({ statusProp }) {
 
   const handleReset = clearFilters => {
     clearFilters();
-    setSearchText("");
+    setSearchText('');
   };
 
   const getColumnSearchProps = dataIndex => ({
@@ -137,7 +143,7 @@ export default function AllUsers({ statusProp }) {
       setSelectedKeys,
       selectedKeys,
       confirm,
-      clearFilters,
+      clearFilters
     }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -148,7 +154,7 @@ export default function AllUsers({ statusProp }) {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: "block" }}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
@@ -171,7 +177,7 @@ export default function AllUsers({ statusProp }) {
     filterIcon: filtered => (
       <Icon
         type="search"
-        style={{ fontSize: "20px", color: filtered ? "#1890ff" : undefined }}
+        style={{ fontSize: '20px', color: filtered ? '#1890ff' : undefined }}
       />
     ),
     onFilter: (value, record) => {
@@ -184,7 +190,7 @@ export default function AllUsers({ statusProp }) {
       if (visible) {
         setTimeout(() => searchInputRef.current.select());
       }
-    },
+    }
   });
 
   return (
@@ -194,13 +200,13 @@ export default function AllUsers({ statusProp }) {
           getColumnSearchProps,
           searchText,
           manageUserStatusOnClick,
-          deleteUser,
+          deleteUser
         })}
         dataSource={
           allUsersData &&
           createUserTable(decideUserData(statusProp, allUsersData))
         }
-        style={{ backgroundColor: "#ffffff" }}
+        style={{ backgroundColor: '#ffffff' }}
         bordered
         loading={allUsersDataIsLoading}
       />
