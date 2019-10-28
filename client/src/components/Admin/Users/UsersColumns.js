@@ -54,7 +54,6 @@ export default ({
       downgradeUser.madeSuperBy = "";
     }
     return (
-
         <div className="flex items-center justify-between">
           {hasUpgradeActions && (
             <ActionBtn
@@ -71,7 +70,6 @@ export default ({
         />
       )}
       </div>
-
     );
   };
 
