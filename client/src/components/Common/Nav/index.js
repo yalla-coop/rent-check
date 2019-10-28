@@ -88,14 +88,14 @@ const Nav = ({ role }) => {
               Control Panel
             </S.MenuLink>
           )}
-          <S.MenuLink
+          {/* <S.MenuLink
             to={ACCOUNT_URL}
             onClick={() => {
               toggleMenu();
             }}
           >
             My Account
-          </S.MenuLink>
+          </S.MenuLink> */}
           {/* THIS WILL NEED TO CLEAR COOKIE */}
           <S.MenuLink
             to={MAP_URL}
