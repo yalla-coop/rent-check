@@ -22,7 +22,7 @@ const decideUserData = (userStatus, allUsersData) => {
       return allUsersData.filter(el => el.status === statusConst.VERIFIED);
 
     case roles.SUPERUSER:
-      return allUsersData.filter(el => el.level === roles.SUPERUSER);
+      return allUsersData.filter(el => el.role === roles.SUPERUSER)
 
     default:
       return allUsersData;
