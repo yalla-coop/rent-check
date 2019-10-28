@@ -1,12 +1,12 @@
 const boom = require("@hapi/boom");
 
-const connectToDatabase = require("../../database/dbConnection");
-const getSuperUserSubUsers = require("../../database/queries/user/getSuperUserSubUsers");
-const getRentalRecordsByIds = require("../../database/queries/rentalRecord/getRentalRecordsByIds");
-const { roles, status } = require("../../constants/users");
+const connectToDatabase = require("../../../database/dbConnection");
+const getSuperUserSubUsers = require("../../../database/queries/user/getSuperUserSubUsers");
+const getRentalRecordsByIds = require("../../../database/queries/rentalRecord/getRentalRecordsByIds");
+const { roles } = require("../../../constants/users");
 
 // temp
-const User = require("../../database/models/User");
+const User = require("../../../database/models/User");
 
 // Stub - function to be replaced with one that gets ID of logged in user
 const getCurrentUser = () => User.findOne({ name: "Farah Zaqout" });
