@@ -1,49 +1,56 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
 import React, { useState, useRef, useEffect, Fragment } from "react";
-import { Table, Input, Icon, Button, message, Modal } from "antd";
+import { List, Input, Icon, Button, message, Modal } from "antd";
 import useApiCallback from "../../../hooks/useApiCallback";
-import UsersColumns from "./UsersColumns";
+//import UsersColumns from "./UsersColumns";
+import ListWithFilter from './ListWithFilter';
+import UserListItem from './UserListItem';
 
 import { status as statusConst, roles } from "../../../constants/users";
 
 // chooses data base for user table depending on section
-const decideUserData = (userStatus, allUsersData) => {
+const filterUsersByStatus = (userStatus, users) => {
+  if (!users) {
+    return [];
+  }
   switch (userStatus) {
     case statusConst.UNVERIFIED:
-      return allUsersData.filter(el => el.status === statusConst.UNVERIFIED);
+      return users.filter(el => el.status === statusConst.UNVERIFIED);
 
     case statusConst.AWAITING_SUPER:
-      return allUsersData.filter(
-        el => el.status === statusConst.AWAITING_SUPER
-      );
+      return users.filter(el => el.status === statusConst.AWAITING_SUPER);
 
     case statusConst.VERIFIED:
-      return allUsersData.filter(el => el.status === statusConst.VERIFIED);
+      return users.filter(el => el.status === statusConst.VERIFIED);
 
     case roles.SUPERUSER:
-      return allUsersData.filter(el => el.role === roles.SUPERUSER);
+      return users.filter(el => el.role === roles.SUPERUSER);
 
     default:
-      return allUsersData;
+      return users;
   }
 };
 
 // create table friendly data sets
-const createUserTable = arr =>
-  arr.map(({ _id, name, email, role, status }) => ({
-    key: _id,
-    name,
-    email,
-    level: role,
-    status,
-  }));
+// const createUserTable = arr =>
+//   arr.map(({ _id, name, email, role, status }) => ({
+//     key: _id,
+//     name,
+//     email,
+//     level: role,
+//     status,
+//   }));
 
 export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
     getAllUsersData,
   ] = useApiCallback("get", "/api/admin/users");
+
+  useEffect(() => {
+    getAllUsersData();
+  }, [])
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
@@ -55,8 +62,6 @@ export default function AllUsers({ statusProp }) {
     deleteUserApi,
   ] = useApiCallback("delete", "/api/admin/users");
 
-  const [searchText, setSearchText] = useState("");
-  const searchInputRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [deletingUser, setDeletingUser] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
@@ -122,87 +127,17 @@ export default function AllUsers({ statusProp }) {
     deleteUserApi({ data: { userId: userToDelete } });
   };
 
-  const handleSearch = (selectedKeys, confirm) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-  };
-
-  const handleReset = clearFilters => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={searchInputRef}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: "block" }}
-        />
-        <Button
-          type="primary"
-          onClick={() => handleSearch(selectedKeys, confirm)}
-          icon="search"
-          size="small"
-          style={{ width: 90, marginRight: 8 }}
-        >
-          Search
-        </Button>
-        <Button
-          onClick={() => handleReset(clearFilters)}
-          size="small"
-          style={{ width: 90 }}
-        >
-          Reset
-        </Button>
-      </div>
-    ),
-    filterIcon: filtered => (
-      <Icon
-        type="search"
-        style={{ fontSize: "20px", color: filtered ? "#1890ff" : undefined }}
-      />
-    ),
-    onFilter: (value, record) => {
-      return record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes(value.toLowerCase());
-    },
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => searchInputRef.current.select());
-      }
-    },
-  });
+  const actions = {
+    manageUserStatusOnClick,
+    deleteUser,
+  }
 
   return (
     <Fragment>
-      <Table
-        columns={UsersColumns({
-          getColumnSearchProps,
-          searchText,
-          manageUserStatusOnClick,
-          deleteUser,
-        })}
-        dataSource={
-          allUsersData &&
-          createUserTable(decideUserData(statusProp, allUsersData))
-        }
-        style={{ backgroundColor: "#ffffff" }}
-        bordered
-        loading={allUsersDataIsLoading}
+      <ListWithFilter
+        dataSource={filterUsersByStatus(statusProp, allUsersData)}
+        renderItem={props => <UserListItem {...props} actions={actions} />}
+        pagination={{ position: 'bottom' }}
       />
       <Modal
         title="Are you sure?"

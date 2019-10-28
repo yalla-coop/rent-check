@@ -24,10 +24,10 @@ export const menuElements = [
     route: "/users",
     icon: "user",
     items: [
-      // {
-      //   title: "All",
-      //   route: "/",
-      // },
+      {
+        title: "My users",
+        route: "/",
+      },
       {
         title: "My verified users",
         route: "/verified",
