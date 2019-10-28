@@ -24,18 +24,10 @@ export const menuElements = [
     route: "/users",
     icon: "user",
     items: [
-      {
-        title: "All",
-        route: "/",
-      },
-      {
-        title: "Awaiting verification",
-        route: "/verify",
-      },
-      {
-        title: "Requested super user privileges",
-        route: "/super-req",
-      },
+      // {
+      //   title: "All",
+      //   route: "/",
+      // },
       {
         title: "My verified users",
         route: "/verified",
@@ -44,6 +36,15 @@ export const menuElements = [
         title: "My super users",
         route: "/super",
       },
+      {
+        title: "Awaiting verification",
+        route: "/verify",
+      },
+      {
+        title: "Requested Street Rep",
+        route: "/super-req",
+      },
+
     ],
   },
   {
@@ -52,21 +53,21 @@ export const menuElements = [
     icon: "bar-chart",
     items: [
       {
-        title: "All",
+        title: "My members' data",
         route: "/",
       },
-      {
-        title: "Awaiting verification",
-        route: "/rental-verify",
-      },
-      {
-        title: "My verified data",
-        route: "/rental-verified",
-      },
-      {
-        title: "My added data",
-        route: "/rental-added",
-      },
+      // {
+      //   title: "My verified data",
+      //   route: "/verified",
+      // },
+      // {
+      //   title: "Awaiting verification",
+      //   route: "/verify",
+      // },
+      // {
+      //   title: "My added data",
+      //   route: "/rental-added",
+      // },
     ],
   },
 ];
