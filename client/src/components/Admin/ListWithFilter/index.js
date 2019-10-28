@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { List, Input } from 'antd';
 
 import useWindowWidth from '../../../hooks/useWindowWidth';
-import useApiCallback from '../../../hooks/useApiCallback';
 
-export default function ListWithFilter({ dataSource, renderItem, ...props }) {
+export default function ListWithFilter({ dataSource, renderItem, loading, ...props }) {
   const [searchText, setSearchText] = useState('');
   const [filteredSource, setFilteredSource] = useState(dataSource);
   useEffect(
@@ -39,6 +38,7 @@ export default function ListWithFilter({ dataSource, renderItem, ...props }) {
         renderItem={renderItem}
         itemLayout={isSmallScreen ? 'vertical' : 'horizontal'}
         bordered
+        loading={loading}
         {...props}
       />
     </div>

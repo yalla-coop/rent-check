@@ -24,5 +24,5 @@ export const renderUserDetails = {
   unverified: "Unverified",
   verified: "Verified",
   rejected: "Rejected",
-  awaitingSuperUser: "Awaiting Super User",
+  awaitingSuperUser: "Awaiting Street Rep",
 };

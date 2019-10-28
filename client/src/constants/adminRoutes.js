@@ -28,14 +28,14 @@ export const menuElements = [
         title: "My users",
         route: "/",
       },
-      {
-        title: "My verified users",
-        route: "/verified",
-      },
-      {
-        title: "My super users",
-        route: "/super",
-      },
+      // {
+      //   title: "My verified users",
+      //   route: "/verified",
+      // },
+      // {
+      //   title: "My super users",
+      //   route: "/super",
+      // },
       {
         title: "Awaiting verification",
         route: "/verify",

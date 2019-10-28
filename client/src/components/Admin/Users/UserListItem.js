@@ -1,22 +1,15 @@
 import React from 'react';
-import { List, Tag, Button, Icon } from 'antd';
+import { List, Tag, Button } from 'antd';
 import { renderUserDetails, status as statusConst, roles } from "../../../constants/users";
-import useApiCallback from '../../../hooks/useApiCallback';
-
-const UserLevel = ({ role, status }) => {
-  if (role === 'user' && status === 'unverified') {
-    return null;
-  }
-  return (
-    <Tag color="yellow">{role}</Tag>
-  );
-};
 
 const Title = ({ name, status, role }) => {
   return (
     <div>
       <span style={{ marginRight: '0.4rem' }}>{name}</span>
-      <UserLevel role={role} status={status} />
+      <div style={{minWidth: "200px"}}>
+      <Tag color={role === roles.ADMIN ? "pink" : "blue"}>{renderUserDetails[role]}</Tag>
+      <Tag color={status === statusConst.VERIFIED ? "green" : status === statusConst.AWAITING_SUPER ? "orange" : "red"}>{renderUserDetails[status]}</Tag>
+      </div>
     </div>
   );
 };
@@ -56,16 +49,15 @@ const ActionButtons = ({ user }) => {
     downgradeAction = "Reject Request";
     downgradeUser.status = statusConst.VERIFIED;
   }
-  console.log(user.status === "unverified")
   return hasActions && (
-      <div className="">
+      <div className="mb2">
         <ActionBtn
-          color="#219653"
+          color="green"
           userUpdate={upgradeUser}
           action={upgradeAction}
         />
         <ActionBtn
-          color="#EB5757"
+          color="red"
           userUpdate={downgradeUser}
           action={downgradeAction}
         />

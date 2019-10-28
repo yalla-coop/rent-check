@@ -1,10 +1,10 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef, useEffect, Fragment } from "react";
-import { List, Input, Icon, Button, message, Modal } from "antd";
+import React, { useState, useEffect, Fragment } from "react";
+import { message, Modal } from "antd";
 import useApiCallback from "../../../hooks/useApiCallback";
 //import UsersColumns from "./UsersColumns";
-import ListWithFilter from './ListWithFilter';
+import ListWithFilter from '../ListWithFilter';
 import UserListItem from './UserListItem';
 
 import { status as statusConst, roles } from "../../../constants/users";
@@ -50,7 +50,7 @@ export default function AllUsers({ statusProp }) {
 
   useEffect(() => {
     getAllUsersData();
-  }, [])
+  }, [getAllUsersData])
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
@@ -138,6 +138,7 @@ export default function AllUsers({ statusProp }) {
         dataSource={filterUsersByStatus(statusProp, allUsersData)}
         renderItem={props => <UserListItem {...props} actions={actions} />}
         pagination={{ position: 'bottom' }}
+        loading={allUsersDataIsLoading}
       />
       <Modal
         title="Are you sure?"

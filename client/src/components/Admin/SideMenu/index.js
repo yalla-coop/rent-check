@@ -12,30 +12,13 @@ import useWindowWidth from "../../../hooks/useWindowWidth";
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-export default function SideMenu() {
-  const [collapsed, setCollapsed] = useState(false);
-  const device = useWindowWidth();
-
-  useEffect(() => {
-    setCollapsed(device.isTablet);
-  }, [device]);
-
-  return (
-    <Sider
-      collapsible
-      collapsed={collapsed}
-      onCollapse={value => {
-        setCollapsed(value);
-      }}
-      theme="light"
-      style={{ paddingTop: "2rem" }}
-    >
-      <div className="logo" />
-      <Menu
+const InnerMenu = props => (
+  <Menu
         defaultSelectedKeys={["/"]}
         defaultOpenKeys={[menuElements[0].title]}
         mode="inline"
         theme="light"
+        {...props}
       >
         {menuElements.map(element =>
           element.items ? (
@@ -70,6 +53,31 @@ export default function SideMenu() {
           )
         )}
       </Menu>
+)
+
+export default function SideMenu() {
+  const [collapsed, setCollapsed] = useState(false);
+  const [isSmallScreen, setSmallScreen] = useState(false);
+  const device = useWindowWidth();
+
+  useEffect(() => {
+    setSmallScreen(device.isTablet);
+  }, [device]);
+
+  return isSmallScreen ? (
+    <InnerMenu />
+  ) : (
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={value => {
+        setCollapsed(value);
+      }}
+      theme="light"
+      style={{ paddingTop: '2rem' }}
+      width={250}
+    >
+      <InnerMenu />
     </Sider>
   );
 }
