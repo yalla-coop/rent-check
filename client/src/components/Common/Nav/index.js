@@ -7,7 +7,6 @@ import logo from "../../../assets/logo.png";
 import {
   MAP_URL,
   ADD_RENTAL_URL,
-  ACCOUNT_URL,
   CONTROL_PANEL_URL,
   STREET_REP_URL,
 } from "../../../constants/navRoutes";
