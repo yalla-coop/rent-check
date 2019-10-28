@@ -88,12 +88,12 @@ export default function AllUsers({ statusProp }) {
         );
       }
     }
-    if (userToUpdate) {
+    if (updatingUser && userToUpdate) {
       setUpdatingUser(false);
       setUserToUpdate(null);
       message.success(userStatusData && userStatusData.msg);
     }
-    if (userToDelete) {
+    if (deletingUser && userToDelete) {
       setDeletingUser(false);
       setUserToDelete(null);
       toggleModal();
