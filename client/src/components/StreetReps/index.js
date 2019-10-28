@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Collapse, List, Button, message } from "antd";
 import useFetch from "../../hooks/useFetch";
 import useApiCallback from "../../hooks/useApiCallback";
+import logo from "../../assets/logo.png";
 
 const { Panel } = Collapse;
 
@@ -39,6 +40,7 @@ export default function StreetReps() {
       <div className="dtc v-mid tc black-80 ph3 ph4-l">
         <div className="measure-wide lh-copy db ml-auto mr-auto f6 f5-ns">
           <h1 className="f1 tc mt3">Street Reps</h1>
+          <img src={logo} className="w5 mb4" />
           <p>
             Street reps play a crucial role in the Rent Check app by verifying
             that users and data added to the app are trustworthy, keeping our
