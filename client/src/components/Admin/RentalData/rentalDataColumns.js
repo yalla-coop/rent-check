@@ -96,7 +96,10 @@ const rentalDataColumns = props => {
       title: "Actions",
       dataIndex: "rentalData",
       key: "actions",
-      render: (data, record) => (
+      render: (data, record) => {
+        console.log(data)
+        return (
+        
         <div className="flex items-center">
           <Link
             to={{
@@ -127,7 +130,7 @@ const rentalDataColumns = props => {
             <Icon type="delete" />
           </Button>
         </div>
-      ),
+      )},
     },
   ];
 

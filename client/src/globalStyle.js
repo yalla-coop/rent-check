@@ -30,5 +30,10 @@ export default createGlobalStyle`
   --rejected: var(--red);
   --awaitingSuperUser: var(--B8);
   --invalid: var(--gray);
+
+  /* roles colors */
+  --user: var(--gray);
+  --superUser: var(--pink);
+  --admin: var(--blue);
 }
 `;

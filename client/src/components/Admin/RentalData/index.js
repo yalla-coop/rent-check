@@ -3,17 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 
 // Components
-import { Modal, Icon, message, Select } from "antd";
+import { Modal, message, Select } from "antd";
 import axios from "axios";
 import Loading from "../../Common/Loading";
-import Table from "../Table";
 import RentalRecord from "./RentalRecord";
-
-// Styling
-import * as S from "./RentalData.style";
-
-// Table props
-import rentalDataColumns from "./rentalDataColumns";
+import ListWithFilter from "../ListWithFilter";
+import RentalRecordListItem from "./RentalRecordListItem";
 
 // custom hooks
 import useFetch from "../../../hooks/useFetch";
@@ -23,7 +18,6 @@ import { statusEnum } from "../../../constants/rentalRecords";
 
 // routes
 import { routes } from "../../../constants/adminRoutes";
-import { ADD_RENTAL_URL } from "../../../constants/navRoutes";
 
 const { RENTAL_DATA_ALL, RENTAL_DATA_SINGLE } = routes;
 
@@ -107,16 +101,17 @@ function RentalData({ history }) {
 
   // create table friendly data sets and also pass on all rental details
   const rentalRecords =
-    rentalData &&
+    rentalData ?
     rentalData.map(record => ({
       key: record._id,
       status: record.status,
       submitted: record.submittedBy.email,
+      submittedName: record.submittedBy.name,
       date: record.createdAt,
       rentalData: record,
       updateRecord,
       editStatus,
-    }));
+    })) : [];
 
   return (
     <Switch>
@@ -126,21 +121,14 @@ function RentalData({ history }) {
         path={RENTAL_DATA_ALL}
         render={props => (
           <>
-            <S.TopSection>
-              <S.StyledLink to={ADD_RENTAL_URL}>
-                Add new rental data{" "}
-                <Icon
-                  type="arrow-right"
-                  fontSize={32}
-                  style={{ paddingLeft: "0.25rem" }}
-                />
-              </S.StyledLink>
-            </S.TopSection>
-            <Table
-              columns={rentalDataColumns}
+            <ListWithFilter
+              renderItem={RentalRecordListItem}
               dataSource={rentalRecords}
+              pagination={{ position: 'bottom' }}
+              bordered
               {...props}
               loading={isLoading}
+              filterFunction={(item, searchText) => true}
             />
             {recordToUpdate && (
               <Modal

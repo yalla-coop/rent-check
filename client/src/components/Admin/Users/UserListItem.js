@@ -7,8 +7,8 @@ const Title = ({ name, status, role }) => {
     <div>
       <span style={{ marginRight: '0.4rem' }}>{name}</span>
       <div style={{minWidth: "200px"}}>
-      <Tag color={role === roles.ADMIN ? "pink" : "blue"}>{renderUserDetails[role]}</Tag>
-      <Tag color={status === statusConst.VERIFIED ? "green" : status === statusConst.AWAITING_SUPER ? "orange" : "red"}>{renderUserDetails[status]}</Tag>
+      <Tag color={`var(--${role})`}>{renderUserDetails[role]}</Tag>
+      <Tag color={`var(--${status})`}>{renderUserDetails[status]}</Tag>
       </div>
     </div>
   );

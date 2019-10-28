@@ -132,6 +132,10 @@ export default function AllUsers({ statusProp }) {
     deleteUser,
   }
 
+  const filterUsers = (user, searchText) => 
+    user.name.toLowerCase().includes(searchText.toLowerCase()) || 
+      user.email.toLowerCase().includes(searchText.toLowerCase())
+
   return (
     <Fragment>
       <ListWithFilter
@@ -139,6 +143,7 @@ export default function AllUsers({ statusProp }) {
         renderItem={props => <UserListItem {...props} actions={actions} />}
         pagination={{ position: 'bottom' }}
         loading={allUsersDataIsLoading}
+        filterFunction={filterUsers}
       />
       <Modal
         title="Are you sure?"

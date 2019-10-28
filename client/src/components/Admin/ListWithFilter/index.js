@@ -3,20 +3,16 @@ import { List, Input } from 'antd';
 
 import useWindowWidth from '../../../hooks/useWindowWidth';
 
-export default function ListWithFilter({ dataSource, renderItem, loading, ...props }) {
+export default function ListWithFilter({ dataSource, renderItem, filterFunction, loading, ...props }) {
   const [searchText, setSearchText] = useState('');
   const [filteredSource, setFilteredSource] = useState(dataSource);
   useEffect(
     () =>
       dataSource &&
       setFilteredSource(
-        dataSource.filter(
-          user =>
-            user.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchText.toLowerCase())
-        )
+        dataSource.filter(item => filterFunction(item, searchText))
       ),
-    [dataSource, searchText]
+    [dataSource, searchText, filterFunction]
   );
   const [isSmallScreen, setSmallScreen] = useState(false);
   const device = useWindowWidth();
