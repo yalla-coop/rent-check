@@ -28,7 +28,7 @@ describe("approveSuperUser updates user status", () => {
       expect(updatedUser.status).toBe(status.VERIFIED);
       expect(updatedUser.role).toBe(roles.SUPERUSER);
       expect(updatedUser.grantedSuperBy.toString()).toBe(
-        adminUser._id.toString()
+        adminUser._id.toString(),
       );
       done();
     });

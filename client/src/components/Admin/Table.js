@@ -1,10 +1,10 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef } from 'react';
-import { Table, Input, Icon, Button } from 'antd';
+import React, { useState, useRef } from "react";
+import { Table, Input, Icon, Button } from "antd";
 
 export default function TableComponent({ columns, dataSource, loading }) {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const searchInputRef = useRef(null);
 
@@ -15,7 +15,7 @@ export default function TableComponent({ columns, dataSource, loading }) {
 
   const handleReset = clearFilters => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
 
   const getColumnSearchProps = dataIndex => ({
@@ -34,7 +34,7 @@ export default function TableComponent({ columns, dataSource, loading }) {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Button
           type="primary"
@@ -57,7 +57,7 @@ export default function TableComponent({ columns, dataSource, loading }) {
     filterIcon: filtered => (
       <Icon
         type="search"
-        style={{ fontSize: '20px', color: filtered ? '#1890ff' : undefined }}
+        style={{ fontSize: "20px", color: filtered ? "#1890ff" : undefined }}
       />
     ),
     onFilter: (value, record) => {
@@ -81,7 +81,7 @@ export default function TableComponent({ columns, dataSource, loading }) {
         searchText,
       })}
       dataSource={dataSource}
-      style={{ backgroundColor: '#ffffff' }}
+      style={{ backgroundColor: "#ffffff" }}
       bordered
     />
   );

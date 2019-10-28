@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
   display: flex;
@@ -14,5 +14,5 @@ export const Logo = styled.img`
 `;
 
 export const Headline = styled.h1.attrs({
-  className: 'avenir f4 f2-l mb3 mb5-l',
+  className: "avenir f4 f2-l mb3 mb5-l",
 })``;

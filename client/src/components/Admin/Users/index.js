@@ -1,15 +1,15 @@
 // Router for User routes
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
 // components
-import AllUsers from './AllUsers';
+import AllUsers from "./AllUsers";
 
 // routes
-import { routes } from '../../../constants/adminRoutes';
+import { routes } from "../../../constants/adminRoutes";
 
 // status as filter base of users
-import { status, roles } from '../../../constants/users';
+import { status, roles } from "../../../constants/users";
 
 const {
   USERS_ALL,

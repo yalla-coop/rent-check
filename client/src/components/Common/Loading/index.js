@@ -1,6 +1,6 @@
-import React from 'react';
-import { LargeCenteredImage, HeaderTitle, BoldPink } from './Loading.styles';
-import logo from '../../assets/logo.png';
+import React from "react";
+import { LargeCenteredImage, HeaderTitle, BoldPink } from "./Loading.styles";
+import logo from "../../../assets/logo.png";
 
 const Loading = () => {
   return (

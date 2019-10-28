@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from 'react';
-import * as yup from 'yup';
-import { message } from 'antd';
+import { useState } from "react";
+import * as yup from "yup";
+import { message } from "antd";
 
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
 message.config({
   top: 100,
@@ -43,7 +43,7 @@ function useForm2(stateSchema = {}, validationSchema = {}, callback) {
       await validateField(fieldName, value);
       const newErrs = {
         ...errors,
-        [fieldName]: '',
+        [fieldName]: "",
       };
       setErrors(newErrs);
       setCanSubmit(true);
@@ -70,16 +70,16 @@ function useForm2(stateSchema = {}, validationSchema = {}, callback) {
           setIsSubmitting(false);
           // TODO: render different message if the user is the Admin
           message.success(
-            'Data will need to be verified by your street rep',
+            "Data will need to be verified by your street rep",
             5,
             () => {
-              history.push('/');
+              history.push("/");
             }
           );
           setState({});
         } catch (error) {
-          message.error('Something went wrong try again later', 5, () => {
-            history.push('/');
+          message.error("Something went wrong try again later", 5, () => {
+            history.push("/");
           });
           setIsSubmitting(false);
           setState({});
@@ -89,7 +89,7 @@ function useForm2(stateSchema = {}, validationSchema = {}, callback) {
       setIsSubmitting(false);
       const errorsObj = {};
       errs.inner.forEach(err => {
-        const field = err.path.split('.')[0];
+        const field = err.path.split(".")[0];
         errorsObj[field] = err.message;
       });
       setErrors(errorsObj);

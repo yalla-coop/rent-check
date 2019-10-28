@@ -10,7 +10,7 @@ export const sizeNum = {
   tablet: 768,
   laptop: 1024,
   laptopL: 1440,
-  desktop: 2560
+  desktop: 2560,
 };
 
 export const size = {
@@ -21,7 +21,7 @@ export const size = {
   tablet: `${sizeNum.tablet}px`,
   laptop: `${sizeNum.laptop}px`,
   laptopL: `${sizeNum.laptopL}px`,
-  desktop: `${sizeNum.desktop}px`
+  desktop: `${sizeNum.desktop}px`,
 };
 
 export const breakpoints = {
@@ -33,7 +33,7 @@ export const breakpoints = {
   laptop: `(min-width: ${size.laptop})`,
   laptopL: `(min-width: ${size.laptopL})`,
   desktop: `(min-width: ${size.desktop})`,
-  desktopL: `(min-width: ${size.desktop})`
+  desktopL: `(min-width: ${size.desktop})`,
 };
 
 export const breakpointsMax = {
@@ -45,5 +45,5 @@ export const breakpointsMax = {
   laptop: `(max-width: ${size.laptop})`,
   laptopL: `(max-width: ${size.laptopL})`,
   desktop: `(max-width: ${size.desktop})`,
-  desktopL: `(max-width: ${size.desktop})`
+  desktopL: `(max-width: ${size.desktop})`,
 };

@@ -1,13 +1,13 @@
 // creates Drawer Menu
-import React, { useState, useEffect } from 'react';
-import { Menu, Icon, Layout } from 'antd';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Menu, Icon, Layout } from "antd";
+import { Link } from "react-router-dom";
 
 // menu structure
-import { menuElements } from '../../../constants/adminRoutes';
+import { menuElements } from "../../../constants/adminRoutes";
 
 // custom hooks
-import useWindowWidth from '../../../useWindowWidth';
+import useWindowWidth from "../../../hooks/useWindowWidth";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -28,11 +28,11 @@ export default function SideMenu() {
         setCollapsed(value);
       }}
       theme="light"
-      style={{ paddingTop: '2rem' }}
+      style={{ paddingTop: "2rem" }}
     >
       <div className="logo" />
       <Menu
-        defaultSelectedKeys={['/']}
+        defaultSelectedKeys={["/"]}
         defaultOpenKeys={[menuElements[0].title]}
         mode="inline"
         theme="light"
@@ -40,7 +40,7 @@ export default function SideMenu() {
         {menuElements.map(element =>
           element.items ? (
             <SubMenu
-              style={{ textAlign: 'left' }}
+              style={{ textAlign: "left" }}
               key={element.route}
               title={
                 <span>
@@ -52,7 +52,7 @@ export default function SideMenu() {
               {element.items.map(item => (
                 <Menu.Item
                   key={element.route + item.route}
-                  style={{ textAlign: 'left' }}
+                  style={{ textAlign: "left" }}
                 >
                   <Link to={`/control-panel${element.route + item.route}`}>
                     <span>{item.title}</span>
@@ -61,7 +61,7 @@ export default function SideMenu() {
               ))}
             </SubMenu>
           ) : (
-            <Menu.Item key={element.route} style={{ textAlign: 'left' }}>
+            <Menu.Item key={element.route} style={{ textAlign: "left" }}>
               <Link to={`/control-panel${element.route}`}>
                 <Icon type={element.icon} />
                 <span>{element.title}</span>
@@ -69,12 +69,6 @@ export default function SideMenu() {
             </Menu.Item>
           )
         )}
-        <Menu.Item style={{ textAlign: 'left' }}>
-          <Link to="/">
-            <Icon type="home" />
-            <span>Vist Website</span>
-          </Link>
-        </Menu.Item>
       </Menu>
     </Sider>
   );

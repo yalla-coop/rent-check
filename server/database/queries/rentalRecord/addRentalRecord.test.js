@@ -8,13 +8,13 @@ const buildData = require("../../data/index");
 const { addRentalRecord } = require("./index");
 
 // import db models
-const RentalRecord = require("../../models/RentalRecord");
 const User = require("../../models/User");
 
 // import constants
 const rentalRecordsConst = require("../../../constants/rentalRecords");
 const usersConst = require("../../../constants/users");
-const roles = usersConst.roles;
+
+const { roles } = usersConst;
 const userStatus = usersConst.status;
 
 describe("addRentalRecords adds a valid record", () => {
@@ -27,7 +27,6 @@ describe("addRentalRecords adds a valid record", () => {
   test("should get an array of rental records without attached user data", async done => {
     // get our users to create the data
     const superUser = await User.findOne({ role: roles.SUPERUSER });
-    const admin = await User.findOne({ role: roles.ADMIN });
     const user = await User.findOne({
       role: roles.USER,
       status: userStatus.VERIFIED,
@@ -53,7 +52,7 @@ describe("addRentalRecords adds a valid record", () => {
       specification: rentalRecordsConst.specification.REFURBISHED,
       breakClauses: "Half way through the lease in 2017",
     };
-    const result = await addRentalRecord(record);
+    await addRentalRecord(record);
     done();
   });
 });

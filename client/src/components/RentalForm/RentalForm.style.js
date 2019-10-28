@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Label = styled.label.attrs({
-  className: 'ma0',
+  className: "ma0",
 })`
   display: block;
   font-weight: bold;

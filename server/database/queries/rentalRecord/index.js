@@ -1,5 +1,3 @@
-const RentalRecord = require("../../models/RentalRecord");
-
 const addRentalRecord = require("./addRentalRecord");
 const getAllRentalRecords = require("./getAllRentalRecords");
 const getRentalRecordsByUserId = require("./getRentalRecordsByUserId");
@@ -15,5 +13,5 @@ module.exports = {
   getAllRentalRecordsAdmin,
   deleteUserRecords,
   deleteSingleRecord,
-  setRecordStatus
+  setRecordStatus,
 };

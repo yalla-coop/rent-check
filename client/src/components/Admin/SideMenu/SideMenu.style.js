@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Button } from 'antd';
+import styled from "styled-components";
+import { Button } from "antd";
 
 export const SideMenuWrapper = styled.div`
   position: fixed;

@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import { useState, useEffect, useReducer } from 'react';
-import axios from 'axios';
+import { useState, useEffect, useReducer } from "react";
+import axios from "axios";
 
 const types = {
-  FETCH_INIT: 'FETCH_INIT',
-  FETCH_SUCCESS: 'FETCH_SUCCESS',
-  FETCH_FAILURE: 'FETCH_FAILURE',
+  FETCH_INIT: "FETCH_INIT",
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  FETCH_FAILURE: "FETCH_FAILURE",
 };
 
 const dataFetchReducer = (state, action) => {

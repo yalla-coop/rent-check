@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   Form,
   Closer,
   LargeCenteredImage,
   Warning,
   Button,
-} from './PostcodeForm.styles';
-import logo from '../../assets/logo.png';
+} from "./PostcodeForm.styles";
+import logo from "../../../assets/logo.png";
 
 const SearchForm = ({
   showWarning,
@@ -18,9 +18,9 @@ const SearchForm = ({
 }) => {
   let inputClasses;
   if (showWarning) {
-    inputClasses = 'input-reset ba b--black-20 pa2 db mt2 dark-pink';
+    inputClasses = "input-reset ba b--black-20 pa2 db mt2 dark-pink";
   } else {
-    inputClasses = 'input-reset ba b--black-20 pa2 db mt2';
+    inputClasses = "input-reset ba b--black-20 pa2 db mt2";
   }
   return (
     <Form onSubmit={onSubmit}>

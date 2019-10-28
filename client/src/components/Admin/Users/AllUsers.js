@@ -1,11 +1,11 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { Table, Input, Icon, Button, message, Modal } from 'antd';
-import useApiCallback from '../../../hooks/useApiCallback';
-import UsersColumns from './UsersColumns';
+import React, { useState, useRef, useEffect, Fragment } from "react";
+import { Table, Input, Icon, Button, message, Modal } from "antd";
+import useApiCallback from "../../../hooks/useApiCallback";
+import UsersColumns from "./UsersColumns";
 
-import { status as statusConst, roles } from '../../../constants/users';
+import { status as statusConst, roles } from "../../../constants/users";
 
 // chooses data base for user table depending on section
 const decideUserData = (userStatus, allUsersData) => {
@@ -43,21 +43,19 @@ export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
     getAllUsersData,
-  ] = useApiCallback('get', '/api/admin/users');
+  ] = useApiCallback("get", "/api/admin/users");
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
     updateUserStatus,
-  ] = useApiCallback('patch', '/api/admin/users');
+  ] = useApiCallback("patch", "/api/admin/users");
 
   const [
     { data: deletedUser, error: userDeleteError },
     deleteUserApi,
-  ] = useApiCallback('delete', '/api/admin/users'); 
+  ] = useApiCallback("delete", "/api/admin/users");
 
-  
-
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const searchInputRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [deletingUser, setDeletingUser] = useState(false);
@@ -72,7 +70,7 @@ export default function AllUsers({ statusProp }) {
         return message.error(userStatusUpdateHasErrored);
       } catch (e) {
         return message.error(
-          'An error occurred in processing your request. Please try again later.'
+          "An error occurred in processing your request. Please try again later."
         );
       }
     }
@@ -84,7 +82,7 @@ export default function AllUsers({ statusProp }) {
         return message.error(userDeleteError);
       } catch (e) {
         return message.error(
-          'An error occurred deleting user. Please try again later.'
+          "An error occurred deleting user. Please try again later."
         );
       }
     }
@@ -95,16 +93,22 @@ export default function AllUsers({ statusProp }) {
       setDeletingUser(false);
       setUserToDelete(null);
       toggleModal();
-      message.success(deletedUser && deletedUser.msg)
+      message.success(deletedUser && deletedUser.msg);
     }
     return getAllUsersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getAllUsersData, userStatusUpdateHasErrored, userStatusData, deletedUser, userDeleteError]);
+  }, [
+    getAllUsersData,
+    userStatusUpdateHasErrored,
+    userStatusData,
+    deletedUser,
+    userDeleteError,
+  ]);
 
   // validate/reject (super) user status
   // takes user id, status (awaiting verification/ awaiting super user) and action (reject, approve)
 
-  const manageUserStatusOnClick = (updatedUser) => {
+  const manageUserStatusOnClick = updatedUser => {
     updateUserStatus(updatedUser);
   };
 
@@ -114,8 +118,8 @@ export default function AllUsers({ statusProp }) {
   };
 
   const confirmDelete = () => {
-      setDeletingUser(true);
-      deleteUserApi({ data: { userId: userToDelete  }})
+    setDeletingUser(true);
+    deleteUserApi({ data: { userId: userToDelete } });
   };
 
   const handleSearch = (selectedKeys, confirm) => {
@@ -125,7 +129,7 @@ export default function AllUsers({ statusProp }) {
 
   const handleReset = clearFilters => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
 
   const getColumnSearchProps = dataIndex => ({
@@ -144,7 +148,7 @@ export default function AllUsers({ statusProp }) {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Button
           type="primary"
@@ -167,7 +171,7 @@ export default function AllUsers({ statusProp }) {
     filterIcon: filtered => (
       <Icon
         type="search"
-        style={{ fontSize: '20px', color: filtered ? '#1890ff' : undefined }}
+        style={{ fontSize: "20px", color: filtered ? "#1890ff" : undefined }}
       />
     ),
     onFilter: (value, record) => {
@@ -196,7 +200,7 @@ export default function AllUsers({ statusProp }) {
           allUsersData &&
           createUserTable(decideUserData(statusProp, allUsersData))
         }
-        style={{ backgroundColor: '#ffffff' }}
+        style={{ backgroundColor: "#ffffff" }}
         bordered
         loading={allUsersDataIsLoading}
       />

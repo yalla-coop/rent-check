@@ -1,8 +1,8 @@
 // sets columns for user table
-import React from 'react';
-import Highlighter from 'react-highlight-words';
-import { Button, Icon, Tag, Divider } from 'antd';
-import { renderUserDetails, status, roles } from '../../../constants/users';
+import React from "react";
+import Highlighter from "react-highlight-words";
+import { Button, Icon, Tag, Divider } from "antd";
+import { renderUserDetails, status, roles } from "../../../constants/users";
 
 export default ({
   getColumnSearchProps,
@@ -11,13 +11,9 @@ export default ({
   deleteUser,
 }) => {
   // renders btn to approve or reject user/ super user
-  const ActionBtn = ({
-    userUpdate,
-    color, 
-    action
-  }) => (
+  const ActionBtn = ({ userUpdate, color, action }) => (
     <Button
-      style={{ color, borderColor: color, fontSize: '0.8rem' }}
+      style={{ color, borderColor: color, fontSize: "0.8rem" }}
       className="mr1"
       ghost
       onClick={() => manageUserStatusOnClick(userUpdate)}
@@ -26,9 +22,9 @@ export default ({
     </Button>
   );
 
-  const ActionButtons = ({user}) => {
-    let upgradeUser = {_id: user.key};
-    let downgradeUser = {_id: user.key};
+  const ActionButtons = ({ user }) => {
+    let upgradeUser = { _id: user.key };
+    let downgradeUser = { _id: user.key };
     let hasActions = false;
     let upgradeAction = "";
     let downgradeAction = "";
@@ -48,22 +44,31 @@ export default ({
       downgradeAction = "Reject Request";
       downgradeUser.status = status.VERIFIED;
     }
-    return hasActions && (
-          <div className="flex items-center justify-between">
-            <ActionBtn color='#219653' userUpdate={upgradeUser} action={upgradeAction} />
-            <ActionBtn color='#EB5757' userUpdate={downgradeUser} action={downgradeAction} />
-          </div>
-    )
-
-  }
+    return (
+      hasActions && (
+        <div className="flex items-center justify-between">
+          <ActionBtn
+            color="#219653"
+            userUpdate={upgradeUser}
+            action={upgradeAction}
+          />
+          <ActionBtn
+            color="#EB5757"
+            userUpdate={downgradeUser}
+            action={downgradeAction}
+          />
+        </div>
+      )
+    );
+  };
 
   const renderDeleteBtn = userId => (
     <span className="flex items-center">
       <Divider type="vertical" />
       <Button
         style={{
-          color: 'var(--red)',
-          borderColor: 'var(--red)',
+          color: "var(--red)",
+          borderColor: "var(--red)",
         }}
         className="mr1 self-end"
         ghost
@@ -76,65 +81,65 @@ export default ({
 
   const tableColumns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: text => (
-        <span style={{ fontWeight: '700' }}>
+        <span style={{ fontWeight: "700" }}>
           <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
             searchWords={[searchText]}
             autoEscape
             textToHighlight={text.toString()}
           />
         </span>
       ),
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps("name"),
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
       render: text => (
         <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
           searchWords={[searchText]}
           autoEscape
           textToHighlight={text.toString()}
         />
       ),
-      ...getColumnSearchProps('email'),
+      ...getColumnSearchProps("email"),
     },
     {
-      title: 'Level',
-      dataIndex: 'level',
-      key: 'level',
+      title: "Level",
+      dataIndex: "level",
+      key: "level",
       render: (text, record) => (
         <div className="flex items-center justify-between">
           <span>{renderUserDetails[text]}</span>
 
-          {record.level && record.level === 'user' ? (
+          {record.level && record.level === "user" ? (
             <Button>
               <Icon type="form" />
             </Button>
           ) : (
-            ''
+            ""
           )}
         </div>
       ),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
       render: (text, record) => (
         <Tag color={`var(--${text})`}>{renderUserDetails[text]}</Tag>
       ),
     },
     {
-      title: 'Actions',
-      dataIndex: 'actions',
-      key: 'actions',
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
       render: (text, record) => {
         return [status.UNVERIFIED, status.AWAITING_SUPER].includes(
           record.status

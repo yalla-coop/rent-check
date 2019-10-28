@@ -1,5 +1,6 @@
-const { roleEnum, statusEnum } = require("../../constants/users");
 const mongoose = require("mongoose");
+const { roleEnum, statusEnum } = require("../../constants/users");
+
 const { Schema, model } = mongoose;
 
 const schema = new mongoose.Schema({

@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 function rotationBuilder() {
   const rotation = keyframes`
@@ -18,28 +18,28 @@ function rotationBuilder() {
 }
 
 export const LegendUseclass = styled.div.attrs({
-  className: 'fixed left-0 bottom-0 z-9999',
+  className: "fixed left-0 bottom-0 z-9999",
 })``;
 
 export const Circle = styled.div.attrs({
-  className: 'mt2 w2 h2 br-100 flex items-center justify-center ',
+  className: "mt2 w2 h2 br-100 flex items-center justify-center ",
 })`
   background: ${props => props.color};
 `;
 
 export const AnimateCircle = styled.div.attrs({
-  className: 'mt2 w2 h2 br-100 flex items-center justify-center ',
+  className: "mt2 w2 h2 br-100 flex items-center justify-center ",
 })`
   background: ${props => props.color};
   animation: ${rotationBuilder()} 0.5s linear;
 `;
 
 export const UseText = styled.p.attrs({
-  className: 'avenir black ma0',
+  className: "avenir black ma0",
 })``;
 
 export const ClassListItems = styled.ul.attrs({
-  className: 'pl2 list',
+  className: "pl2 list",
 })`
   display: ${props => props.display};
 `;

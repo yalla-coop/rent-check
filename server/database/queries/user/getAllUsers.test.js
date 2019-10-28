@@ -1,9 +1,7 @@
 /**
  * @jest-environment node
  */
-const User = require("../../models/User");
 const buildData = require("../../data/index");
-const { roles, status } = require("../../../constants/users");
 
 const { getAllUsers } = require("./index");
 

@@ -5,7 +5,7 @@ import axios from "axios";
 const types = {
   FETCH_INIT: "FETCH_INIT",
   FETCH_SUCCESS: "FETCH_SUCCESS",
-  FETCH_FAILURE: "FETCH_FAILURE"
+  FETCH_FAILURE: "FETCH_FAILURE",
 };
 
 const dataFetchReducer = (state, action) => {
@@ -18,14 +18,14 @@ const dataFetchReducer = (state, action) => {
         isLoading: false,
         isError: false,
         error: null,
-        data: action.payload
+        data: action.payload,
       };
     case types.FETCH_FAILURE:
       return {
         ...state,
         isLoading: false,
         isError: true,
-        error: action.payload
+        error: action.payload,
       };
     default:
       throw new Error();
@@ -37,7 +37,7 @@ const useApiCallback = (method, url, initialData) => {
     isLoading: false,
     isError: false,
     data: initialData,
-    error: null
+    error: null,
   });
 
   const apiCallback = useCallback(
@@ -55,12 +55,12 @@ const useApiCallback = (method, url, initialData) => {
             if (error.response.data.message) {
               dispatch({
                 type: types.FETCH_FAILURE,
-                payload: error.response.data.message
+                payload: error.response.data.message,
               });
             } else {
               dispatch({
                 type: types.FETCH_FAILURE,
-                payload: error.response.data
+                payload: error.response.data,
               });
             }
           }

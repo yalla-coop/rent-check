@@ -1,31 +1,31 @@
-import React from 'react';
-import moment from 'moment';
-import { Row, Col } from 'antd';
-import axios from 'axios';
+import React from "react";
+import moment from "moment";
+import { Row, Col } from "antd";
+import axios from "axios";
 
-import FormItem from './FormItem';
-import formData from './rental-form.config';
-import useForm from '../../hooks/useForm';
-import validationSchema from './rentalForm.validation';
+import FormItem from "./FormItem";
+import formData from "./rental-form.config";
+import useForm from "../../hooks/useForm";
+import validationSchema from "./rentalForm.validation";
 
-import * as S from './RentalForm.style';
+import * as S from "./RentalForm.style";
 
-import Button from '../Common/Button';
+import Button from "../Common/Button";
 
 const initValues = {};
 formData().forEach(item => {
-  if (item.type === 'date') {
+  if (item.type === "date") {
     initValues[item.name] = null;
-  } else if (item.type === 'number') {
+  } else if (item.type === "number") {
     initValues[item.name] = undefined;
   } else {
-    initValues[item.name] = '';
+    initValues[item.name] = "";
   }
 });
 
 const RentalForm = () => {
   const onSubmitForm = state => {
-    return axios.post('/api/locations', state);
+    return axios.post("/api/locations", state);
   };
 
   const {
@@ -53,7 +53,7 @@ const RentalForm = () => {
     }
     return (
       endValue.valueOf() <= startValue.valueOf() ||
-      (endValue && endValue < moment().subtract(1, 'day'))
+      (endValue && endValue < moment().subtract(1, "day"))
     );
   };
 
@@ -98,7 +98,7 @@ const RentalForm = () => {
         type="primary"
         text="Submit"
         loading={isSubmitting}
-        style={{ margin: '0 auto' }}
+        style={{ margin: "0 auto" }}
       />
     </S.Form>
   );
