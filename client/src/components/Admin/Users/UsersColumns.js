@@ -25,18 +25,21 @@ export default ({
   const ActionButtons = ({ user }) => {
     let upgradeUser = { _id: user.key };
     let downgradeUser = { _id: user.key };
-    let hasActions = false;
+    let hasUpgradeActions = false;
+    let hasDowngradeActions = false;
     let upgradeAction = "";
     let downgradeAction = "";
     if (user.status === status.UNVERIFIED) {
-      hasActions = true;
+      hasUpgradeActions = true;
+      hasDowngradeActions = true;
       upgradeAction = "Verify User";
       upgradeUser.status = status.VERIFIED;
       upgradeUser.verifiedBy = "CURRENT USER ID";
       downgradeAction = "Reject User";
       downgradeUser.status = status.REJECTED;
-    } else if (user.status === status.AWAITING_SUPER) {
-      hasActions = true;
+    } if (user.status === status.AWAITING_SUPER) {
+      hasUpgradeActions = true;
+      hasDowngradeActions = true;
       upgradeAction = "Make Super";
       upgradeUser.status = status.VERIFIED;
       upgradeUser.role = roles.SUPERUSER;
@@ -44,21 +47,31 @@ export default ({
       downgradeAction = "Reject Request";
       downgradeUser.status = status.VERIFIED;
     }
+    else if (user.level === roles.SUPERUSER) {
+      hasDowngradeActions = true;
+      downgradeAction = 'Revoke Super Privileges';
+      downgradeUser.role = roles.USER;
+      downgradeUser.madeSuperBy = "";
+    }
     return (
-      hasActions && (
+
         <div className="flex items-center justify-between">
+          {hasUpgradeActions && (
+            <ActionBtn
+              color="#219653"
+              userUpdate={upgradeUser}
+              action={upgradeAction}
+            />
+        )}
+      {hasDowngradeActions && (
           <ActionBtn
-            color="#219653"
-            userUpdate={upgradeUser}
-            action={upgradeAction}
-          />
-          <ActionBtn
-            color="#EB5757"
-            userUpdate={downgradeUser}
-            action={downgradeAction}
-          />
-        </div>
-      )
+          color="#EB5757"
+          userUpdate={downgradeUser}
+          action={downgradeAction}
+        />
+      )}
+      </div>
+
     );
   };
 
@@ -140,18 +153,14 @@ export default ({
       title: "Actions",
       dataIndex: "actions",
       key: "actions",
-      render: (text, record) => {
-        return [status.UNVERIFIED, status.AWAITING_SUPER].includes(
-          record.status
-        ) ? (
+      render: (text, record) =>
+       (
           <div className="flex items-center justify-between">
             <ActionButtons user={record} />
             {renderDeleteBtn(record.key)}
           </div>
-        ) : (
-          <div>{renderDeleteBtn(record.key)}</div>
-        );
-      },
+        )
+
     },
   ];
 
