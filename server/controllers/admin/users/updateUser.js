@@ -18,13 +18,12 @@ module.exports = async function updateUser(req, res) {
 
   const userVerified = (previous, updated) =>
     previous.role === roles.USER &&
-    previous.status === status.UNVERIFIED &&
+    (previous.status === status.UNVERIFIED ||
+      previous.status === status.REJECTED) &&
     updated.status === status.VERIFIED;
 
   const userRejected = (previous, updated) =>
-    previous.role === roles.USER &&
-    previous.status === status.UNVERIFIED &&
-    updated.status === status.REJECTED;
+    previous.role === roles.USER && updated.status === status.REJECTED;
 
   const superUserGranted = (previous, updated) =>
     previous.status === status.AWAITING_SUPER &&
@@ -32,14 +31,15 @@ module.exports = async function updateUser(req, res) {
     updated.role === roles.SUPERUSER;
 
   const superUserRejected = (previous, updated) =>
-    previous.status === status.AWAITING_SUPER &&
+    (previous.status === status.AWAITING_SUPER ||
+      previous.role === roles.SUPERUSER) &&
     updated.status === status.VERIFIED &&
-    updated.role !== roles.SUPERUSER;
+    updated.role === roles.USER;
 
   const updateDatabase = async (query, args, msg) => {
     try {
       await query(...args);
-      const updatedUserProfile = await getUser(updatedUser._id);
+      await getUser(updatedUser._id);
       res.send({ msg });
     } catch (err) {
       res

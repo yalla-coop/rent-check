@@ -40,6 +40,11 @@ const ActionButtons = ({ user }) => {
     upgradeUser.verifiedBy = "CURRENT USER ID";
     downgradeAction = "Reject User";
     downgradeUser.status = statusConst.REJECTED;
+  } else if (user.status === statusConst.REJECTED) {
+    hasActions = true;
+    upgradeAction = "Verify User";
+    upgradeUser.status = statusConst.VERIFIED;
+    upgradeUser.verifiedBy = "CURRENT USER ID"; 
   } else if (user.status === statusConst.AWAITING_SUPER) {
     hasActions = true;
     upgradeAction = "Make Street Rep";
@@ -48,19 +53,34 @@ const ActionButtons = ({ user }) => {
     upgradeUser.madeSuperBy = "CURRENT USER ID";
     downgradeAction = "Reject Request";
     downgradeUser.status = statusConst.VERIFIED;
+  } else if (user.status === statusConst.VERIFIED && user.role === roles.USER) {
+    hasActions = true;
+    downgradeAction = "Reject User";
+    downgradeUser.status = statusConst.REJECTED;
+    downgradeUser.rejectedBy = "CURRENT USER ID";
+  } else if (user.status === statusConst.VERIFIED && user.role === roles.SUPERUSER) {
+    hasActions = true;
+    downgradeAction = "Remove Street Rep";
+    downgradeUser.role = roles.USER;
+    downgradeUser.status = statusConst.VERIFIED;
+    downgradeUser.rejectedBy = "CURRENT USER ID";
   }
   return hasActions && (
       <div className="mb2">
+      {upgradeAction !== "" && (
         <ActionBtn
           color="green"
           userUpdate={upgradeUser}
           action={upgradeAction}
         />
+      )}
+      {downgradeAction !== "" && (
         <ActionBtn
           color="red"
           userUpdate={downgradeUser}
           action={downgradeAction}
         />
+      )}
       </div>
     )
 };
