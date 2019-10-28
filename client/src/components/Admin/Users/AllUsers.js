@@ -144,6 +144,7 @@ export default function AllUsers({ statusProp }) {
         pagination={{ position: 'bottom' }}
         loading={allUsersDataIsLoading}
         filterFunction={filterUsers}
+        filterPlaceholder="Search by name or email"
       />
       <Modal
         title="Are you sure?"

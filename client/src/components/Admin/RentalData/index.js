@@ -113,6 +113,8 @@ function RentalData({ history }) {
       editStatus,
     })) : [];
 
+  const filterByPostcodeAndEmail = (item, searchText) => item.rentalData.postcode.toLowerCase().includes(searchText.toLowerCase()) || item.submitted.toLowerCase().includes(searchText.toLowerCase())
+
   return (
     <Switch>
       {loading && <Loading />}
@@ -128,7 +130,8 @@ function RentalData({ history }) {
               bordered
               {...props}
               loading={isLoading}
-              filterFunction={(item, searchText) => true}
+              filterFunction={filterByPostcodeAndEmail}
+              filterPlaceholder="Search by postcode or email"
             />
             {recordToUpdate && (
               <Modal

@@ -18,7 +18,7 @@ export const statusEnum = Object.values(status);
 export const renderUserDetails = {
   // role
   user: "User",
-  superUser: "Super User",
+  superUser: "Street Rep",
   admin: "Admin",
   // status
   unverified: "Unverified",

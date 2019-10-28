@@ -3,7 +3,7 @@ import { List, Input } from 'antd';
 
 import useWindowWidth from '../../../hooks/useWindowWidth';
 
-export default function ListWithFilter({ dataSource, renderItem, filterFunction, loading, ...props }) {
+export default function ListWithFilter({ dataSource, renderItem, filterFunction, filterPlaceholder, loading, ...props }) {
   const [searchText, setSearchText] = useState('');
   const [filteredSource, setFilteredSource] = useState(dataSource);
   useEffect(
@@ -23,7 +23,7 @@ export default function ListWithFilter({ dataSource, renderItem, filterFunction,
   return (
     <div>
       <Input
-        placeholder="Search by name or email"
+        placeholder={filterPlaceholder || "Type to search"}
         allowClear
         value={searchText}
         onChange={e => setSearchText(e.target.value)}

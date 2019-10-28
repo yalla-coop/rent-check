@@ -42,7 +42,7 @@ const ActionButtons = ({ user }) => {
     downgradeUser.status = statusConst.REJECTED;
   } else if (user.status === statusConst.AWAITING_SUPER) {
     hasActions = true;
-    upgradeAction = "Make Super";
+    upgradeAction = "Make Street Rep";
     upgradeUser.status = statusConst.VERIFIED;
     upgradeUser.role = roles.SUPERUSER;
     upgradeUser.madeSuperBy = "CURRENT USER ID";
