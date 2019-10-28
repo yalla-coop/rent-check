@@ -9,7 +9,8 @@ export const Label = styled.label.attrs({
 `;
 
 export const Form = styled.form`
-  width: 65%;
-  margin: 0 auto;
+  width: 90%;
+  max-width: 600px;
+  margin: 4rem auto 2rem auto;
   margin-top: 4rem;
 `;

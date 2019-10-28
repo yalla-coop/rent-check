@@ -3,7 +3,7 @@ import { Input } from "antd";
 
 const TextArea = ({ name, handleChange, value }) => {
   return (
-    <div>
+    <div style={{width: "100%"}}>
       <Input.TextArea
         style={{ width: "100%" }}
         rows={4}

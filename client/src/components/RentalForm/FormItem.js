@@ -9,12 +9,11 @@ const FormItem = ({ label, type, ...formProps }) => {
       type="flex"
       justify="space-between"
       align="middle"
-      style={{ margin: "10px 0" }}
+      style={{ margin: "1.5rem 0" }}
     >
-      <Col span={7}>
-        <Label>{label}</Label>
-      </Col>
-      <Col span={16}>
+        
+      <Col span={24}>
+      <Label>{label}</Label>
         {getInputComponent(type)(formProps)}
         <div key={formProps.label} style={{ color: "red" }}>
           {formProps.error}
