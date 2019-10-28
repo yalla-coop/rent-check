@@ -32,20 +32,13 @@ module.exports = {
     "consistent-return": 0,
     "func-names": 0,
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn", // <--- THIS IS THE NEW RULE
+    "react-hooks/exhaustive-deps": "warn",
     "jsx-a11y/label-has-associated-control": 0,
-    "react/jsx-props-no-spreading": [
-      {
-        html: "ignore",
-        custom: "ignore",
-        explicitSpread: "ignore",
-      },
-    ],
+    "react/jsx-props-no-spreading": 0,
     "jsx-a11y/label-has-for": 0,
     "consistent-return": 0,
     "import/prefer-default-export": 0,
     "react/jsx-no-undef": 1,
-    // disables the windows/unix linebreak checks.
     "linebreak-style": 0,
     "linebreak-style": [0, "error", "windows"],
     "react/prop-types": [0],
