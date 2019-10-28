@@ -35,7 +35,7 @@ export default function StreetReps() {
   const showOnlyRepsWithLocationDetails = reps =>
     reps && reps.filter(rep => rep.companyName && rep.companyAddress);
   return (
-    <article className="vh-100 dt w-100 bg-light-pink pv5">
+    <article className="vh-100 dt w-100 bg-white pv5">
       <div className="dtc v-mid tc black-80 ph3 ph4-l">
         <div className="measure-wide lh-copy db ml-auto mr-auto f6 f5-ns">
           <h1 className="f1 tc mt3">Street Reps</h1>
@@ -85,6 +85,8 @@ export default function StreetReps() {
                 the role you can speak to one of our existing reps, who you can
                 find in the list above.
               </p>
+              <p>
+                By requesting to become a Street Rep, you agree to the Street Rep terms and conditions</p>
               <Button
                 onClick={e => {
                   e.preventDefault();
