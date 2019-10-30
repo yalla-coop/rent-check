@@ -20,7 +20,7 @@ export default ({
     >
       {action}
     </Button>
-  );
+  )
 
   const ActionButtons = ({ user }) => {
     let upgradeUser = { _id: user.key };

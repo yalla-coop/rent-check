@@ -36,23 +36,23 @@ const createUserTable = arr =>
     name,
     email,
     level: role,
-    status
+    status,
   }));
 
 export default function AllUsers({ statusProp }) {
   const [
     { data: allUsersData, isLoading: allUsersDataIsLoading },
-    getAllUsersData
+    getAllUsersData,
   ] = useApiCallback('get', '/api/admin/users');
 
   const [
     { data: userStatusData, error: userStatusUpdateHasErrored },
-    updateUserStatus
+    updateUserStatus,
   ] = useApiCallback('patch', '/api/admin/users');
 
   const [
     { data: deletedUser, error: userDeleteError },
-    deleteUserApi
+    deleteUserApi,
   ] = useApiCallback('delete', '/api/admin/users');
 
   const [searchText, setSearchText] = useState('');
@@ -106,7 +106,7 @@ export default function AllUsers({ statusProp }) {
     userStatusUpdateHasErrored,
     userStatusData,
     deletedUser,
-    userDeleteError
+    userDeleteError,
   ]);
 
   // validate/reject (super) user status
@@ -143,7 +143,7 @@ export default function AllUsers({ statusProp }) {
       setSelectedKeys,
       selectedKeys,
       confirm,
-      clearFilters
+      clearFilters,
     }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -190,17 +190,17 @@ export default function AllUsers({ statusProp }) {
       if (visible) {
         setTimeout(() => searchInputRef.current.select());
       }
-    }
+    },
   });
 
   return (
-    <Fragment>
+    <>
       <Table
         columns={UsersColumns({
           getColumnSearchProps,
           searchText,
           manageUserStatusOnClick,
-          deleteUser
+          deleteUser,
         })}
         dataSource={
           allUsersData &&
@@ -222,6 +222,6 @@ export default function AllUsers({ statusProp }) {
           submitted. This action cannot be undone.
         </p>
       </Modal>
-    </Fragment>
+    </>
   );
 }

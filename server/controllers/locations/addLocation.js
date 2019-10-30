@@ -1,14 +1,14 @@
-const connectToDatabase = require("../../database/dbConnection");
-const User = require("../../database/models/User");
-const getSingleGeo = require("../../utils/postcodes");
-const { addRentalRecord } = require("../../database/queries/rentalRecord");
-const RentalRecord = require("../../database/models/RentalRecord");
-const validateByRecord = require("../../utils/validateByModel");
-const { status } = require("../../constants/rentalRecords");
-const { roles } = require("../../constants/users");
+const connectToDatabase = require('../../database/dbConnection');
+const User = require('../../database/models/User');
+const getSingleGeo = require('../../utils/postcodes');
+const { addRentalRecord } = require('../../database/queries/rentalRecord');
+const RentalRecord = require('../../database/models/RentalRecord');
+const validateByRecord = require('../../utils/validateByModel');
+const { status } = require('../../constants/rentalRecords');
+const { roles } = require('../../constants/users');
 
 // Stub - function to be replaced with one that gets ID of logged in user
-const getCurrentUser = () => User.findOne({ name: "Krissie Nicholson" });
+const getCurrentUser = () => User.findOne({ name: 'Krissie Nicholson' });
 
 const validateRentalRecord = record => validateByRecord(RentalRecord, record);
 
