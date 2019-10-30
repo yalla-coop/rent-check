@@ -1,6 +1,6 @@
 // creates Tables for Users and Rental Data
 // gets fed data source and column files as props
-import React, { useState, useRef, useEffect, Fragment } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Table, Input, Icon, Button, message, Modal } from 'antd';
 import useApiCallback from '../../../hooks/useApiCallback';
 import UsersColumns from './UsersColumns';
