@@ -1,13 +1,14 @@
-const connectToDatabase = require("../../../database/dbConnection");
 const {
   getUser,
   approveSuperUser,
   rejectSuperUser,
+  revokeSuperUser,
   approveUser,
   rejectUser,
-  getAdminUserId,
-} = require("../../../database/queries/user");
-const { status, roles } = require("../../../constants/users");
+  getAdminUserId
+} = require('../../../database/queries/user');
+
+const { status, roles } = require('../../../constants/users');
 
 module.exports = async function updateUser(req, res) {
   // TODO replace with current logged in admin ID
@@ -36,16 +37,18 @@ module.exports = async function updateUser(req, res) {
     updated.status === status.VERIFIED &&
     updated.role !== roles.SUPERUSER;
 
+  const superUserRevoked = (previous, updated) =>
+    previous.role === roles.SUPERUSER && updated.role === roles.USER;
+
   const updateDatabase = async (query, args, msg) => {
     try {
       await query(...args);
-      const updatedUserProfile = await getUser(updatedUser._id);
       res.send({ msg });
     } catch (err) {
       res
         .status(500)
         .send(
-          "Sorry, there has been an internal server error updating the user caused by this request",
+          'Sorry, there has been an internal server error updating the user caused by this request'
         );
     }
   };
@@ -54,33 +57,42 @@ module.exports = async function updateUser(req, res) {
     return updateDatabase(
       rejectUser,
       [updatedUser._id],
-      "User has been rejected",
+      'User has been rejected'
     );
   }
   if (userVerified(previousUser, updatedUser)) {
     return updateDatabase(
       approveUser,
       [updatedUser._id, adminIdPlaceholder],
-      "User has been verified",
+      'User has been verified'
     );
   }
   if (superUserRejected(previousUser, updatedUser)) {
     return updateDatabase(
       rejectSuperUser,
       [updatedUser._id],
-      "Request for Super User access has been rejected",
+      'Request for Super User access has been rejected'
     );
   }
   if (superUserGranted(previousUser, updatedUser)) {
     return updateDatabase(
       approveSuperUser,
       [updatedUser._id, adminIdPlaceholder],
-      "Request for Super User access granted",
+      'Request for Super User access granted'
     );
   }
+
+  if (superUserRevoked(previousUser, updatedUser)) {
+    return updateDatabase(
+      revokeSuperUser,
+      [updatedUser._id],
+      'Super User Privileges revoked'
+    );
+  }
+
   return res
     .status(400)
     .send(
-      "There was a problem with the data submitted, please check and try again.",
+      'There was a problem with the data submitted, please check and try again.'
     );
 };

@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-const express = require("express");
-const httpErrors = require("http-errors");
-const path = require("path");
-const pino = require("pino");
-const pinoHttp = require("pino-http");
-const bodyParser = require("body-parser");
-const connectToDatabase = require("./database/dbConnection");
-const router = require("./controllers/index");
+const express = require('express');
+const httpErrors = require('http-errors');
+const path = require('path');
+const pino = require('pino');
+const pinoHttp = require('pino-http');
+const bodyParser = require('body-parser');
+const connectToDatabase = require('./database/dbConnection');
+const router = require('./controllers/index');
 
 module.exports = function main(options, cb) {
   // Set default options
@@ -14,7 +14,7 @@ module.exports = function main(options, cb) {
   const opts = {
     // Default options
 
-    ...options,
+    ...options
   };
 
   const logger = pino();
@@ -42,8 +42,8 @@ module.exports = function main(options, cb) {
       });
     }
   }
-  process.on("uncaughtException", unhandledError);
-  process.on("unhandledRejection", unhandledError);
+  process.on('uncaughtException', unhandledError);
+  process.on('unhandledRejection', unhandledError);
 
   // Create the express app
   const app = express();
@@ -59,18 +59,18 @@ module.exports = function main(options, cb) {
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     // serve client/build folder as static files
-    app.use(express.static(path.join(__dirname, "..", "client", "build")));
+    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
   }
 
   // use API router
-  app.use("/api", router);
+  app.use('/api', router);
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     // redirect unknown requests back to React
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
     });
   }
 
@@ -87,7 +87,7 @@ module.exports = function main(options, cb) {
 
   // Start database
   connectToDatabase()
-    .then(() => console.log("DB Connection initialised"))
+    .then(() => console.log('DB Connection initialised'))
     .catch(e => console.error(e));
 
   // Start server
@@ -98,7 +98,7 @@ module.exports = function main(options, cb) {
 
     // If some other error means we should close
     if (serverClosing) {
-      return ready(new Error("Server was closed before it could start"));
+      return ready(new Error('Server was closed before it could start'));
     }
 
     serverStarted = true;
